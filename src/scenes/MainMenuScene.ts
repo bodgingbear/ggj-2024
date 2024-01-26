@@ -35,7 +35,7 @@ export class MainMenuScene extends Phaser.Scene {
     pressSpaceButton.setOrigin(0.5, 0.5);
 
     // this.input.keyboard!.addKey("SPACE").on("down", (): void => {
-      this.scene.start("GameScene");
+    this.scene.start("GameScene");
     // });
 
     const howToPlayButton = new TextButton(this, 32, 720 - 32, "How to play", {

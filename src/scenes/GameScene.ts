@@ -20,12 +20,12 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  private sickChildren: SickChild[] = [];
   private pressedKeys: Set<string> = new Set();
   private shiftKey!: Phaser.Input.Keyboard.Key;
 
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
+  private sickChildren!: Phaser.GameObjects.Group;
 
   preload() {
     this.load.image("kuba", "/assets/images/credits/kuba.png");
@@ -57,12 +57,14 @@ export class GameScene extends Phaser.Scene {
 
     // Setup keys
     this.keys = this.input.keyboard!.createCursorKeys();
+    this.sickChildren = this.physics.add.group({});
+
     // Create SickChild instances
     Array(CHILDREN_COUNT)
       .fill(0xdeadbeef)
       .forEach((_, childIdx) => {
         const sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), this.keys, childIdx);
-        this.sickChildren.push(sickChild);
+        this.sickChildren.add(sickChild.sprite);
 
         this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
       });
@@ -80,6 +82,12 @@ export class GameScene extends Phaser.Scene {
         shootInterval: 500,
       }).sprite,
     );
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.physics.add.collider(this.sickChildren, this.bullets, (sickChildObj: any, bulletObj: any) => {
+      sickChildObj.getData("ref")?.onHit(bulletObj.getData("ref"));
+      bulletObj.getData("ref").destroy();
+    });
   }
 
   update(_time: number, delta: number) {
@@ -90,7 +98,8 @@ export class GameScene extends Phaser.Scene {
     this.input.keyboard!.on("keydown", this.handleChildrenMovementKeyDown, this);
     this.input.keyboard!.on("keyup", this.handleChildrenMovementKeyUp, this);
 
-    this.sickChildren.forEach((child) => {
+    this.sickChildren.getChildren().forEach((childObj) => {
+      const child: SickChild = childObj.getData("ref");
       const pressedKeys = Array.from(this.pressedKeys);
 
       const shouldControlChild = this.shiftKey.isDown || pressedKeys.some((key) => key === child.getControlKey());
@@ -110,7 +119,10 @@ export class GameScene extends Phaser.Scene {
 
     // Activate all children with Shift
     if (key === "Shift") {
-      this.sickChildren.forEach((sickChild) => sickChild.setControlled(true));
+      this.sickChildren.getChildren().forEach((childObj) => {
+        const child: SickChild = childObj.getData("ref");
+        child.setControlled(true);
+      });
     }
 
     // Check if the key released is a correct number key
@@ -126,7 +138,10 @@ export class GameScene extends Phaser.Scene {
 
     // Activate all children with Shift
     if (key === "Shift") {
-      this.sickChildren.forEach((sickChild) => sickChild.setControlled(false));
+      this.sickChildren.getChildren().forEach((childObj) => {
+        const child: SickChild = childObj.getData("ref");
+        child.setControlled(false);
+      });
     }
 
     // Check if the key released is a correct number key

@@ -24,6 +24,8 @@ export class SickChild {
     this.body.collideWorldBounds = true;
     this.body.setCollideWorldBounds(true);
 
+    this.sprite.setData("ref", this);
+
     // Set key to control the child
     this.controlKey = (controlIndex + 1).toString();
   }
@@ -35,6 +37,16 @@ export class SickChild {
 
   getControlKey(): string {
     return this.controlKey;
+  }
+
+  onHit(): void {
+    this.sprite.setTint(0xff0000);
+    this.scene.time.addEvent({
+      delay: 100,
+      callback: () => {
+        this.sprite.setTint(0xffffff);
+      },
+    });
   }
 
   update() {
