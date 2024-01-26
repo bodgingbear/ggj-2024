@@ -25,6 +25,21 @@ export class Private implements Solider {
     this.sprite.setData("ref", this);
   }
 
+  update() {
+    this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
+
+    switch (this.state) {
+      case "searching":
+        this.body.angle += 1;
+        break;
+      case "shooting":
+        break;
+      default:
+        console.warn(`Unexpected type on state ${this.state}`);
+        break;
+    }
+  }
+
   foundEnemy(targetPosition: Phaser.Math.Vector2): void {
     if (this.state === "shooting") {
       return;
@@ -39,7 +54,14 @@ export class Private implements Solider {
     });
   }
 
-  finishShooting(): void {}
+  finishShooting(): void {
+    if (this.state === "searching") {
+      return;
+    }
+
+    this.state = "searching";
+    this.shootingEvent?.destroy();
+  }
 
   shoot = (targetPosition: Phaser.Math.Vector2) => {
     this.bullets.add(new Bullet(this.scene, targetPosition, undefined, undefined, 2).sprite);
