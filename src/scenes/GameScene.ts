@@ -1,3 +1,5 @@
+import { SickChild } from "../objects/SickChild/SickChild";
+
 export class GameScene extends Phaser.Scene {
   public constructor() {
     super({
@@ -5,15 +7,21 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  public create(): void {
-    const text = this.add
-      .text(1280 / 2, 720 / 2, "Here is the game", {
-        fontSize: "48px",
-        color: "#fff",
-        align: "center",
-      })
-      .setLineSpacing(10);
+  private sickChild!: SickChild;
 
-    text.setOrigin(0.5, 0.5);
+  preload() {
+    this.load.image("kuba", "/assets/images/credits/kuba.png");
+  }
+
+  public create(): void {
+    this.physics.world.setBounds(0, 350, 1200, 720);
+
+    const keys = this.input.keyboard!.createCursorKeys();
+
+    this.sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), keys);
+  }
+
+  update() {
+    this.sickChild.update();
   }
 }

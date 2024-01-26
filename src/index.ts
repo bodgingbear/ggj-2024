@@ -23,6 +23,9 @@ const game = new Phaser.Game({
     height: 720,
   },
   zoom: 5,
+  physics: {
+    default: "arcade",
+  },
 });
 
 window.addEventListener("load", (): Phaser.Game => game);
