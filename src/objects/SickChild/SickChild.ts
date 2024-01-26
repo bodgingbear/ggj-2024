@@ -1,18 +1,23 @@
+import { EventEmitter } from "../../utils/EventEmitter/EventEmitter";
 import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
 
 const PLAYER_VELOCITY = 600;
 
+type Events = {
+  death: () => void;
+};
+
 /** Player
  */
-export class SickChild {
+export class SickChild extends EventEmitter<Events> {
   body: Phaser.Physics.Arcade.Body;
 
   sprite: Phaser.GameObjects.Sprite;
 
   private controlled: boolean = false;
   private controlKey: string;
-  hp: number = 5;
+  hp: number = 1;
 
   constructor(
     private scene: Phaser.Scene,
@@ -20,6 +25,7 @@ export class SickChild {
     private keys: Phaser.Types.Input.Keyboard.CursorKeys,
     controlIndex: number,
   ) {
+    super();
     this.sprite = this.scene.add.sprite(position.x, position.y, "kuba");
     scene.physics.world.enable(this.sprite);
 
@@ -70,6 +76,7 @@ export class SickChild {
   public destroy() {
     this.sprite.destroy();
     this.body.destroy();
+    this.emit("death");
   }
 
   update() {

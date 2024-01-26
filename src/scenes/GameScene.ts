@@ -64,7 +64,10 @@ export class GameScene extends Phaser.Scene {
     Array(CHILDREN_COUNT)
       .fill(0xdeadbeef)
       .forEach((_, childIdx) => {
-        const sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), this.keys, childIdx);
+        const sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), this.keys, childIdx).on(
+          "death",
+          this.handleChildDeath,
+        );
         this.sickChildren.add(sickChild.sprite);
 
         this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
@@ -90,6 +93,7 @@ export class GameScene extends Phaser.Scene {
       bulletObj.getData("ref").destroy();
     });
     this.hud = new HUD(this);
+    this.hud.onCounterChange(this.sickChildren.getLength());
   }
 
   update(_time: number, delta: number) {
@@ -153,4 +157,11 @@ export class GameScene extends Phaser.Scene {
       this.pressedKeys.delete(key);
     }
   }
+
+  handleChildDeath = () => {
+    this.hud.decreaseCounter();
+    if (this.sickChildren.getLength() > 0) {
+      this.cameras.main.startFollow(this.sickChildren.getChildren()[0]);
+    }
+  };
 }
