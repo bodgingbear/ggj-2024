@@ -1,0 +1,16 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  background: #000;
+  font-family: 'Press Start 2P';
+}
+
+body {
+  margin: 0;
+}
+
+#app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
