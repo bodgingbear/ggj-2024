@@ -2,6 +2,7 @@ import { SCALE } from "../constants";
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { HUD } from "../objects/HUD/HUD";
+import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
 
 const CHILDREN_COUNT = 5;
 interface MapLayers {
@@ -12,6 +13,7 @@ interface MapLayers {
 export class GameScene extends Phaser.Scene {
   private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
   private map!: Phaser.Tilemaps.Tilemap;
+  private tilemapObjectsManager!: TilemapObjectsManager;
 
   private mapLayers!: MapLayers;
 
@@ -28,12 +30,9 @@ export class GameScene extends Phaser.Scene {
   private sickChildren!: Phaser.GameObjects.Group;
   private hud!: HUD;
 
-  preload() {
-    this.load.image("kuba", "/assets/images/credits/kuba.png");
-  }
-
   private createMap() {
     this.map = this.make.tilemap({ key: "tilemap" });
+    this.tilemapObjectsManager = new TilemapObjectsManager(this.map);
 
     // The first parameter is the name of the tileset in Tiled and the second parameter is the key
     // of the tileset image used when loading the file in preload.
@@ -61,19 +60,21 @@ export class GameScene extends Phaser.Scene {
     this.sickChildren = this.physics.add.group({});
 
     // Create SickChild instances
-    Array(CHILDREN_COUNT)
-      .fill(0xdeadbeef)
-      .forEach((_, childIdx) => {
-        const sickChild = new SickChild(
-          this,
-          new Phaser.Math.Vector2(1270 / 2, 720 / 2 - childIdx * 56),
-          this.keys,
-          childIdx,
-        ).on("death", this.handleChildDeath);
-        this.sickChildren.add(sickChild.sprite);
+    this.tilemapObjectsManager.players.forEach((playerPosition, childIdx) => {
+      const sickChild = new SickChild(
+        this,
+        new Phaser.Math.Vector2(playerPosition.x * SCALE, playerPosition.y * SCALE),
+        this.keys,
+        childIdx,
+        playerPosition.sprite,
+      ).on("death", this.handleChildDeath);
+      this.sickChildren.add(sickChild.sprite);
 
-        this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
-      });
+      this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
+    });
+
+    this.cameras.main.startFollow(this.sickChildren.getChildren()[0]);
+    this.cameras.main.stopFollow();
 
     this.shiftKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 

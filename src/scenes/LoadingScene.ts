@@ -20,10 +20,12 @@ export class LoadingScene extends Phaser.Scene {
     // Assets go here
     this.load.video("demo", loadAsset("videos/demo.mp4"), true);
 
-    this.load.image("kuba", "/assets/images/credits/kuba.png");
     this.load.image("blood", "/assets/images/credits/logo.png");
+    this.load.multiatlas("master", "atlas/atlas.json", "atlas");
     this.load.image("base_tiles", loadAsset("maps/tilemap.png"));
     this.load.tilemapTiledJSON("tilemap", loadAsset("maps/tilemap.tmj"));
+
+    this.load.image("kuba", "/assets/images/credits/kuba.png");
 
     this.load.addFile(
       new FontFile(this.load, "Press Start 2P", {
@@ -41,7 +43,42 @@ export class LoadingScene extends Phaser.Scene {
     this.loadCreditsAssets();
   }
 
-  public create(): void {}
+  private setupAnimations() {
+    this.anims.create({
+      key: "fat-kid",
+      frames: this.anims.generateFrameNames("master", {
+        start: 1,
+        end: 2,
+        prefix: "FatKid/FatKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "poor-kid",
+      frames: this.anims.generateFrameNames("master", {
+        start: 1,
+        end: 2,
+        prefix: "PoorKid/PoorKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "small-kid",
+      frames: this.anims.generateFrameNames("master", {
+        start: 1,
+        end: 2,
+        prefix: "SmallKid/SmallKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+  }
+
+  public create(): void {
+    this.setupAnimations();
+  }
 
   public update(): void {
     if (shouldSkipIntro()) {
