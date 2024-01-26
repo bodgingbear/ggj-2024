@@ -22,6 +22,8 @@ export class SickChild extends EventEmitter<Events> {
   private controlKey: string;
   hp: number = 1;
 
+  destroyed: boolean = false;
+
   constructor(
     private scene: Phaser.Scene,
     startingPosition: Phaser.Math.Vector2,
@@ -70,7 +72,6 @@ export class SickChild extends EventEmitter<Events> {
   }
 
   onHit(bullet: Bullet): void {
-    if (this.hp <= 0) return;
     this.sprite.setTint(0xff0000);
     this.scene.time.addEvent({
       delay: 100,
@@ -81,12 +82,15 @@ export class SickChild extends EventEmitter<Events> {
     this.hp -= bullet.damage;
 
     new Blood(this.scene, this.body.position, 30, 50, 50);
+
     if (this.hp <= 0) {
       this.destroy();
     }
   }
 
   public destroy() {
+    if (this.destroyed) return;
+    this.destroyed = true;
     this.scene.time.addEvent({
       delay: 1000,
       callback: () => {

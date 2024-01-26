@@ -101,8 +101,13 @@ export class GameScene extends Phaser.Scene {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.physics.add.collider(this.sickChildren, this.bullets, (sickChildObj: any, bulletObj: any) => {
       sickChildObj.getData("ref")?.onHit(bulletObj.getData("ref"));
-      bulletObj.getData("ref").destroy();
+      bulletObj.getData("ref")?.destroy();
     });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    this.physics.add.collider(this.mapLayers.barriers, this.bullets, (bulletObj: any) => {
+      bulletObj.getData("ref")?.destroy();
+    });
+
     this.hud = new HUD(this);
     this.hud.onCounterChange(this.sickChildren.getLength());
   }
