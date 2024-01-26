@@ -26,15 +26,8 @@ export class GameScene extends Phaser.Scene {
   private shiftKey!: Phaser.Input.Keyboard.Key;
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
-<<<<<<< HEAD
   private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
   private hud!: HUD;
-=======
-
-  preload() {
-    this.load.image("kuba", "/assets/images/credits/kuba.png");
-  }
->>>>>>> 441b4a4eb7bf8571ad2a90f5dd9c2e0aec427ccc
 
   private createMap() {
     this.map = this.make.tilemap({ key: "tilemap" });
