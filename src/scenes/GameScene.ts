@@ -3,8 +3,8 @@ import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { HUD } from "../objects/HUD/HUD";
 import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
+import { ChildMovementController } from "../objects/SickChild/ChildMovementController";
 
-const CHILDREN_COUNT = 5;
 interface MapLayers {
   ground: Phaser.Tilemaps.TilemapLayer;
   barriers: Phaser.Tilemaps.TilemapLayer;
@@ -111,9 +111,7 @@ export class GameScene extends Phaser.Scene {
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
 
-    // Set up children key events
-    this.input.keyboard!.on("keydown", this.handleChildrenMovementKeyDown, this);
-    this.input.keyboard!.on("keyup", this.handleChildrenMovementKeyUp, this);
+    new ChildMovementController(this, this.sickChildren, this.pressedKeys);
 
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");
@@ -129,44 +127,6 @@ export class GameScene extends Phaser.Scene {
         child.setControlled(false);
       }
     });
-  }
-
-  handleChildrenMovementKeyDown(event: KeyboardEvent) {
-    const key = event.key;
-
-    // Activate all children with Shift
-    if (key === "Shift") {
-      this.sickChildren.getChildren().forEach((childObj) => {
-        const child: SickChild = childObj.getData("ref");
-        child.setControlled(true);
-      });
-    }
-
-    // Check if the key released is a correct number key
-    const index = parseInt(key);
-    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= CHILDREN_COUNT;
-    if (isExpectedNumber) {
-      this.pressedKeys.add(key);
-    }
-  }
-
-  handleChildrenMovementKeyUp(event: KeyboardEvent) {
-    const key = event.key;
-
-    // Activate all children with Shift
-    if (key === "Shift") {
-      this.sickChildren.getChildren().forEach((childObj) => {
-        const child: SickChild = childObj.getData("ref");
-        child.setControlled(false);
-      });
-    }
-
-    // Check if the key released is a correct number key
-    const index = parseInt(key);
-    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= CHILDREN_COUNT;
-    if (isExpectedNumber) {
-      this.pressedKeys.delete(key);
-    }
   }
 
   handleChildDeath = () => {

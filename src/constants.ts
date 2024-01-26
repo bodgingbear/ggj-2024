@@ -1,5 +1,7 @@
 import { TeamMemberData } from "./types/TeamMember";
 
+export const CHILDREN_COUNT = 5;
+
 export const TEAM: TeamMemberData[] = [
   {
     name: "Kacper Pietrzak",
