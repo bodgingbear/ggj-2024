@@ -61,17 +61,21 @@ export class SickChild extends EventEmitter<Events> {
     });
     this.hp -= bullet.damage;
 
-    if (this.hp > 0) {
-      new Blood(this.scene, this.body.position, 20, 50, 50);
-    } else {
+    new Blood(this.scene, this.body.position, 20, 50, 50);
+    if (this.hp <= 0) {
       this.destroy();
     }
   }
 
   public destroy() {
-    this.sprite.destroy();
-    this.body.destroy();
-    this.emit("death");
+    this.scene.time.addEvent({
+      delay: 1000,
+      callback: () => {
+        this.sprite.destroy();
+        this.body.destroy();
+        this.emit("death");
+      },
+    });
   }
 
   update() {
