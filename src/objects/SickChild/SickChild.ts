@@ -1,12 +1,15 @@
 import { EventEmitter } from "../../utils/EventEmitter/EventEmitter";
 import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
+import { SCALE } from "../../constants";
 
 const PLAYER_VELOCITY = 600;
 
 type Events = {
   death: () => void;
 };
+
+type AnimationName = "fat-kid" | "poor-kid" | "small-kid";
 
 /** Player
  */
@@ -21,13 +24,28 @@ export class SickChild extends EventEmitter<Events> {
 
   constructor(
     private scene: Phaser.Scene,
-    position: Phaser.Math.Vector2,
+    startingPosition: Phaser.Math.Vector2,
     private keys: Phaser.Types.Input.Keyboard.CursorKeys,
     controlIndex: number,
+    animationName: AnimationName,
   ) {
     super();
-    this.sprite = this.scene.add.sprite(position.x, position.y, "kuba");
-    scene.physics.world.enable(this.sprite);
+    const baseSpriteName: Record<AnimationName, string> = {
+      "fat-kid": "FatKid/FatKid-1",
+      "poor-kid": "PoorKid/PoorKid-1",
+      "small-kid": "SmallKid/SmallKid-1",
+    };
+    this.sprite = this.scene.add.sprite(
+      startingPosition.x,
+      startingPosition.y,
+      "master",
+      baseSpriteName[animationName],
+    );
+    this.sprite.setScale(SCALE);
+
+    this.scene.physics.world.enable(this.sprite);
+
+    this.sprite.anims.play(animationName);
 
     this.body = this.sprite.body as Phaser.Physics.Arcade.Body;
 

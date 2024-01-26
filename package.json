@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "phaser": "^3.70.0",
-    "webfontloader": "^1.6.28"
+    "webfontloader": "^1.6.28",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/webfontloader": "^1.6.38",

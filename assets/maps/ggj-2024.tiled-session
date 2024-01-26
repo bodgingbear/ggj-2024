@@ -1,0 +1,67 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "tilemap.tmj",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "tilemap.tmj": {
+            "scale": 3,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 154.83333333333331,
+                "y": 61.5
+            }
+        },
+        "tilemap.tmj#tilemap": {
+            "scaleInDock": 2
+        },
+        "untitled.tmj": {
+            "scale": 0.7501395089285714,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 640.5475172029012,
+                "y": 0.6665426817927482
+            }
+        },
+        "untitled.tmj#tilemap": {
+            "scaleInDock": 1
+        },
+        "untitled.tmx": {
+            "scale": 2.4158,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 221.66570080304666,
+                "y": 91.68805364682505
+            }
+        },
+        "untitled.tmx#tilemap": {
+            "scaleInDock": 4,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "/Users/bartoszlegiec/Projects/ggj-2024/assets/maps",
+    "last.imagePath": "/Users/bartoszlegiec/Library/CloudStorage/GoogleDrive-bartosz.legiec@gmail.com/My Drive/Bodging Bear/GGJ 2024",
+    "map.fixedSize": false,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "openFiles": [
+        "tilemap.tmj"
+    ],
+    "project": "ggj-2024.tiled-project",
+    "recentFiles": [
+        "tilemap.tmj",
+        "untitled.tmx",
+        "untitled.tmj"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    }
+}
