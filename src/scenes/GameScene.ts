@@ -30,7 +30,7 @@ export class GameScene extends Phaser.Scene {
     this.keys = this.input.keyboard!.createCursorKeys();
     // Create SickChild instances
     Array(CHILDREN_COUNT)
-      .fill("")
+      .fill(0xdeadbeef)
       .forEach((_, childIdx) => {
         const sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), this.keys, childIdx);
         this.sickChildren.push(sickChild);
