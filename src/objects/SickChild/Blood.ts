@@ -14,18 +14,18 @@ export class Blood {
         "blood",
       );
 
-      sprite.setScale(0.1 + Math.random() * 2);
+      sprite.setScale(0.1 + Math.random() * 3);
 
       this.scene.physics.world.enable(sprite);
 
       if (sprite.body) {
-        sprite.body!.velocity.x = -200 - Math.random() * 200;
-        sprite.body!.velocity.y = -200 + Math.random() * 400;
+        sprite.body!.velocity.x = -250 - Math.random() * 200;
+        sprite.body!.velocity.y = -250 + Math.random() * 400;
       }
       return sprite;
     });
 
-    const bloodFlightTimeMs = 200;
+    const bloodFlightTimeMs = 400;
 
     this.scene.time.addEvent({
       delay: bloodFlightTimeMs,
