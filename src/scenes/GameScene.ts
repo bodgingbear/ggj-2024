@@ -64,10 +64,12 @@ export class GameScene extends Phaser.Scene {
     Array(CHILDREN_COUNT)
       .fill(0xdeadbeef)
       .forEach((_, childIdx) => {
-        const sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), this.keys, childIdx).on(
-          "death",
-          this.handleChildDeath,
-        );
+        const sickChild = new SickChild(
+          this,
+          new Phaser.Math.Vector2(1270 / 2, 720 / 2 - childIdx * 56),
+          this.keys,
+          childIdx,
+        ).on("death", this.handleChildDeath);
         this.sickChildren.add(sickChild.sprite);
 
         this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
