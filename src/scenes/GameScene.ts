@@ -94,10 +94,6 @@ export class GameScene extends Phaser.Scene {
       sickChildObj.getData("ref")?.onHit(bulletObj.getData("ref"));
       bulletObj.getData("ref").destroy();
     });
-    // this.physics.add.collider(this.sickChildren, this.sickChildren, (a: any, b: any) => {
-    //   const childA: SickChild = a.getData("ref");
-    //   const childB: SickChild = b.getData("ref");
-    // });
     this.hud = new HUD(this);
   }
 

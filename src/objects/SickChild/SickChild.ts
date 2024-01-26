@@ -26,13 +26,9 @@ export class SickChild {
     this.body = this.sprite.body as Phaser.Physics.Arcade.Body;
 
     this.body.collideWorldBounds = true;
-    // this.body.setCollideWorldBounds(true);
+    this.body.setCollideWorldBounds(true);
     this.body.immovable = true;
-    // this.body.setBounce(0);
-
-    // Set up the collision callback
-    // this.body.onCollide = true;
-    // this.scene.physics.world.on("collide", this.handleCollision, this);
+    this.body.setBounce(0);
 
     this.sprite.setData("ref", this);
 
@@ -64,13 +60,6 @@ export class SickChild {
     } else {
       this.destroy();
     }
-
-    //   new FlyingCorpse(this.scene, this.body.position);
-    //   new Reward(this.scene, this.body.position, this.reward);
-    //   this.inventory.increaseAccountBalance(this.reward);
-
-    //   deathCb();
-    // }
   }
 
   public destroy() {
@@ -82,8 +71,6 @@ export class SickChild {
     if (!this.controlled) {
       return;
     }
-
-    if (!this.body.touching.none) return;
 
     let velocity = new Phaser.Math.Vector2(0, 0);
 
