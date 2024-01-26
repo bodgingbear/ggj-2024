@@ -1,3 +1,4 @@
+import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
 
 const PLAYER_VELOCITY = 600;
@@ -11,7 +12,7 @@ export class SickChild {
 
   private controlled: boolean = false;
   private controlKey: string;
-  hp: number = 100;
+  hp: number = 5;
 
   constructor(
     private scene: Phaser.Scene,
@@ -48,7 +49,7 @@ export class SickChild {
     return this.controlKey;
   }
 
-  onHit(): void {
+  onHit(bullet: Bullet): void {
     this.sprite.setTint(0xff0000);
     this.scene.time.addEvent({
       delay: 100,
@@ -56,13 +57,13 @@ export class SickChild {
         this.sprite.setTint(0xffffff);
       },
     });
-    // this.hp -= bullet.damage;
+    this.hp -= bullet.damage;
 
     if (this.hp > 0) {
       new Blood(this.scene, this.body.position, 20, 50, 50);
+    } else {
+      this.destroy();
     }
-    // else {
-    //   this.destroy();
 
     //   new FlyingCorpse(this.scene, this.body.position);
     //   new Reward(this.scene, this.body.position, this.reward);
@@ -70,6 +71,11 @@ export class SickChild {
 
     //   deathCb();
     // }
+  }
+
+  public destroy() {
+    this.sprite.destroy();
+    this.body.destroy();
   }
 
   update() {
