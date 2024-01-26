@@ -52,6 +52,7 @@ export class SickChild extends EventEmitter<Events> {
   }
 
   onHit(bullet: Bullet): void {
+    if (this.hp <= 0) return;
     this.sprite.setTint(0xff0000);
     this.scene.time.addEvent({
       delay: 100,

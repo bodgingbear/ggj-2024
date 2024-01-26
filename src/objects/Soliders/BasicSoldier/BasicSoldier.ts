@@ -6,6 +6,7 @@ type Opts = {
   shootIntervalJitter?: number;
   bulletsInSeries?: number;
   rotationSpeed?: number;
+  stopOnShoot?: boolean;
 };
 
 function rotateVector(rotation: number) {
@@ -32,6 +33,8 @@ export class BasicSoldier {
 
   rotationDirection = 1;
 
+  rotationEnabled = true;
+
   constructor(
     private scene: Phaser.Scene,
     position: Phaser.Math.Vector2,
@@ -44,6 +47,7 @@ export class BasicSoldier {
       shootIntervalJitter: 0,
       bulletsInSeries: 1,
       rotationSpeed: 0.02,
+      stopOnShoot: true,
       ...opts,
     };
     this.sprite = this.scene.add.sprite(position.x, position.y, "kuba").setScale(2);
@@ -70,6 +74,8 @@ export class BasicSoldier {
   }
 
   update(delta: number) {
+    if (!this.rotationEnabled) return;
+
     this.body.rotation += this.rotationDirection * this.opts.rotationSpeed! * delta;
 
     if (this.rotationDirection > 0) {
@@ -86,6 +92,26 @@ export class BasicSoldier {
   }
 
   shoot = (direction: Phaser.Math.Vector2) => {
-    this.bullets.add(new Bullet(this.scene, new Phaser.Math.Vector2(this.sprite.x, this.sprite.y), direction).sprite);
+    const interval = 50;
+
+    this.scene.time.addEvent({
+      delay: interval,
+      callback: () => {
+        this.bullets.add(
+          new Bullet(this.scene, new Phaser.Math.Vector2(this.sprite.x, this.sprite.y), direction).sprite,
+        );
+      },
+      repeat: this.opts.bulletsInSeries! - 1,
+    });
+
+    if (this.opts.stopOnShoot) {
+      this.rotationEnabled = false;
+      this.scene.time.addEvent({
+        delay: (this.opts.bulletsInSeries! + 2) * interval,
+        callback: () => {
+          this.rotationEnabled = true;
+        },
+      });
+    }
   };
 }

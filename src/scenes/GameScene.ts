@@ -80,7 +80,15 @@ export class GameScene extends Phaser.Scene {
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
 
-    this.soldiers.add(new BasicSoldier(this, new Phaser.Math.Vector2(1280 / 2 - 300, 720 / 2), this.bullets).sprite);
+    this.soldiers.add(
+      new BasicSoldier(this, new Phaser.Math.Vector2(1280 / 2 - 300, 720 / 2), this.bullets, {
+        rotationRange: [0, 360],
+        rotationSpeed: 0.1,
+        shootInterval: 50,
+        bulletsInSeries: 1,
+        stopOnShoot: false,
+      }).sprite,
+    );
     this.soldiers.add(
       new BasicSoldier(this, new Phaser.Math.Vector2(1280 / 2 + 300, 720 / 2), this.bullets, {
         rotationRange: [-20, 20],
