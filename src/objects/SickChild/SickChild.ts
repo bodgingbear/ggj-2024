@@ -78,6 +78,7 @@ export class SickChild {
 
     if (this.keys.right?.isDown) {
       velocity.add(new Phaser.Math.Vector2(PLAYER_VELOCITY, 0));
+      this.onHit();
     }
 
     if (velocity.x !== 0 && velocity.y !== 0) {
