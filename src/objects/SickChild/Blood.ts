@@ -10,6 +10,7 @@ export class Blood {
       const sprite = this.scene.add.sprite(
         position.x - spreadX / 2 + Math.random() * spreadY,
         position.y - spreadY / 2 + Math.random() * spreadY,
+        "master",
         "blood",
       );
 
