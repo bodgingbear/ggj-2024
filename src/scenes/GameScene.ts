@@ -1,6 +1,8 @@
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 
+const CHILDREN_COUNT = 5;
+
 export class GameScene extends Phaser.Scene {
   public constructor() {
     super({
@@ -8,11 +10,14 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  private sickChild!: SickChild;
+  private sickChildren: SickChild[] = [];
+  private pressedKeys: Set<string> = new Set();
+  private shiftKey!: Phaser.Input.Keyboard.Key;
 
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
-  private basicSoldier!: BasicSoldier;
+
+  private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
 
   preload() {
     this.load.image("kuba", "/assets/images/credits/kuba.png");
@@ -21,9 +26,17 @@ export class GameScene extends Phaser.Scene {
   public create(): void {
     this.physics.world.setBounds(0, 0, 1280, 720);
 
-    const keys = this.input.keyboard!.createCursorKeys();
+    // Setup keys
+    this.keys = this.input.keyboard!.createCursorKeys();
+    // Create SickChild instances
+    Array(CHILDREN_COUNT)
+      .fill("")
+      .forEach((_, childIdx) => {
+        const sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), this.keys, childIdx);
+        this.sickChildren.push(sickChild);
+      });
 
-    this.sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), keys);
+    this.shiftKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
 
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
@@ -39,8 +52,56 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number) {
-    this.sickChild.update();
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
+
+    // Set up children key events
+    this.input.keyboard!.on("keydown", this.handleChildrenMovementKeyDown, this);
+    this.input.keyboard!.on("keyup", this.handleChildrenMovementKeyUp, this);
+
+    this.sickChildren.forEach((child) => {
+      const pressedKeys = Array.from(this.pressedKeys);
+
+      const shouldControlChild = this.shiftKey.isDown || pressedKeys.some((key) => key === child.getControlKey());
+
+      if (shouldControlChild) {
+        child.setControlled(true);
+        child.update();
+      } else {
+        child.setControlled(false);
+      }
+    });
+  }
+
+  handleChildrenMovementKeyDown(event: KeyboardEvent) {
+    const key = event.key;
+
+    // Activate all children with Shift
+    if (key === "Shift") {
+      this.sickChildren.forEach((sickChild) => sickChild.setControlled(true));
+    }
+
+    // Check if the key released is a correct number key
+    const index = parseInt(key);
+    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= CHILDREN_COUNT;
+    if (isExpectedNumber) {
+      this.pressedKeys.add(key);
+    }
+  }
+
+  handleChildrenMovementKeyUp(event: KeyboardEvent) {
+    const key = event.key;
+
+    // Activate all children with Shift
+    if (key === "Shift") {
+      this.sickChildren.forEach((sickChild) => sickChild.setControlled(false));
+    }
+
+    // Check if the key released is a correct number key
+    const index = parseInt(key);
+    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= CHILDREN_COUNT;
+    if (isExpectedNumber) {
+      this.pressedKeys.delete(key);
+    }
   }
 }

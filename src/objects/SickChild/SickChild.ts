@@ -7,10 +7,14 @@ export class SickChild {
 
   sprite: Phaser.GameObjects.Sprite;
 
+  private controlled: boolean = false;
+  private controlKey: string;
+
   constructor(
     private scene: Phaser.Scene,
     position: Phaser.Math.Vector2,
     private keys: Phaser.Types.Input.Keyboard.CursorKeys,
+    controlIndex: number,
   ) {
     this.sprite = this.scene.add.sprite(position.x, position.y, "kuba");
     scene.physics.world.enable(this.sprite);
@@ -18,9 +22,25 @@ export class SickChild {
     this.body = this.sprite.body as Phaser.Physics.Arcade.Body;
 
     this.body.collideWorldBounds = true;
+    this.body.setCollideWorldBounds(true);
+
+    // Set key to control the child
+    this.controlKey = (controlIndex + 1).toString();
+  }
+
+  setControlled(value: boolean): void {
+    this.controlled = value;
+  }
+
+  getControlKey(): string {
+    return this.controlKey;
   }
 
   update() {
+    if (!this.controlled) {
+      return;
+    }
+
     let velocity = new Phaser.Math.Vector2(0, 0);
 
     if (this.keys.up?.isDown) {
