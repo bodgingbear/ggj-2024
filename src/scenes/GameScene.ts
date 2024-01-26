@@ -27,8 +27,6 @@ export class GameScene extends Phaser.Scene {
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
 
-  private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
-
   preload() {
     this.load.image("kuba", "/assets/images/credits/kuba.png");
   }
