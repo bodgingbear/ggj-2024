@@ -50,3 +50,5 @@ export const TEAM: TeamMemberData[] = [
   //   imagePath: 'images/credits/arek.png',
   // },
 ];
+
+export const SCALE = 5;
