@@ -28,3 +28,5 @@ dist-ssr
 
 # Yarn
 .yarn/install-state.gz
+
+!.vscode/settings.json

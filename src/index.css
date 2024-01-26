@@ -1,8 +1,9 @@
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
-  background: #000;
-  font-family: 'Press Start 2P';
+  background: #aaa;
+  font-family: "Press Start 2P";
 }
 
 body {

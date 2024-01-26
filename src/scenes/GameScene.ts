@@ -1,10 +1,20 @@
+import { SCALE } from "../constants";
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { HUD } from "../objects/HUD/HUD";
 
 const CHILDREN_COUNT = 5;
+interface MapLayers {
+  ground: Phaser.Tilemaps.TilemapLayer;
+  barriers: Phaser.Tilemaps.TilemapLayer;
+}
 
 export class GameScene extends Phaser.Scene {
+  private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
+  private map!: Phaser.Tilemaps.Tilemap;
+
+  private mapLayers!: MapLayers;
+
   public constructor() {
     super({
       key: "GameScene",
@@ -16,20 +26,50 @@ export class GameScene extends Phaser.Scene {
   private shiftKey!: Phaser.Input.Keyboard.Key;
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
+<<<<<<< HEAD
   private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
   private hud!: HUD;
+=======
+
+  preload() {
+    this.load.image("kuba", "/assets/images/credits/kuba.png");
+  }
+>>>>>>> 441b4a4eb7bf8571ad2a90f5dd9c2e0aec427ccc
+
+  private createMap() {
+    this.map = this.make.tilemap({ key: "tilemap" });
+
+    // The first parameter is the name of the tileset in Tiled and the second parameter is the key
+    // of the tileset image used when loading the file in preload.
+    const tiles = this.map.addTilesetImage("tilemap", "base_tiles")!;
+
+    this.mapLayers = {} as MapLayers;
+
+    this.mapLayers.ground = this.map.createLayer("Ground", tiles, 0, 0)!;
+    this.mapLayers.ground.setScale(SCALE);
+
+    this.mapLayers.barriers = this.map.createLayer("Barriers", tiles, 0, 0)!;
+    this.mapLayers.barriers.setScale(SCALE);
+
+    this.mapLayers.barriers.setCollisionByExclusion([-1]);
+
+    this.physics.world.setBounds(0, 0, this.map.widthInPixels * SCALE, this.map.heightInPixels * SCALE);
+    this.cameras.main.setBounds(0, 0, this.map.widthInPixels * SCALE, this.map.heightInPixels * SCALE);
+  }
 
   public create(): void {
-    this.physics.world.setBounds(0, 0, 1280, 720);
+    this.createMap();
 
     // Setup keys
     this.keys = this.input.keyboard!.createCursorKeys();
     // Create SickChild instances
     Array(CHILDREN_COUNT)
-      .fill("")
+      .fill(0xdeadbeef)
       .forEach((_, childIdx) => {
         const sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), this.keys, childIdx);
         this.sickChildren.push(sickChild);
+
+        this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
       });
 
     this.shiftKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
@@ -64,6 +104,7 @@ export class GameScene extends Phaser.Scene {
       if (shouldControlChild) {
         child.setControlled(true);
         child.update();
+        this.cameras.main.startFollow(child.sprite);
       } else {
         child.setControlled(false);
       }

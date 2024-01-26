@@ -22,6 +22,8 @@ export class LoadingScene extends Phaser.Scene {
 
     this.load.image("kuba", "/assets/images/credits/kuba.png");
     this.load.image("blood", "/assets/images/credits/logo.png");
+    this.load.image("base_tiles", loadAsset("maps/tilemap.png"));
+    this.load.tilemapTiledJSON("tilemap", loadAsset("maps/tilemap.tmj"));
 
     this.load.addFile(
       new FontFile(this.load, "Press Start 2P", {
@@ -84,6 +86,7 @@ export class LoadingScene extends Phaser.Scene {
   };
 
   private changeScene = () => {
-    this.scene.start("MainMenuScene");
+    this.scene.start("GameScene");
+    // this.scene.start("MainMenuScene");
   };
 }
