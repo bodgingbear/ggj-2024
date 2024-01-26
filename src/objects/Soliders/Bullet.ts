@@ -17,6 +17,13 @@ export class Bullet {
     this.body = this.sprite.body as Phaser.Physics.Arcade.Body;
 
     this.sprite.setData("ref", this);
+
+    this.scene.time.addEvent({
+      delay: 2000,
+      callback: () => {
+        this.destroy();
+      },
+    });
   }
 
   destroy() {
