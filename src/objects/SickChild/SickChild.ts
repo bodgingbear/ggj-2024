@@ -25,7 +25,13 @@ export class SickChild {
     this.body = this.sprite.body as Phaser.Physics.Arcade.Body;
 
     this.body.collideWorldBounds = true;
-    this.body.setCollideWorldBounds(true);
+    // this.body.setCollideWorldBounds(true);
+    this.body.immovable = true;
+    // this.body.setBounce(0);
+
+    // Set up the collision callback
+    // this.body.onCollide = true;
+    // this.scene.physics.world.on("collide", this.handleCollision, this);
 
     this.sprite.setData("ref", this);
 
@@ -71,6 +77,8 @@ export class SickChild {
       return;
     }
 
+    if (!this.body.touching.none) return;
+
     let velocity = new Phaser.Math.Vector2(0, 0);
 
     if (this.keys.up?.isDown) {
@@ -95,4 +103,20 @@ export class SickChild {
 
     this.body.setVelocity(velocity.x, velocity.y);
   }
+
+  //   private handleCollision(bodyA: Phaser.Physics.Arcade.Body, bodyB: Phaser.Physics.Arcade.Body) {
+  //     if (bodyA && bodyB) {
+  //       // Adjust the bounce to control the behavior of the collision
+  //       const bounce = 0.01;
+  //       // Adjust velocity for bodyA
+  //       if (bodyA.velocity) {
+  //         bodyA.setVelocity(bodyA.velocity.x * bounce, bodyA.velocity.y * bounce);
+  //       }
+
+  //       // Adjust velocity for bodyB
+  //       if (bodyB.velocity) {
+  //         bodyB.setVelocity(bodyB.velocity.x * bounce, bodyB.velocity.y * bounce);
+  //       }
+  //     }
+  //   }
 }

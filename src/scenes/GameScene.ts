@@ -64,7 +64,12 @@ export class GameScene extends Phaser.Scene {
     Array(CHILDREN_COUNT)
       .fill(0xdeadbeef)
       .forEach((_, childIdx) => {
-        const sickChild = new SickChild(this, new Phaser.Math.Vector2(1270 / 2, 720 / 2), this.keys, childIdx);
+        const sickChild = new SickChild(
+          this,
+          new Phaser.Math.Vector2(1270 / 2, 720 / 2 - childIdx * 56),
+          this.keys,
+          childIdx,
+        );
         this.sickChildren.add(sickChild.sprite);
 
         this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
@@ -89,6 +94,10 @@ export class GameScene extends Phaser.Scene {
       sickChildObj.getData("ref")?.onHit(bulletObj.getData("ref"));
       bulletObj.getData("ref").destroy();
     });
+    // this.physics.add.collider(this.sickChildren, this.sickChildren, (a: any, b: any) => {
+    //   const childA: SickChild = a.getData("ref");
+    //   const childB: SickChild = b.getData("ref");
+    // });
     this.hud = new HUD(this);
   }
 

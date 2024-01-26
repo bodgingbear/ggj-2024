@@ -17,9 +17,10 @@ export class Blood {
 
       this.scene.physics.world.enable(sprite);
 
-      sprite.body!.velocity.x = -200 - Math.random() * 200;
-      sprite.body!.velocity.y = -200 + Math.random() * 400;
-
+      if (sprite.body) {
+        sprite.body!.velocity.x = -200 - Math.random() * 200;
+        sprite.body!.velocity.y = -200 + Math.random() * 400;
+      }
       return sprite;
     });
 
@@ -29,8 +30,10 @@ export class Blood {
       delay: bloodFlightTimeMs,
       callback: () => {
         bloodParticles.forEach((sprite) => {
-          sprite.body!.velocity.x = 0;
-          sprite.body!.velocity.y = 0;
+          if (sprite.body) {
+            sprite.body!.velocity.x = 0;
+            sprite.body!.velocity.y = 0;
+          }
         });
       },
     });
