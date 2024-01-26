@@ -20,6 +20,9 @@ export class LoadingScene extends Phaser.Scene {
     // Assets go here
     this.load.video("demo", loadAsset("videos/demo.mp4"), true);
 
+    this.load.image("base_tiles", loadAsset("maps/tilemap.png"));
+    this.load.tilemapTiledJSON("tilemap", loadAsset("maps/tilemap.tmj"));
+
     this.load.addFile(
       new FontFile(this.load, "Press Start 2P", {
         custom: ["Courier", "Press Start 2P"],
@@ -81,6 +84,7 @@ export class LoadingScene extends Phaser.Scene {
   };
 
   private changeScene = () => {
-    this.scene.start("MainMenuScene");
+    this.scene.start("GameScene");
+    // this.scene.start("MainMenuScene");
   };
 }

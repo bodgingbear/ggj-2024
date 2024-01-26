@@ -22,10 +22,10 @@ const game = new Phaser.Game({
     width: 1280,
     height: 720,
   },
-  zoom: 5,
   physics: {
     default: "arcade",
   },
+  pixelArt: true,
 });
 
 window.addEventListener("load", (): Phaser.Game => game);

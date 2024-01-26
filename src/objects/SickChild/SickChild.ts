@@ -1,4 +1,4 @@
-const PLAYER_VELOCITY = 1000;
+const PLAYER_VELOCITY = 600;
 
 /** Player
  */
@@ -29,6 +29,7 @@ export class SickChild {
   }
 
   setControlled(value: boolean): void {
+    this.body.setVelocity(0, 0);
     this.controlled = value;
   }
 
