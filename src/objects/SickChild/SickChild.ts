@@ -81,8 +81,7 @@ export class SickChild extends EventEmitter<Events> {
     });
     this.hp -= bullet.damage;
 
-    new Blood(this.scene, this.body.position, 30, 50, 50);
-
+    new Blood(this.scene, this.body.position, 510, 50, 50);
     if (this.hp <= 0) {
       this.destroy();
     }
