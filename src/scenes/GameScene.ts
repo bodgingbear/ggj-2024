@@ -14,7 +14,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   public create(): void {
-    this.physics.world.setBounds(0, 350, 1200, 720);
+    this.physics.world.setBounds(0, 0, 1280, 720);
 
     const keys = this.input.keyboard!.createCursorKeys();
 
