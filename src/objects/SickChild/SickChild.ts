@@ -1,3 +1,5 @@
+import { Blood } from "./Blood";
+
 const PLAYER_VELOCITY = 1000;
 
 /** Player
@@ -9,6 +11,7 @@ export class SickChild {
 
   private controlled: boolean = false;
   private controlKey: string;
+  hp: number = 100;
 
   constructor(
     private scene: Phaser.Scene,
@@ -34,6 +37,23 @@ export class SickChild {
 
   getControlKey(): string {
     return this.controlKey;
+  }
+
+  public onHit() {
+    // this.hp -= bullet.damage;
+
+    if (this.hp > 0) {
+      new Blood(this.scene, this.body.position, 3, 50, 50);
+    }
+    // else {
+    //   this.destroy();
+
+    //   new FlyingCorpse(this.scene, this.body.position);
+    //   new Reward(this.scene, this.body.position, this.reward);
+    //   this.inventory.increaseAccountBalance(this.reward);
+
+    //   deathCb();
+    // }
   }
 
   update() {

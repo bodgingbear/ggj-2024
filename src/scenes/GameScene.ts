@@ -1,5 +1,6 @@
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
+import { HUD } from "../objects/HUD/HUD";
 
 const CHILDREN_COUNT = 5;
 
@@ -13,15 +14,10 @@ export class GameScene extends Phaser.Scene {
   private sickChildren: SickChild[] = [];
   private pressedKeys: Set<string> = new Set();
   private shiftKey!: Phaser.Input.Keyboard.Key;
-
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
-
   private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
-
-  preload() {
-    this.load.image("kuba", "/assets/images/credits/kuba.png");
-  }
+  private hud!: HUD;
 
   public create(): void {
     this.physics.world.setBounds(0, 0, 1280, 720);
@@ -49,6 +45,7 @@ export class GameScene extends Phaser.Scene {
         shootInterval: 500,
       }).sprite,
     );
+    this.hud = new HUD(this);
   }
 
   update(_time: number, delta: number) {
