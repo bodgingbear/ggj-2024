@@ -4,6 +4,7 @@ import { Bullet } from "./Bullet";
 
 export type SniperOpts = {
   rotationRange: [number, number];
+  startingRotation: number;
   rotationSpeed: number;
   timeToShoot: number;
   cooldown: number;
@@ -34,8 +35,6 @@ export class Sniper {
 
   container: Phaser.GameObjects.Container;
 
-  opts: SniperOpts;
-
   line: Phaser.GameObjects.Line;
 
   barriers!: Phaser.GameObjects.Group;
@@ -46,17 +45,12 @@ export class Sniper {
     private scene: Phaser.Scene,
     position: Phaser.Math.Vector2,
     private bullets: Phaser.GameObjects.Group,
-    opts: Partial<SniperOpts> = {},
+    public opts: SniperOpts,
     animationName: SniperAnimationName = "basic-soldier",
   ) {
-    this.opts = {
-      rotationRange: [180, 270],
-      rotationSpeed: 0.03,
-      timeToShoot: 100,
-      cooldown: 1000,
-      ...opts,
-    };
     this.container = this.scene.add.container(position.x, position.y).setScale(SCALE);
+
+    this.container.angle = opts.startingRotation;
 
     this.sprite = new Phaser.GameObjects.Sprite(this.scene, 0, 0, "master", SNIPER_BASE_SPRITE_NAME[animationName]);
 

@@ -96,16 +96,16 @@
             16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
             16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
             16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16,
-            51, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 52],
+            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 39, 28, 28, 28, 40,
+            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 16,
+            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 16,
+            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 16,
+            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 16,
+            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 16,
+            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 16,
+            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 16,
+            16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 16, 0, 0, 0, 16,
+            51, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 28, 51, 28, 28, 28, 52],
          "height":27,
          "id":3,
          "name":"Barriers",
@@ -281,8 +281,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":136,
-                 "y":56
+                 "x":168,
+                 "y":368
                 }, 
                 {
                  "height":0,
@@ -300,8 +300,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":168,
-                 "y":56
+                 "x":360,
+                 "y":312
                 }, 
                 {
                  "height":0,
@@ -319,8 +319,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":200,
-                 "y":56
+                 "x":436,
+                 "y":104
                 }, 
                 {
                  "height":0,
@@ -338,8 +338,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":232,
-                 "y":56
+                 "x":404,
+                 "y":204
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -470,6 +470,202 @@
                  "width":0,
                  "x":76,
                  "y":16
+                }, 
+                {
+                 "height":0,
+                 "id":50,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"cooldown",
+                         "type":"float",
+                         "value":1000
+                        }, 
+                        {
+                         "name":"rotationRangeEnd",
+                         "type":"float",
+                         "value":90
+                        }, 
+                        {
+                         "name":"rotationRangeStart",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"rotationSpeed",
+                         "type":"float",
+                         "value":0.03
+                        }, 
+                        {
+                         "name":"sprite",
+                         "propertytype":"SoldierSprite",
+                         "type":"string",
+                         "value":"basic-soldier"
+                        }, 
+                        {
+                         "name":"startingRotation",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"timeToShoot",
+                         "type":"float",
+                         "value":3000
+                        }],
+                 "rotation":0,
+                 "type":"Sniper",
+                 "visible":true,
+                 "width":0,
+                 "x":392,
+                 "y":408
+                }, 
+                {
+                 "height":0,
+                 "id":51,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"cooldown",
+                         "type":"float",
+                         "value":1000
+                        }, 
+                        {
+                         "name":"rotationRangeEnd",
+                         "type":"float",
+                         "value":90
+                        }, 
+                        {
+                         "name":"rotationRangeStart",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"rotationSpeed",
+                         "type":"float",
+                         "value":0.03
+                        }, 
+                        {
+                         "name":"sprite",
+                         "propertytype":"SoldierSprite",
+                         "type":"string",
+                         "value":"basic-soldier"
+                        }, 
+                        {
+                         "name":"startingRotation",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"timeToShoot",
+                         "type":"float",
+                         "value":2500
+                        }],
+                 "rotation":0,
+                 "type":"Sniper",
+                 "visible":true,
+                 "width":0,
+                 "x":392,
+                 "y":376
+                }, 
+                {
+                 "height":0,
+                 "id":52,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"cooldown",
+                         "type":"float",
+                         "value":1000
+                        }, 
+                        {
+                         "name":"rotationRangeEnd",
+                         "type":"float",
+                         "value":90
+                        }, 
+                        {
+                         "name":"rotationRangeStart",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"rotationSpeed",
+                         "type":"float",
+                         "value":0.03
+                        }, 
+                        {
+                         "name":"sprite",
+                         "propertytype":"SoldierSprite",
+                         "type":"string",
+                         "value":"basic-soldier"
+                        }, 
+                        {
+                         "name":"startingRotation",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"timeToShoot",
+                         "type":"float",
+                         "value":2000
+                        }],
+                 "rotation":0,
+                 "type":"Sniper",
+                 "visible":true,
+                 "width":0,
+                 "x":392,
+                 "y":344
+                }, 
+                {
+                 "height":0,
+                 "id":53,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"cooldown",
+                         "type":"float",
+                         "value":1000
+                        }, 
+                        {
+                         "name":"rotationRangeEnd",
+                         "type":"float",
+                         "value":90
+                        }, 
+                        {
+                         "name":"rotationRangeStart",
+                         "type":"float",
+                         "value":0
+                        }, 
+                        {
+                         "name":"rotationSpeed",
+                         "type":"float",
+                         "value":0.03
+                        }, 
+                        {
+                         "name":"sprite",
+                         "propertytype":"SoldierSprite",
+                         "type":"string",
+                         "value":"basic-soldier"
+                        }, 
+                        {
+                         "name":"startingRotation",
+                         "type":"float",
+                         "value":315
+                        }, 
+                        {
+                         "name":"timeToShoot",
+                         "type":"float",
+                         "value":1500
+                        }],
+                 "rotation":0,
+                 "type":"Sniper",
+                 "visible":true,
+                 "width":0,
+                 "x":24,
+                 "y":216
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -516,7 +712,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":50,
+ "nextobjectid":54,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.10.2",

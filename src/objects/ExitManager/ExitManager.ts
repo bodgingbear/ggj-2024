@@ -9,7 +9,7 @@ export class ExitManager extends EventEmitter<Events> {
 
   constructor(scene: Phaser.Scene) {
     super();
-    this.exit = scene.add.text(2200, 2000, "EXIT").setScale(4);
+    this.exit = scene.add.text(0, 0, "EXIT").setScale(4);
   }
 
   getExit() {

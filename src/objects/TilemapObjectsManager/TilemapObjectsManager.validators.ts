@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { BasicSoldierOpts, SoldierAnimationName } from "../Soliders/BasicSoldier/BasicSoldier";
 import { SickChildAnimationName } from "../SickChild/SickChild";
+import { SniperOpts } from "../Soliders/Sniper";
 
 type TiledObject = Phaser.Types.Tilemaps.TiledObject;
 
@@ -14,6 +15,13 @@ export interface TiledBasicSoldierObject {
   x: number;
   y: number;
   options: BasicSoldierOpts;
+  sprite: SoldierAnimationName;
+}
+
+export interface TiledSniperObject {
+  x: number;
+  y: number;
+  options: SniperOpts;
   sprite: SoldierAnimationName;
 }
 
@@ -131,5 +139,43 @@ export function parseCollider(obj: TiledObject): TiledColliderObject | null {
     y: data.data.y,
     height: data.data.height,
     width: data.data.width,
+  };
+}
+
+const SniperValidator = z.object({
+  x: z.number(),
+  y: z.number(),
+  type: z.literal("Sniper"),
+  properties: z.object({
+    rotationRangeStart: z.number(),
+    rotationRangeEnd: z.number(),
+    startingRotation: z.number(),
+    rotationSpeed: z.number(),
+    timeToShoot: z.number(),
+    cooldown: z.number(),
+    sprite: z.literal("basic-soldier"),
+  }),
+});
+
+export function parseSniper(obj: TiledObject): TiledSniperObject | null {
+  const data = SniperValidator.safeParse({
+    ...obj,
+    properties: parseProperties(obj.properties),
+  });
+
+  if (!data.success) {
+    return null;
+  }
+
+  const { rotationRangeStart, rotationRangeEnd, sprite, ...options } = data.data.properties;
+
+  return {
+    x: data.data.x,
+    y: data.data.y,
+    options: {
+      ...options,
+      rotationRange: [rotationRangeStart, rotationRangeEnd],
+    },
+    sprite,
   };
 }

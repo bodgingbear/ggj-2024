@@ -77,10 +77,10 @@ export class GameScene extends Phaser.Scene {
 
     this.sickChildren = this.physics.add.group({});
 
-    this.startingChildCount = this.tilemapObjectsManager.players.length;
+    this.startingChildCount = this.tilemapObjectsManager.objects.players.length;
 
     this.mapCollidersGroup = this.physics.add.group();
-    this.tilemapObjectsManager.colliders.forEach((colliderData) => {
+    this.tilemapObjectsManager.objects.colliders.forEach((colliderData) => {
       const width = colliderData.width * SCALE;
       const height = colliderData.height * SCALE;
       const x = colliderData.x * SCALE;
@@ -97,7 +97,7 @@ export class GameScene extends Phaser.Scene {
     });
 
     // Create SickChild instances
-    this.tilemapObjectsManager.players.forEach((playerPosition, childIdx) => {
+    this.tilemapObjectsManager.objects.players.forEach((playerPosition, childIdx) => {
       const sickChild = new SickChild(
         this,
         new Phaser.Math.Vector2(playerPosition.x * SCALE, playerPosition.y * SCALE),
@@ -124,12 +124,7 @@ export class GameScene extends Phaser.Scene {
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
 
-    const sniper = new Sniper(this, new Phaser.Math.Vector2(37, 65).scale(SCALE), this.bullets);
-    sniper.trackTargetGroup(this.sickChildren);
-    sniper.trackBarriers(this.mapCollidersGroup);
-    this.soldiers.add(sniper.sprite);
-
-    this.tilemapObjectsManager.basicSoldiers.forEach((soldierData) => {
+    this.tilemapObjectsManager.objects.basicSoldiers.forEach((soldierData) => {
       const soldier = new BasicSoldier(
         this,
         new Phaser.Math.Vector2(soldierData.x * SCALE, soldierData.y * SCALE),
@@ -139,6 +134,20 @@ export class GameScene extends Phaser.Scene {
       );
 
       this.soldiers.add(soldier.sprite);
+    });
+    this.tilemapObjectsManager.objects.snipers.forEach((sniperData) => {
+      const sniper = new Sniper(
+        this,
+        new Phaser.Math.Vector2(sniperData.x * SCALE, sniperData.y * SCALE),
+        this.bullets,
+        sniperData.options,
+        sniperData.sprite,
+      );
+
+      sniper.trackTargetGroup(this.sickChildren);
+      sniper.trackBarriers(this.mapCollidersGroup);
+
+      this.soldiers.add(sniper.sprite);
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
