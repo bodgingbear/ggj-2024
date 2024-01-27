@@ -1,4 +1,4 @@
-import { CHANGE_PLAYER_VIEW_TIME, SCALE } from "../constants";
+import { SCALE } from "../constants";
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
@@ -34,7 +34,6 @@ export class GameScene extends Phaser.Scene {
   private hud!: HUDController;
 
   private exitManager!: ExitManager;
-  private exit!: Phaser.GameObjects.Text;
 
   private startingChildCount!: number;
   private mapCollidersGroup!: Phaser.Physics.Arcade.Group;
@@ -117,9 +116,7 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.stopFollow();
 
     // Manage exit
-    this.exitManager = new ExitManager(this);
-    this.exit = this.exitManager.getExit();
-    this.exitManager.on("level_win", this.handleLevelWin);
+    this.exitManager = new ExitManager(this, this.tilemapObjectsManager.objects.exitTriggers);
 
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
@@ -175,11 +172,15 @@ export class GameScene extends Phaser.Scene {
 
     new ChildMovementController(this, this.sickChildren, this.startingChildCount, this.hud);
 
+    const exitGroup = this.exitManager.getExitGroup();
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");
       child.update();
 
-      if (intersects(child.sprite, this.exit)) {
+      const isIntersecting = exitGroup
+        .getChildren()
+        .some((exit) => intersects(child.sprite, exit as Phaser.GameObjects.Rectangle));
+      if (isIntersecting) {
         this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
         child.winLevel(this.exitManager, this.sickChildren.getLength());
       }

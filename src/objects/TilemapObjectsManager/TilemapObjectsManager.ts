@@ -1,6 +1,7 @@
 import {
   parseBasicSoldier,
   parseCollider,
+  parseExitTrigger,
   parseSniper,
   parseTiledPlayerObject,
 } from "./TilemapObjectsManager.validators";
@@ -10,6 +11,7 @@ const OBJECTS_DEF = {
   basicSoldiers: parseBasicSoldier,
   snipers: parseSniper,
   colliders: parseCollider,
+  exitTriggers: parseExitTrigger,
 } as const;
 
 export class TilemapObjectsManager {

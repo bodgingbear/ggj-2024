@@ -260,6 +260,28 @@
          "y":0
         }, 
         {
+         "draworder":"topdown",
+         "id":15,
+         "name":"Triggers",
+         "objects":[
+                {
+                 "height":12,
+                 "id":54,
+                 "name":"",
+                 "rotation":0,
+                 "type":"ExitTrigger",
+                 "visible":true,
+                 "width":80,
+                 "x":16,
+                 "y":0
+                }],
+         "opacity":1,
+         "type":"objectgroup",
+         "visible":true,
+         "x":0,
+         "y":0
+        }, 
+        {
          "color":"#3172e6",
          "draworder":"topdown",
          "id":4,
@@ -410,7 +432,7 @@
                  "visible":true,
                  "width":0,
                  "x":36,
-                 "y":16
+                 "y":20
                 }, 
                 {
                  "height":0,
@@ -469,7 +491,7 @@
                  "visible":true,
                  "width":0,
                  "x":76,
-                 "y":16
+                 "y":20
                 }, 
                 {
                  "height":0,
@@ -711,8 +733,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":15,
- "nextobjectid":54,
+ "nextlayerid":16,
+ "nextobjectid":55,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.10.2",

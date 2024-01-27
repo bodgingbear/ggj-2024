@@ -1,18 +1,37 @@
+import { SCALE } from "../../constants";
 import { EventEmitter } from "../../utils/EventEmitter/EventEmitter";
 
 type Events = {
   level_win: () => void;
 };
 
-export class ExitManager extends EventEmitter<Events> {
-  private exit!: Phaser.GameObjects.Text;
+interface Rect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 
-  constructor(scene: Phaser.Scene) {
+export class ExitManager extends EventEmitter<Events> {
+  private exitGroup!: Phaser.Physics.Arcade.Group;
+
+  constructor(scene: Phaser.Scene, rects: Rect[]) {
     super();
-    this.exit = scene.add.text(0, 0, "EXIT").setScale(4);
+
+    this.exitGroup = scene.physics.add.group();
+    rects.forEach((rectData) => {
+      const rect = scene.add.rectangle(0, 0, 0, 0);
+      rect.setVisible(false);
+
+      rect.setOrigin(0, 0);
+      rect.setSize(rectData.width * SCALE, rectData.height * SCALE);
+      rect.setPosition(rectData.x * SCALE, rectData.y * SCALE);
+
+      this.exitGroup.add(rect);
+    });
   }
 
-  getExit() {
-    return this.exit;
+  getExitGroup() {
+    return this.exitGroup;
   }
 }

@@ -93,7 +93,6 @@ export class HUDController {
 
     for (let i = 0; i < playersList.length; i++) {
       const player = playersList[i].getData("ref") as SickChild;
-      console.log(player);
 
       this.playerTiles.push(new PlayerTile(scene, GAP + i * (TILE_WIDTH + GAP), GAP, player.getAnimationName()));
     }

@@ -10,28 +10,6 @@ export interface TiledPlayerObject {
   y: number;
   sprite: SickChildAnimationName;
 }
-
-export interface TiledBasicSoldierObject {
-  x: number;
-  y: number;
-  options: BasicSoldierOpts;
-  sprite: SoldierAnimationName;
-}
-
-export interface TiledSniperObject {
-  x: number;
-  y: number;
-  options: SniperOpts;
-  sprite: SoldierAnimationName;
-}
-
-export interface TiledColliderObject {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-}
-
 const PropertiesValidator = z.array(
   z.object({
     name: z.string(),
@@ -76,6 +54,12 @@ export function parseTiledPlayerObject(obj: TiledObject): TiledPlayerObject | nu
   };
 }
 
+export interface TiledBasicSoldierObject {
+  x: number;
+  y: number;
+  options: BasicSoldierOpts;
+  sprite: SoldierAnimationName;
+}
 const BasicSoldierValidator = z.object({
   x: z.number(),
   y: z.number(),
@@ -116,6 +100,12 @@ export function parseBasicSoldier(obj: TiledObject): TiledBasicSoldierObject | n
   };
 }
 
+export interface TiledColliderObject {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
 const ColliderValidator = z.object({
   x: z.number(),
   y: z.number(),
@@ -142,6 +132,12 @@ export function parseCollider(obj: TiledObject): TiledColliderObject | null {
   };
 }
 
+export interface TiledSniperObject {
+  x: number;
+  y: number;
+  options: SniperOpts;
+  sprite: SoldierAnimationName;
+}
 const SniperValidator = z.object({
   x: z.number(),
   y: z.number(),
@@ -177,5 +173,37 @@ export function parseSniper(obj: TiledObject): TiledSniperObject | null {
       rotationRange: [rotationRangeStart, rotationRangeEnd],
     },
     sprite,
+  };
+}
+
+export interface TiledExitTriggerObject {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+const ExitTriggerValidator = z.object({
+  x: z.number(),
+  y: z.number(),
+  width: z.number(),
+  height: z.number(),
+  type: z.literal("ExitTrigger"),
+});
+
+export function parseExitTrigger(obj: TiledObject): TiledExitTriggerObject | null {
+  const data = ExitTriggerValidator.safeParse({
+    ...obj,
+    properties: parseProperties(obj.properties),
+  });
+
+  if (!data.success) {
+    return null;
+  }
+
+  return {
+    x: data.data.x,
+    y: data.data.y,
+    width: data.data.width,
+    height: data.data.height,
   };
 }

@@ -1,7 +1,7 @@
 import { EventEmitter } from "../../utils/EventEmitter/EventEmitter";
 import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
-import { CHANGE_PLAYER_VIEW_TIME, SCALE } from "../../constants";
+import { SCALE } from "../../constants";
 import { ExitManager } from "../ExitManager/ExitManager";
 
 const PLAYER_VELOCITY = 600;
