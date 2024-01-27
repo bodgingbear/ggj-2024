@@ -1,7 +1,7 @@
 import { EventEmitter } from "../../utils/EventEmitter/EventEmitter";
 import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
-import { SCALE } from "../../constants";
+import { CHANGE_PLAYER_VIEW_TIME, SCALE } from "../../constants";
 
 const PLAYER_VELOCITY = 600;
 
@@ -63,6 +63,25 @@ export class SickChild extends EventEmitter<Events> {
   }
 
   setControlled(value: boolean): void {
+    if (value === this.controlled) {
+      return;
+    }
+
+    if (value) {
+      this.scene.cameras.main.pan(
+        this.sprite.x,
+        this.sprite.y,
+        CHANGE_PLAYER_VIEW_TIME,
+        "Sine.easeInOut",
+        false,
+        (_, animationProgress) => {
+          if (animationProgress === 1) {
+            this.scene.cameras.main.startFollow(this.sprite);
+          }
+        },
+      );
+    }
+
     this.body.setVelocity(0, 0);
     this.controlled = value;
   }

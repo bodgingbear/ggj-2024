@@ -29,6 +29,14 @@ export class ChildMovementController {
     const isExpectedNumber = !isNaN(index) && index >= 1 && index <= CHILDREN_COUNT;
     if (isExpectedNumber) {
       this.pressedKeys.add(key);
+
+      this.sickChildren.getChildren().forEach((childObj) => {
+        const child: SickChild = childObj.getData("ref");
+
+        if (child.getControlKey() === key) {
+          child.setControlled(true);
+        }
+      });
     }
   };
 
@@ -48,6 +56,14 @@ export class ChildMovementController {
     const isExpectedNumber = !isNaN(index) && index >= 1 && index <= CHILDREN_COUNT;
     if (isExpectedNumber) {
       this.pressedKeys.delete(key);
+
+      this.sickChildren.getChildren().forEach((childObj) => {
+        const child: SickChild = childObj.getData("ref");
+
+        if (child.getControlKey() === key) {
+          child.setControlled(false);
+        }
+      });
     }
   };
 }

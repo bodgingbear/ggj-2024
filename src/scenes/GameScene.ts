@@ -26,7 +26,6 @@ export class GameScene extends Phaser.Scene {
   }
 
   private pressedKeys: Set<string> = new Set();
-  private shiftKey!: Phaser.Input.Keyboard.Key;
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
   private sickChildren!: Phaser.GameObjects.Group;
@@ -78,8 +77,6 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.sickChildren.getChildren()[0]);
     this.cameras.main.stopFollow();
 
-    this.shiftKey = this.input.keyboard!.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
 
@@ -117,37 +114,7 @@ export class GameScene extends Phaser.Scene {
 
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");
-      const pressedKeys = Array.from(this.pressedKeys);
-
-      const shouldControlChild = this.shiftKey.isDown || pressedKeys.some((key) => key === child.getControlKey());
-
-      if (shouldControlChild) {
-        child.setControlled(true);
-        child.update();
-
-        // Animate view change
-        this.cameras.main.pan(
-          child.sprite.x,
-          child.sprite.y,
-          CHANGE_PLAYER_VIEW_TIME,
-          "Sine.easeInOut",
-          true,
-          (_, animationProgress) => {
-            console.log(this.cameras.main.x, this.cameras.main.y);
-            if (animationProgress === 1) {
-              console.log("finish");
-
-              this.cameras.main.startFollow(child);
-
-              setTimeout(() => {
-                console.log(this.cameras.main.x, this.cameras.main.y);
-              }, 200);
-            }
-          },
-        );
-      } else {
-        child.setControlled(false);
-      }
+      child.update();
     });
   }
 
