@@ -4,7 +4,7 @@
 			"image": "atlas.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 256,
+				"w": 261,
 				"h": 64
 			},
 			"scale": 1,
@@ -472,24 +472,24 @@
 					}
 				},
 				{
-					"filename": "SmallKid/SmallKid-1",
+					"filename": "PoorKid/PoorKid-6",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 7,
-						"h": 17
+						"w": 11,
+						"h": 21
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 7,
-						"h": 17
+						"w": 11,
+						"h": 21
 					},
 					"frame": {
 						"x": 248,
 						"y": 1,
-						"w": 7,
-						"h": 17
+						"w": 11,
+						"h": 21
 					}
 				},
 				{
@@ -514,7 +514,7 @@
 					}
 				},
 				{
-					"filename": "PoorKid/PoorKid-6",
+					"filename": "PoorKid/PoorKid-7",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -535,7 +535,7 @@
 					}
 				},
 				{
-					"filename": "PoorKid/PoorKid-7",
+					"filename": "PoorKid/PoorKid-8",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -598,23 +598,23 @@
 					}
 				},
 				{
-					"filename": "PoorKid/PoorKid-8",
+					"filename": "Girl/Girl-2",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 11,
+						"w": 10,
 						"h": 21
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 11,
+						"w": 10,
 						"h": 21
 					},
 					"frame": {
 						"x": 105,
 						"y": 25,
-						"w": 11,
+						"w": 10,
 						"h": 21
 					}
 				},
@@ -640,48 +640,6 @@
 					}
 				},
 				{
-					"filename": "Girl/Girl-2",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 10,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 10,
-						"h": 21
-					},
-					"frame": {
-						"x": 118,
-						"y": 25,
-						"w": 10,
-						"h": 21
-					}
-				},
-				{
-					"filename": "SmallKid/SmallKid-2",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 7,
-						"h": 17
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 7,
-						"h": 17
-					},
-					"frame": {
-						"x": 248,
-						"y": 20,
-						"w": 7,
-						"h": 17
-					}
-				},
-				{
 					"filename": "Girl/Girl-3",
 					"rotated": false,
 					"trimmed": false,
@@ -696,7 +654,28 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 130,
+						"x": 117,
+						"y": 25,
+						"w": 10,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Girl/Girl-4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 10,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 10,
+						"h": 21
+					},
+					"frame": {
+						"x": 129,
 						"y": 25,
 						"w": 10,
 						"h": 21
@@ -724,27 +703,6 @@
 					}
 				},
 				{
-					"filename": "Girl/Girl-4",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 10,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 10,
-						"h": 21
-					},
-					"frame": {
-						"x": 142,
-						"y": 24,
-						"w": 10,
-						"h": 21
-					}
-				},
-				{
 					"filename": "PoorKid/PoorKid-1",
 					"rotated": false,
 					"trimmed": false,
@@ -759,7 +717,7 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 154,
+						"x": 141,
 						"y": 24,
 						"w": 9,
 						"h": 21
@@ -780,7 +738,7 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 165,
+						"x": 152,
 						"y": 24,
 						"w": 9,
 						"h": 21
@@ -801,7 +759,7 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 176,
+						"x": 163,
 						"y": 24,
 						"w": 9,
 						"h": 21
@@ -822,7 +780,7 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 187,
+						"x": 174,
 						"y": 24,
 						"w": 9,
 						"h": 21
@@ -843,7 +801,7 @@
 						"h": 15
 					},
 					"frame": {
-						"x": 198,
+						"x": 185,
 						"y": 24,
 						"w": 15,
 						"h": 15
@@ -864,7 +822,7 @@
 						"h": 15
 					},
 					"frame": {
-						"x": 215,
+						"x": 202,
 						"y": 24,
 						"w": 15,
 						"h": 15
@@ -885,8 +843,8 @@
 						"h": 15
 					},
 					"frame": {
-						"x": 147,
-						"y": 47,
+						"x": 219,
+						"y": 24,
 						"w": 15,
 						"h": 15
 					}
@@ -906,10 +864,31 @@
 						"h": 15
 					},
 					"frame": {
-						"x": 164,
-						"y": 47,
+						"x": 236,
+						"y": 24,
 						"w": 15,
 						"h": 15
+					}
+				},
+				{
+					"filename": "SmallKid/SmallKid-1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 7,
+						"h": 17
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 7,
+						"h": 17
+					},
+					"frame": {
+						"x": 253,
+						"y": 24,
+						"w": 7,
+						"h": 17
 					}
 				},
 				{
@@ -927,10 +906,31 @@
 						"h": 15
 					},
 					"frame": {
-						"x": 181,
+						"x": 147,
 						"y": 47,
 						"w": 15,
 						"h": 15
+					}
+				},
+				{
+					"filename": "Tombstone",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 13,
+						"h": 12
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 13,
+						"h": 12
+					},
+					"frame": {
+						"x": 164,
+						"y": 47,
+						"w": 13,
+						"h": 12
 					}
 				},
 				{
@@ -948,7 +948,7 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 198,
+						"x": 185,
 						"y": 41,
 						"w": 9,
 						"h": 17
@@ -969,7 +969,7 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 209,
+						"x": 196,
 						"y": 41,
 						"w": 9,
 						"h": 17
@@ -990,7 +990,7 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 220,
+						"x": 207,
 						"y": 41,
 						"w": 9,
 						"h": 17
@@ -1011,9 +1011,30 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 232,
-						"y": 24,
+						"x": 218,
+						"y": 41,
 						"w": 9,
+						"h": 17
+					}
+				},
+				{
+					"filename": "SmallKid/SmallKid-2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 7,
+						"h": 17
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 7,
+						"h": 17
+					},
+					"frame": {
+						"x": 229,
+						"y": 41,
+						"w": 7,
 						"h": 17
 					}
 				},
@@ -1032,8 +1053,8 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 231,
-						"y": 43,
+						"x": 238,
+						"y": 41,
 						"w": 7,
 						"h": 17
 					}
@@ -1053,7 +1074,7 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 240,
+						"x": 247,
 						"y": 43,
 						"w": 7,
 						"h": 17
@@ -1074,8 +1095,8 @@
 						"h": 4
 					},
 					"frame": {
-						"x": 67,
-						"y": 54,
+						"x": 179,
+						"y": 47,
 						"w": 4,
 						"h": 4
 					}
@@ -1086,6 +1107,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:84cc143f0b1f07ee0c92ca94fd7c229d:8eed9dae2c37f7af3d518ba13f03781f:cbce6b53f0f49e0bf15173c25c41f876$"
+		"smartupdate": "$TexturePacker:SmartUpdate:001a1bc6dfdc78063b82a0519bcff7a8:ecbe49182d392a9f888b93734703c02c:cbce6b53f0f49e0bf15173c25c41f876$"
 	}
 }

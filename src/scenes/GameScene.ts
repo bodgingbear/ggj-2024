@@ -9,6 +9,7 @@ import { intersects } from "../utils/intersects/intersects";
 import { ExitManager } from "../objects/ExitManager/ExitManager";
 import { GameOverScene } from "./GameOverScene";
 import { assertExistence } from "../utils/assertExistence/assertExistence";
+import { TombStonesManager } from "../objects/TombStonesManager/TombStonesManager";
 
 interface MapLayers {
   ground: Phaser.Tilemaps.TilemapLayer;
@@ -25,6 +26,7 @@ export class GameScene extends Phaser.Scene {
   private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
   private map!: Phaser.Tilemaps.Tilemap;
   private tilemapObjectsManager!: TilemapObjectsManager;
+  private tombStonesManager!: TombStonesManager;
 
   private mapLayers!: MapLayers;
 
@@ -83,6 +85,7 @@ export class GameScene extends Phaser.Scene {
     // Setup keys
     this.keys = this.input.keyboard!.createCursorKeys();
 
+    this.tombStonesManager = new TombStonesManager(this);
     this.sickChildren = this.physics.add.group({});
 
     this.startingChildCount = this.tilemapObjectsManager.objects.players.length;
@@ -199,6 +202,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   handleChildDeath = (child: SickChild) => () => {
+    this.tombStonesManager.addTombStone(child.sprite.x, child.sprite.y + child.sprite.displayHeight * (1 / 3));
+
     if (this.sickChildren.getLength() > 0) {
       this.hud.setState("dead", parseInt(child.getControlKey()) - 1);
     } else {
