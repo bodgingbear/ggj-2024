@@ -10,7 +10,7 @@ interface MapLayers {
   barriers: Phaser.Tilemaps.TilemapLayer;
 }
 
-// @TODO: (IN THE MORNING) think through Player movementtogether with the camera follow/transition
+// @TODO: (IN THE MORNING) think through Player movement together with the camera follow/transition
 
 export class GameScene extends Phaser.Scene {
   private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -126,7 +126,25 @@ export class GameScene extends Phaser.Scene {
         child.update();
 
         // Animate view change
-        this.cameras.main.pan(child.sprite.x, child.sprite.y, CHANGE_PLAYER_VIEW_TIME, "Sine.easeInOut", undefined);
+        this.cameras.main.pan(
+          child.sprite.x,
+          child.sprite.y,
+          CHANGE_PLAYER_VIEW_TIME,
+          "Sine.easeInOut",
+          true,
+          (_, animationProgress) => {
+            console.log(this.cameras.main.x, this.cameras.main.y);
+            if (animationProgress === 1) {
+              console.log("finish");
+
+              this.cameras.main.startFollow(child);
+
+              setTimeout(() => {
+                console.log(this.cameras.main.x, this.cameras.main.y);
+              }, 200);
+            }
+          },
+        );
       } else {
         child.setControlled(false);
       }
