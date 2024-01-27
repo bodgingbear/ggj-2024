@@ -6,6 +6,10 @@ import { HUDController } from "../HUDController";
 import { ExitManager } from "../ExitManager/ExitManager";
 
 const PLAYER_VELOCITY = 600;
+const DOWN_ANIMATION_SUFFIX = "-down";
+const UP_ANIMATION_SUFFIX = "-up";
+const LEFT_ANIMATION_SUFFIX = "-left";
+const RIGHT_ANIMATION_SUFFIX = "-right";
 
 type Events = {
   death: () => void;
@@ -38,7 +42,7 @@ export class SickChild extends EventEmitter<Events> {
     startingPosition: Phaser.Math.Vector2,
     private keys: Phaser.Types.Input.Keyboard.CursorKeys,
     controlIndex: number,
-    animationName: SickChildAnimationName,
+    private animationName: SickChildAnimationName,
     hud: HUDController,
   ) {
     super();
@@ -51,7 +55,7 @@ export class SickChild extends EventEmitter<Events> {
       "master",
       SICK_CHILD_BASE_SPRITE_NAME[animationName],
     );
-    this.sprite.anims.play(animationName);
+    this.sprite.anims.play(animationName + DOWN_ANIMATION_SUFFIX);
     this.sprite.setScale(SCALE);
 
     this.scene.physics.world.enable(this.sprite);
@@ -163,5 +167,15 @@ export class SickChild extends EventEmitter<Events> {
     }
 
     this.body.setVelocity(velocity.x, velocity.y);
+
+    if (this.body.velocity.x > 0) {
+      this.sprite.play(this.animationName + RIGHT_ANIMATION_SUFFIX, true);
+    } else if (this.body.velocity.x < 0) {
+      this.sprite.play(this.animationName + LEFT_ANIMATION_SUFFIX, true);
+    } else if (this.body.velocity.y > 0) {
+      this.sprite.play(this.animationName + DOWN_ANIMATION_SUFFIX, true);
+    } else if (this.body.velocity.y < 0) {
+      this.sprite.play(this.animationName + UP_ANIMATION_SUFFIX, true);
+    }
   }
 }

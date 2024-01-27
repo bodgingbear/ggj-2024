@@ -48,7 +48,7 @@ export class LoadingScene extends Phaser.Scene {
 
   private setupAnimations() {
     this.anims.create({
-      key: "fat-kid",
+      key: "fat-kid-left",
       frames: this.anims.generateFrameNames("master", {
         start: 1,
         end: 2,
@@ -58,7 +58,37 @@ export class LoadingScene extends Phaser.Scene {
       repeat: -1,
     });
     this.anims.create({
-      key: "poor-kid",
+      key: "fat-kid-right",
+      frames: this.anims.generateFrameNames("master", {
+        start: 3,
+        end: 4,
+        prefix: "FatKid/FatKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "fat-kid-down",
+      frames: this.anims.generateFrameNames("master", {
+        start: 5,
+        end: 6,
+        prefix: "FatKid/FatKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "fat-kid-up",
+      frames: this.anims.generateFrameNames("master", {
+        start: 7,
+        end: 8,
+        prefix: "FatKid/FatKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "poor-kid-left",
       frames: this.anims.generateFrameNames("master", {
         start: 1,
         end: 2,
@@ -68,10 +98,70 @@ export class LoadingScene extends Phaser.Scene {
       repeat: -1,
     });
     this.anims.create({
-      key: "small-kid",
+      key: "poor-kid-right",
+      frames: this.anims.generateFrameNames("master", {
+        start: 3,
+        end: 4,
+        prefix: "PoorKid/PoorKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "poor-kid-down",
+      frames: this.anims.generateFrameNames("master", {
+        start: 5,
+        end: 6,
+        prefix: "PoorKid/PoorKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "poor-kid-up",
+      frames: this.anims.generateFrameNames("master", {
+        start: 7,
+        end: 8,
+        prefix: "PoorKid/PoorKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "small-kid-left",
       frames: this.anims.generateFrameNames("master", {
         start: 1,
         end: 2,
+        prefix: "SmallKid/SmallKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "small-kid-right",
+      frames: this.anims.generateFrameNames("master", {
+        start: 3,
+        end: 4,
+        prefix: "SmallKid/SmallKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "small-kid-down",
+      frames: this.anims.generateFrameNames("master", {
+        start: 5,
+        end: 6,
+        prefix: "SmallKid/SmallKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "small-kid-up",
+      frames: this.anims.generateFrameNames("master", {
+        start: 7,
+        end: 8,
         prefix: "SmallKid/SmallKid-",
       }),
       frameRate: 6,
