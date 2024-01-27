@@ -6,12 +6,17 @@ export type SniperOpts = {
   rotationRange: [number, number];
   rotationSpeed: number;
   timeToShoot: number;
+  cooldown: number;
 };
 
 export type SniperAnimationName = "basic-soldier";
 const SNIPER_BASE_SPRITE_NAME: Record<SniperAnimationName, string> = {
   "basic-soldier": "BasicSoldier/BasicSoldier-1",
 };
+
+const RAY_LENGTH = 1000;
+
+const SHOOTING_RANGE = 1000;
 
 export class Sniper {
   body: Phaser.Physics.Arcade.Body;
@@ -23,7 +28,9 @@ export class Sniper {
 
   rotationEnabled = true;
 
-  targetGroup?: Phaser.GameObjects.Group;
+  shootingEnabled = true;
+
+  targetGroup!: Phaser.GameObjects.Group;
 
   container: Phaser.GameObjects.Container;
 
@@ -31,7 +38,7 @@ export class Sniper {
 
   line: Phaser.GameObjects.Line;
 
-  barriers!: Phaser.Tilemaps.TilemapLayer;
+  barriers!: Phaser.GameObjects.Group;
 
   lineDebug!: Phaser.GameObjects.Line;
 
@@ -45,14 +52,15 @@ export class Sniper {
     this.opts = {
       rotationRange: [180, 270],
       rotationSpeed: 0.03,
-      timeToShoot: 1000,
+      timeToShoot: 100,
+      cooldown: 1000,
       ...opts,
     };
     this.container = this.scene.add.container(position.x, position.y).setScale(SCALE);
 
     this.sprite = new Phaser.GameObjects.Sprite(this.scene, 0, 0, "master", SNIPER_BASE_SPRITE_NAME[animationName]);
 
-    this.line = new Phaser.GameObjects.Line(this.scene, 0, 0, 0, 0, 100, 0, 0xff2222, 1).setOrigin(0, 0.5);
+    this.line = new Phaser.GameObjects.Line(this.scene, 0, 0, 0, 0, RAY_LENGTH, 0, 0xff2222, 1).setOrigin(0, 0.5);
 
     this.container.add([this.sprite, this.line]);
     this.sprite.anims.play(animationName);
@@ -70,7 +78,7 @@ export class Sniper {
     this.targetGroup = group;
   }
 
-  trackBarriers(barriers: Phaser.Tilemaps.TilemapLayer) {
+  trackBarriers(barriers: Phaser.GameObjects.Group) {
     this.barriers = barriers;
     // console.log(barriers);
     // this.barriers.forEachTile((tile) => {
@@ -109,16 +117,18 @@ export class Sniper {
   update(delta: number) {
     this.drawLaser();
 
-    this.container.angle += this.rotationDirection * this.opts.rotationSpeed! * delta;
-    if (this.rotationDirection > 0) {
-      if (this.container.angle > this.opts.rotationRange![1]) {
-        this.rotationDirection *= -1;
+    if (this.rotationEnabled) {
+      this.container.angle += this.rotationDirection * this.opts.rotationSpeed! * delta;
+      if (this.rotationDirection > 0) {
+        if (this.container.angle > this.opts.rotationRange![1]) {
+          this.rotationDirection *= -1;
+        }
       }
-    }
 
-    if (this.rotationDirection < 0) {
-      if (this.container.angle < this.opts.rotationRange![0]) {
-        this.rotationDirection *= -1;
+      if (this.rotationDirection < 0) {
+        if (this.container.angle < this.opts.rotationRange![0]) {
+          this.rotationDirection *= -1;
+        }
       }
     }
 
@@ -138,44 +148,87 @@ export class Sniper {
 
     // this.lineDebug.setTo(line.x1, line.y1, line.x2, line.y2);
 
-    let minDistance = Infinity;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let closestIntersection: any = null;
+    const barriersHit = {
+      minDistance: Infinity,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      closestIntersection: null as any,
+    };
 
-    this.barriers.forEachTile((tile) => {
-      if (!tile.tileset) return;
-
-      const rect = new Phaser.Geom.Rectangle(
-        tile.pixelX * SCALE,
-        tile.pixelY * SCALE,
-        tile.width * SCALE,
-        tile.height * SCALE,
-      );
+    this.barriers.getChildren().forEach((tile) => {
+      const body = tile.body as Phaser.Physics.Arcade.Body;
+      const rect = new Phaser.Geom.Rectangle(body.x, body.y, body.width, body.height);
 
       const out = Phaser.Geom.Intersects.GetLineToRectangle(line, rect);
       if (out.length > 0) {
         // calculate distance to each intersecting point
         for (const p of out) {
           const d = Phaser.Math.Distance.BetweenPoints(startPos, p);
-          if (d < minDistance) {
-            minDistance = d;
-            closestIntersection = p;
+          if (d < barriersHit.minDistance) {
+            barriersHit.minDistance = d;
+            barriersHit.closestIntersection = p;
           }
         }
       }
     });
 
-    if (closestIntersection) {
-      const vec = new Phaser.Math.Vector2(closestIntersection.x, closestIntersection.y).subtract(
+    const targetHit = {
+      minDistance: Infinity,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      closestIntersection: null as any,
+    };
+    this.targetGroup.getChildren().forEach((tile) => {
+      const body = tile.body as Phaser.Physics.Arcade.Body;
+      const rect = new Phaser.Geom.Rectangle(body.x, body.y, body.width, body.height);
+
+      const out = Phaser.Geom.Intersects.GetLineToRectangle(line, rect);
+      if (out.length > 0) {
+        // calculate distance to each intersecting point
+        for (const p of out) {
+          const d = Phaser.Math.Distance.BetweenPoints(startPos, p);
+          if (d < targetHit.minDistance) {
+            targetHit.minDistance = d;
+            targetHit.closestIntersection = p;
+          }
+        }
+      }
+    });
+
+    const closest = barriersHit.minDistance < targetHit.minDistance ? barriersHit : targetHit;
+    if (closest.closestIntersection) {
+      const vec = new Phaser.Math.Vector2(closest.closestIntersection.x, closest.closestIntersection.y).subtract(
         new Phaser.Math.Vector2(this.container.x, this.container.y),
       );
       const final = rotateVector(-this.container.angle, vec).scale(1 / SCALE);
 
       this.line.setTo(this.line.x, this.line.y, final.x, final.y);
     }
+
+    if (!this.shootingEnabled) return;
+
+    if (targetHit.minDistance < SHOOTING_RANGE && closest === targetHit) {
+      this.shoot(rotateVector(this.container.angle));
+    }
   }
 
   shoot = (direction: Phaser.Math.Vector2) => {
-    this.bullets.add(new Bullet(this.scene, new Phaser.Math.Vector2(this.sprite.x, this.sprite.y), direction).sprite);
+    this.shootingEnabled = false;
+    this.rotationEnabled = false;
+
+    this.scene.time.addEvent({
+      delay: this.opts.timeToShoot!,
+      callback: () => {
+        this.bullets.add(
+          new Bullet(this.scene, new Phaser.Math.Vector2(this.container.x, this.container.y), direction, 10, 1500)
+            .sprite,
+        );
+        this.scene.time.addEvent({
+          delay: this.opts.cooldown!,
+          callback: () => {
+            this.shootingEnabled = true;
+            this.rotationEnabled = true;
+          },
+        });
+      },
+    });
   };
 }

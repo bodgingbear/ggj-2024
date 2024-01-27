@@ -125,9 +125,9 @@ export class GameScene extends Phaser.Scene {
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
 
-    const sniper = new Sniper(this, new Phaser.Math.Vector2(337, 165).scale(SCALE), this.bullets);
+    const sniper = new Sniper(this, new Phaser.Math.Vector2(37, 65).scale(SCALE), this.bullets);
     sniper.trackTargetGroup(this.sickChildren);
-    sniper.trackBarriers(this.mapLayers.barriers);
+    sniper.trackBarriers(this.mapCollidersGroup);
     this.soldiers.add(sniper.sprite);
 
     this.tilemapObjectsManager.basicSoldiers.forEach((soldierData) => {
