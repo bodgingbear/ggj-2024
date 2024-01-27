@@ -1,12 +1,18 @@
+import { SCALE } from "../../../constants";
 import { Bullet } from "../Bullet";
 
-type Opts = {
-  rotationRange?: [number, number];
-  shootInterval?: number;
-  shootIntervalJitter?: number;
-  bulletsInSeries?: number;
-  rotationSpeed?: number;
-  stopOnShoot?: boolean;
+export type BasicSoldierOpts = {
+  rotationRange: [number, number];
+  shootInterval: number;
+  shootIntervalJitter: number;
+  bulletsInSeries: number;
+  rotationSpeed: number;
+  stopOnShoot: boolean;
+};
+
+export type SoldierAnimationName = "basic-soldier";
+const SOLDIER_BASE_SPRITE_NAME: Record<SoldierAnimationName, string> = {
+  "basic-soldier": "BasicSoldier/BasicSoldier-1",
 };
 
 function rotateVector(rotation: number) {
@@ -29,8 +35,6 @@ export class BasicSoldier {
 
   shootingEvent: Phaser.Time.TimerEvent | undefined;
 
-  opts: Opts;
-
   rotationDirection = 1;
 
   rotationEnabled = true;
@@ -39,18 +43,12 @@ export class BasicSoldier {
     private scene: Phaser.Scene,
     position: Phaser.Math.Vector2,
     private bullets: Phaser.GameObjects.Group,
-    opts: Partial<Opts> = {},
+    private opts: BasicSoldierOpts,
+    animationName: SoldierAnimationName,
   ) {
-    this.opts = {
-      rotationRange: [0, 90],
-      shootInterval: 1000,
-      shootIntervalJitter: 0,
-      bulletsInSeries: 1,
-      rotationSpeed: 0.02,
-      stopOnShoot: true,
-      ...opts,
-    };
-    this.sprite = this.scene.add.sprite(position.x, position.y, "kuba").setScale(2);
+    this.sprite = this.scene.add.sprite(position.x, position.y, "master", SOLDIER_BASE_SPRITE_NAME[animationName]);
+    this.sprite.anims.play(animationName);
+    this.sprite.setScale(SCALE);
 
     scene.physics.world.enable(this.sprite);
 

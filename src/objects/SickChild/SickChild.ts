@@ -9,7 +9,12 @@ type Events = {
   death: () => void;
 };
 
-type AnimationName = "fat-kid" | "poor-kid" | "small-kid";
+export type SickChildAnimationName = "fat-kid" | "poor-kid" | "small-kid";
+const SICK_CHILD_BASE_SPRITE_NAME: Record<SickChildAnimationName, string> = {
+  "fat-kid": "FatKid/FatKid-1",
+  "poor-kid": "PoorKid/PoorKid-1",
+  "small-kid": "SmallKid/SmallKid-1",
+};
 
 /** Player
  */
@@ -29,25 +34,20 @@ export class SickChild extends EventEmitter<Events> {
     startingPosition: Phaser.Math.Vector2,
     private keys: Phaser.Types.Input.Keyboard.CursorKeys,
     controlIndex: number,
-    animationName: AnimationName,
+    animationName: SickChildAnimationName,
   ) {
     super();
-    const baseSpriteName: Record<AnimationName, string> = {
-      "fat-kid": "FatKid/FatKid-1",
-      "poor-kid": "PoorKid/PoorKid-1",
-      "small-kid": "SmallKid/SmallKid-1",
-    };
+
     this.sprite = this.scene.add.sprite(
       startingPosition.x,
       startingPosition.y,
       "master",
-      baseSpriteName[animationName],
+      SICK_CHILD_BASE_SPRITE_NAME[animationName],
     );
+    this.sprite.anims.play(animationName);
     this.sprite.setScale(SCALE);
 
     this.scene.physics.world.enable(this.sprite);
-
-    this.sprite.anims.play(animationName);
 
     this.body = this.sprite.body as Phaser.Physics.Arcade.Body;
 

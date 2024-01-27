@@ -83,22 +83,17 @@ export class GameScene extends Phaser.Scene {
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
 
-    this.soldiers.add(
-      new BasicSoldier(this, new Phaser.Math.Vector2(1280 / 2 - 300, 720 / 2), this.bullets, {
-        rotationRange: [0, 360],
-        rotationSpeed: 0.1,
-        shootInterval: 50,
-        bulletsInSeries: 1,
-        stopOnShoot: false,
-      }).sprite,
-    );
-    this.soldiers.add(
-      new BasicSoldier(this, new Phaser.Math.Vector2(1280 / 2 + 300, 720 / 2), this.bullets, {
-        rotationRange: [-20, 20],
-        rotationSpeed: 0.1,
-        shootInterval: 500,
-      }).sprite,
-    );
+    this.tilemapObjectsManager.basicSoldiers.forEach((soldierData) => {
+      const soldier = new BasicSoldier(
+        this,
+        new Phaser.Math.Vector2(soldierData.x * SCALE, soldierData.y * SCALE),
+        this.bullets,
+        soldierData.options,
+        soldierData.sprite,
+      );
+
+      this.soldiers.add(soldier.sprite);
+    });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.physics.add.collider(this.sickChildren, this.bullets, (sickChildObj: any, bulletObj: any) => {

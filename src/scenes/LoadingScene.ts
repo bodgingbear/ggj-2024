@@ -2,6 +2,7 @@ import { TEAM } from "../constants";
 import { FontFile } from "../components/FontFile/FontFile";
 import { loadAsset } from "../utils/loadAsset/loadAsset";
 import { shouldSkipIntro } from "../utils/shouldSkipIntro/shouldSkipIntro";
+import { shouldSkipMenu } from "../utils/shouldSkipMenu/shouldSkipMenu";
 
 export class LoadingScene extends Phaser.Scene {
   private introImage!: Phaser.GameObjects.Sprite;
@@ -23,8 +24,6 @@ export class LoadingScene extends Phaser.Scene {
     this.load.multiatlas("master", "atlas/atlas.json", "atlas");
     this.load.image("base_tiles", loadAsset("maps/tilemap.png"));
     this.load.tilemapTiledJSON("tilemap", loadAsset("maps/tilemap.tmj"));
-
-    this.load.image("kuba", "/assets/images/credits/kuba.png");
 
     this.load.addFile(
       new FontFile(this.load, "Press Start 2P", {
@@ -69,6 +68,16 @@ export class LoadingScene extends Phaser.Scene {
         start: 1,
         end: 2,
         prefix: "SmallKid/SmallKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "basic-soldier",
+      frames: this.anims.generateFrameNames("master", {
+        start: 1,
+        end: 2,
+        prefix: "BasicSoldier/BasicSoldier-",
       }),
       frameRate: 6,
       repeat: -1,
@@ -122,7 +131,10 @@ export class LoadingScene extends Phaser.Scene {
   };
 
   private changeScene = () => {
-    this.scene.start("GameScene");
-    // this.scene.start("MainMenuScene");
+    if (shouldSkipMenu()) {
+      this.scene.start("GameScene");
+    } else {
+      this.scene.start("MainMenuScene");
+    }
   };
 }
