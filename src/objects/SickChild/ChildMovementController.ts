@@ -22,6 +22,15 @@ export class ChildMovementController {
         if (this.heldDownChildrenKeys.size === 0) {
           this.selectFirstAliveChild();
         } else {
+          this.heldDownChildrenKeys.delete(child.getControlKey());
+          this.updateChildren(this.heldDownChildrenKeys, this.heldDownChildrenKeys);
+        }
+      });
+      child.on("win", () => {
+        if (this.heldDownChildrenKeys.size === 0) {
+          this.selectFirstAliveChild();
+        } else {
+          this.heldDownChildrenKeys.delete(child.getControlKey());
           this.updateChildren(this.heldDownChildrenKeys, this.heldDownChildrenKeys);
         }
       });

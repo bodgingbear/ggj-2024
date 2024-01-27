@@ -195,7 +195,7 @@ export class GameScene extends Phaser.Scene {
 
       this.physics.add.overlap(child.sprite, this.exitManager.getExitGroup(), () => {
         this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
-        child.winLevel(this.exitManager, this.sickChildren.getLength());
+        child.winLevel();
 
         if (this.sickChildren.getLength() === 0) {
           this.handleLevelWin();

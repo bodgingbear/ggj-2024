@@ -2,7 +2,6 @@ import { EventEmitter } from "../../utils/EventEmitter/EventEmitter";
 import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
 import { SCALE } from "../../constants";
-import { ExitManager } from "../ExitManager/ExitManager";
 import { HaHa } from "./HaHa";
 
 const PLAYER_VELOCITY = 600;
@@ -13,6 +12,7 @@ const RIGHT_ANIMATION_SUFFIX = "-right";
 
 type Events = {
   death: () => void;
+  win: () => void;
 };
 
 export type SickChildAnimationName = "fat-kid" | "poor-kid" | "small-kid" | "girl";
@@ -145,11 +145,9 @@ export class SickChild extends EventEmitter<Events> {
     }
   }
 
-  winLevel(exitManager: ExitManager, currentChildCount: number) {
+  winLevel() {
     this.sprite.destroy();
-    if (currentChildCount === 1) {
-      exitManager.emit("level_win");
-    }
+    this.emit("win");
   }
 
   public destroy() {

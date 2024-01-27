@@ -11,6 +11,7 @@ export class HaHa {
     this.blood = this.scene.add.particles(0, 0, "master", {
       frame: "UI/Ha",
       speed: 100,
+      quantity: 0,
       lifespan: 1000,
       // gravityY: 200,
       alpha: { start: 0.8, end: 0 },
