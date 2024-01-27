@@ -20,8 +20,8 @@ export class ExitManager extends EventEmitter<Events> {
 
     this.exitGroup = scene.physics.add.group();
     rects.forEach((rectData) => {
-      const rect = scene.add.rectangle(0, 0, 0, 0);
-      rect.setVisible(false);
+      const rect = scene.add.rectangle(0, 0, 0, 0, 0x00ff00);
+      // rect.setVisible(false);
 
       rect.setOrigin(0, 0);
       rect.setSize(rectData.width * SCALE, rectData.height * SCALE);

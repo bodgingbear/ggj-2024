@@ -39,12 +39,12 @@ export class GameScene extends Phaser.Scene {
   private mapCollidersGroup!: Phaser.Physics.Arcade.Group;
 
   private createMap() {
-    this.map = this.make.tilemap({ key: "tilemap" });
+    this.map = this.make.tilemap({ key: "level2" });
     this.tilemapObjectsManager = new TilemapObjectsManager(this.map);
 
     // The first parameter is the name of the tileset in Tiled and the second parameter is the key
     // of the tileset image used when loading the file in preload.
-    const tiles = this.map.addTilesetImage("tilemap", "base_tiles")!;
+    const tiles = this.map.addTilesetImage("tilemap", "tilemap")!;
 
     this.mapLayers = {} as MapLayers;
 
@@ -180,6 +180,11 @@ export class GameScene extends Phaser.Scene {
       const isIntersecting = exitGroup
         .getChildren()
         .some((exit) => intersects(child.sprite, exit as Phaser.GameObjects.Rectangle));
+
+      console.log(
+        exitGroup.getChildren().map((exit) => intersects(child.sprite, exit as Phaser.GameObjects.Rectangle)),
+      );
+
       if (isIntersecting) {
         this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
         child.winLevel(this.exitManager, this.sickChildren.getLength());

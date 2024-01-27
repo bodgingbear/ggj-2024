@@ -27,8 +27,9 @@ export class LoadingScene extends Phaser.Scene {
     this.load.image("rafal", loadAsset("images/credits/rafal.png"));
 
     this.load.multiatlas("master", "atlas/atlas.json", "atlas");
-    this.load.image("base_tiles", loadAsset("maps/tilemap.png"));
-    this.load.tilemapTiledJSON("tilemap", loadAsset("maps/tilemap.tmj"));
+    this.load.image("tilemap", loadAsset("maps/tilemap.png"));
+    this.load.tilemapTiledJSON("level1", loadAsset("maps/level1.tmj"));
+    this.load.tilemapTiledJSON("level2", loadAsset("maps/level2.tmj"));
 
     this.load.addFile(
       new FontFile(this.load, "Press Start 2P", {
