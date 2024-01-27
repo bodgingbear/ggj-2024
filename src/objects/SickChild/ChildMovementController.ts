@@ -20,14 +20,7 @@ export class ChildMovementController {
       const child = childObject.getData("ref") as SickChild;
       child.on("death", () => {
         if (this.heldDownChildrenKeys.size === 0) {
-          const firstNonDeadChildObject = this.sickChildren.getFirstAlive();
-          const firstNonDeadChild = firstNonDeadChildObject?.getData("ref") as SickChild | undefined;
-          if (firstNonDeadChild == null) {
-            return;
-          }
-
-          this.handleChildMovementKeyDown({ key: firstNonDeadChild.getControlKey() } as KeyboardEvent);
-          this.handleChildMovementKeyUp({ key: firstNonDeadChild.getControlKey() } as KeyboardEvent);
+          this.selectFirstAliveChild();
         } else {
           this.updateChildren(this.heldDownChildrenKeys, this.heldDownChildrenKeys);
         }
@@ -36,35 +29,57 @@ export class ChildMovementController {
   }
 
   handleChildMovementKeyDown = (event: KeyboardEvent) => {
-    const previouslyHeldDownChildren = structuredClone(this.heldDownChildrenKeys);
+    if (event.key === "Shift") {
+      this.sickChildren.getChildren().forEach((child) => {
+        (child.getData("ref") as SickChild).setControlled(true);
+        this.hud.setState("active", parseInt((child.getData("ref") as SickChild).getControlKey()) - 1);
+      });
+    } else {
+      const previouslyHeldDownChildren = structuredClone(this.heldDownChildrenKeys);
 
-    const pressedChild = this.sickChildren
-      .getChildren()
-      .find((child) => (child.getData("ref") as SickChild).getControlKey() === event.key);
+      const pressedChild = this.sickChildren
+        .getChildren()
+        .find((child) => (child.getData("ref") as SickChild).getControlKey() === event.key);
 
-    if (pressedChild == null) {
-      return;
+      if (pressedChild == null) {
+        return;
+      }
+
+      this.heldDownChildrenKeys.add((pressedChild.getData("ref") as SickChild).getControlKey());
+      this.updateChildren(previouslyHeldDownChildren, this.heldDownChildrenKeys);
     }
-
-    this.heldDownChildrenKeys.add((pressedChild.getData("ref") as SickChild).getControlKey());
-    this.updateChildren(previouslyHeldDownChildren, this.heldDownChildrenKeys);
   };
 
   handleChildMovementKeyUp = (event: KeyboardEvent) => {
-    const previouslyHeldDownChildren = structuredClone(this.heldDownChildrenKeys);
+    if (event.key === "Shift") {
+      this.selectFirstAliveChild();
+    } else {
+      const previouslyHeldDownChildren = structuredClone(this.heldDownChildrenKeys);
 
-    const releasedChild = this.sickChildren
-      .getChildren()
-      .find((child) => (child.getData("ref") as SickChild).getControlKey() === event.key);
+      const releasedChild = this.sickChildren
+        .getChildren()
+        .find((child) => (child.getData("ref") as SickChild).getControlKey() === event.key);
 
-    if (releasedChild == null) {
+      if (releasedChild == null) {
+        return;
+      }
+
+      const releasedControlKey = (releasedChild.getData("ref") as SickChild).getControlKey();
+      this.heldDownChildrenKeys.delete(releasedControlKey);
+
+      this.updateChildren(previouslyHeldDownChildren, this.heldDownChildrenKeys);
+    }
+  };
+
+  selectFirstAliveChild = () => {
+    const firstNonDeadChildObject = this.sickChildren.getFirstAlive();
+    const firstNonDeadChild = firstNonDeadChildObject?.getData("ref") as SickChild | undefined;
+    if (firstNonDeadChild == null) {
       return;
     }
 
-    const releasedControlKey = (releasedChild.getData("ref") as SickChild).getControlKey();
-    this.heldDownChildrenKeys.delete(releasedControlKey);
-
-    this.updateChildren(previouslyHeldDownChildren, this.heldDownChildrenKeys);
+    this.handleChildMovementKeyDown({ key: firstNonDeadChild.getControlKey() } as KeyboardEvent);
+    this.handleChildMovementKeyUp({ key: firstNonDeadChild.getControlKey() } as KeyboardEvent);
   };
 
   private updateChildren(previouslyHeldDownChildrenKeys: Set<string>, heldDownChildrenKeys: Set<string>) {
