@@ -172,7 +172,7 @@ export class LoadingScene extends Phaser.Scene {
       frames: this.anims.generateFrameNames("master", {
         start: 1,
         end: 2,
-        prefix: "SmallKid/SmallKid-",
+        prefix: "Girl/Girl-",
       }),
       frameRate: 6,
       repeat: -1,
