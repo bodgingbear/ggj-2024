@@ -144,7 +144,11 @@ export class GameScene extends Phaser.Scene {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     this.physics.add.collider(this.sickChildren, this.bullets, (sickChildObj: any, bulletObj: any) => {
       sickChildObj.getData("ref")?.onHit(bulletObj.getData("ref"));
-      bulletObj.getData("ref")?.destroy();
+      if (!bulletObj.getData("hp") || bulletObj.getData("hp") <= 1) {
+        bulletObj.getData("ref")?.destroy();
+      } else {
+        bulletObj.setData("hp", bulletObj.getData("hp") - 1);
+      }
     });
     this.physics.add.collider(
       this.mapCollidersGroup,
