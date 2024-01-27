@@ -1,4 +1,5 @@
 import { SCALE } from "../../../constants";
+import { rotateVector } from "../../../utils/rotateVector";
 import { Bullet } from "../Bullet";
 
 export type BasicSoldierOpts = {
@@ -15,20 +16,6 @@ export type SoldierAnimationName = "basic-soldier";
 const SOLDIER_BASE_SPRITE_NAME: Record<SoldierAnimationName, string> = {
   "basic-soldier": "BasicSoldier/BasicSoldier-1",
 };
-
-function rotateVector(rotation: number) {
-  const vec: Phaser.Math.Vector2 = new Phaser.Math.Vector2(1, 0);
-
-  // Convert angle to radians
-  const angleRadians = (rotation * Math.PI) / 180;
-
-  // Calculate new coordinates after rotation
-  const newX = vec.x * Math.cos(angleRadians) - vec.y * Math.sin(angleRadians);
-  const newY = vec.x * Math.sin(angleRadians) + vec.y * Math.cos(angleRadians);
-
-  // Return the new coordinates as an object
-  return new Phaser.Math.Vector2(newX, newY);
-}
 
 export class BasicSoldier {
   body: Phaser.Physics.Arcade.Body;

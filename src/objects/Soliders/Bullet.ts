@@ -9,8 +9,9 @@ export class Bullet {
     position: Phaser.Math.Vector2,
     private direction: Phaser.Math.Vector2,
     public damage = 1,
+    private velocity = BULLET_VELOCITY,
   ) {
-    this.sprite = this.scene.add.circle(position.x, position.y, 8, 0xd9c078);
+    this.sprite = this.scene.add.circle(position.x, position.y, 4, 0xd9c078);
 
     this.scene.physics.world.enable(this.sprite);
 
@@ -31,7 +32,7 @@ export class Bullet {
   }
 
   update() {
-    this.body.setVelocity(this.direction.x * BULLET_VELOCITY, this.direction.y * BULLET_VELOCITY);
+    this.body.setVelocity(this.direction.x * this.velocity, this.direction.y * this.velocity);
     // TODO: Check collisions with objects, and if in bounds of the map.
   }
 }
