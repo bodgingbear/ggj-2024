@@ -74,9 +74,9 @@ export class SickChild extends EventEmitter<Events> {
         CHANGE_PLAYER_VIEW_TIME,
         "Sine.easeInOut",
         false,
-        (_, animationProgress) => {
+        (camera, animationProgress) => {
           if (animationProgress === 1) {
-            this.scene.cameras.main.startFollow(this.sprite);
+            camera.startFollow(this.sprite);
           }
         },
       );
@@ -148,20 +148,4 @@ export class SickChild extends EventEmitter<Events> {
 
     this.body.setVelocity(velocity.x, velocity.y);
   }
-
-  //   private handleCollision(bodyA: Phaser.Physics.Arcade.Body, bodyB: Phaser.Physics.Arcade.Body) {
-  //     if (bodyA && bodyB) {
-  //       // Adjust the bounce to control the behavior of the collision
-  //       const bounce = 0.01;
-  //       // Adjust velocity for bodyA
-  //       if (bodyA.velocity) {
-  //         bodyA.setVelocity(bodyA.velocity.x * bounce, bodyA.velocity.y * bounce);
-  //       }
-
-  //       // Adjust velocity for bodyB
-  //       if (bodyB.velocity) {
-  //         bodyB.setVelocity(bodyB.velocity.x * bounce, bodyB.velocity.y * bounce);
-  //       }
-  //     }
-  //   }
 }
