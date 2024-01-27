@@ -218,8 +218,13 @@ export class Sniper {
       delay: this.opts.timeToShoot!,
       callback: () => {
         this.bullets.add(
-          new Bullet(this.scene, new Phaser.Math.Vector2(this.container.x, this.container.y), direction, 10, 1500)
-            .sprite,
+          new Bullet(
+            this.scene,
+            new Phaser.Math.Vector2(this.container.x, this.container.y),
+            direction,
+            10,
+            1500,
+          ).sprite.setData("hp", 2),
         );
         this.scene.time.addEvent({
           delay: this.opts.cooldown!,
