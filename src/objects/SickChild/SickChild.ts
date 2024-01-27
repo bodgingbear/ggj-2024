@@ -3,6 +3,7 @@ import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
 import { SCALE } from "../../constants";
 import { ExitManager } from "../ExitManager/ExitManager";
+import { HaHa } from "./HaHa";
 
 const PLAYER_VELOCITY = 600;
 const DOWN_ANIMATION_SUFFIX = "-down";
@@ -46,6 +47,7 @@ export class SickChild extends EventEmitter<Events> {
   public controlled: boolean = false;
   private controlKey: string;
   hp: number = 1;
+  private haha!: HaHa;
 
   destroyed: boolean = false;
 
@@ -65,6 +67,8 @@ export class SickChild extends EventEmitter<Events> {
       "master",
       SICK_CHILD_BASE_SPRITE_NAME[animationName] + "1",
     );
+
+    this.haha = new HaHa(this.scene, this);
 
     const initialSuffix = INITIAL_DIRECTION_TO_SUFFIX_MAP[initialDirection];
     this.sprite.anims.play(animationName + initialSuffix);
@@ -153,6 +157,8 @@ export class SickChild extends EventEmitter<Events> {
     this.destroyed = true;
     this.sprite.destroy();
     this.body.destroy();
+    this.haha.destroy();
+
     // @TODO add corpse
 
     this.emit("death");
