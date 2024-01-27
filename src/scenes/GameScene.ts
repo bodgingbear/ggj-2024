@@ -5,7 +5,6 @@ import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapO
 import { ChildMovementController } from "../objects/SickChild/ChildMovementController";
 import { Sniper } from "../objects/Soliders/Sniper";
 import { HUDController } from "../objects/HUDController";
-import { intersects } from "../utils/intersects/intersects";
 import { ExitManager } from "../objects/ExitManager/ExitManager";
 import { GameOverScene } from "./GameOverScene";
 import { assertExistence } from "../utils/assertExistence/assertExistence";
@@ -176,25 +175,28 @@ export class GameScene extends Phaser.Scene {
     );
 
     new ChildMovementController(this, this.sickChildren, this.hud);
+
+    this.sickChildren.getChildren().forEach((childObj) => {
+      const child: SickChild = childObj.getData("ref");
+
+      this.physics.add.overlap(child.sprite, this.exitManager.getExitGroup(), () => {
+        this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
+        child.winLevel(this.exitManager, this.sickChildren.getLength());
+
+        if (this.sickChildren.getLength() === 0) {
+          this.handleLevelWin();
+        }
+      });
+    });
   }
 
   update(_time: number, delta: number) {
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
 
-    const exitGroup = this.exitManager.getExitGroup();
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");
       child.update();
-
-      const isIntersecting = exitGroup
-        .getChildren()
-        .some((exit) => intersects(child.sprite, exit as Phaser.GameObjects.Rectangle));
-
-      if (isIntersecting) {
-        this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
-        child.winLevel(this.exitManager, this.sickChildren.getLength());
-      }
     });
   }
 
