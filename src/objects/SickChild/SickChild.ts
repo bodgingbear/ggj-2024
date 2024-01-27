@@ -73,15 +73,27 @@ export class SickChild extends EventEmitter<Events> {
       return;
     }
 
-    if (value) {
+    if (value && !this.scene.data.get("cameraIsMoving")) {
+      const previousControlled = this.scene.data.get("currentlyControlled");
+      this.scene.data.set("currentlyControlled", this);
+
+      let animTime = 500;
+      if (previousControlled) {
+        const distance = Math.min(Phaser.Math.Distance.BetweenPoints(previousControlled.sprite, this.sprite), 1000);
+        animTime *= distance / 1000;
+      }
+
+      this.scene.data.set("cameraIsMoving", true);
       this.scene.cameras.main.pan(
         this.sprite.x,
         this.sprite.y,
-        CHANGE_PLAYER_VIEW_TIME,
+        animTime,
         "Sine.easeInOut",
         false,
         (camera, animationProgress) => {
           if (animationProgress === 1) {
+            this.scene.data.set("cameraIsMoving", false);
+
             camera.startFollow(this.sprite);
           }
         },
@@ -138,7 +150,8 @@ export class SickChild extends EventEmitter<Events> {
   }
 
   update() {
-    if (!this.controlled) {
+    const cameraIsMoving = this.scene.data.get("cameraIsMoving");
+    if (!this.controlled || cameraIsMoving) {
       return;
     }
 

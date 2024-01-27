@@ -175,7 +175,6 @@ export class GameScene extends Phaser.Scene {
 
   handleChildDeath = (child: SickChild) => () => {
     if (this.sickChildren.getLength() > 0) {
-      this.cameras.main.pan(child.sprite.x, child.sprite.y, CHANGE_PLAYER_VIEW_TIME, "Sine.easeInOut", undefined);
       this.hud.setState("dead", parseInt(child.getControlKey()) - 1);
     } else {
       this.scene.run("GameOverScene");
