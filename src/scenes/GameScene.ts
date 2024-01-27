@@ -29,6 +29,8 @@ export class GameScene extends Phaser.Scene {
   private sickChildren!: Phaser.GameObjects.Group;
   private counter!: Counter;
 
+  private startingChildCount!: number;
+
   private createMap() {
     this.map = this.make.tilemap({ key: "tilemap" });
     this.tilemapObjectsManager = new TilemapObjectsManager(this.map);
@@ -59,8 +61,10 @@ export class GameScene extends Phaser.Scene {
 
     this.sickChildren = this.physics.add.group({});
 
+    this.startingChildCount = this.tilemapObjectsManager.players.length;
+
     // Create SickChild instances
-    players.forEach((playerPosition, childIdx) => {
+    this.tilemapObjectsManager.players.forEach((playerPosition, childIdx) => {
       const sickChild = new SickChild(
         this,
         new Phaser.Math.Vector2(playerPosition.x * SCALE, playerPosition.y * SCALE),
@@ -69,6 +73,8 @@ export class GameScene extends Phaser.Scene {
         playerPosition.sprite,
       ).on("death", this.handleChildDeath);
       this.sickChildren.add(sickChild.sprite);
+
+      // this.scene.run("HUDScene", { playerCount: this.startingChildCount });
 
       this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
     });
@@ -109,7 +115,7 @@ export class GameScene extends Phaser.Scene {
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
 
-    new ChildMovementController(this, this.sickChildren, this.pressedKeys);
+    new ChildMovementController(this, this.sickChildren, this.pressedKeys, this.startingChildCount);
 
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");
@@ -119,6 +125,7 @@ export class GameScene extends Phaser.Scene {
 
   handleChildDeath = () => {
     this.counter.decreaseCounter();
+
     if (this.sickChildren.getLength() > 0) {
       const child: SickChild = this.sickChildren.getChildren()[0].getData("ref");
       // Animate view change

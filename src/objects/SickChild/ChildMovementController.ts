@@ -1,16 +1,24 @@
-import { CHILDREN_COUNT } from "../../constants";
 import { SickChild } from "./SickChild";
 
 export class ChildMovementController {
   private sickChildren!: Phaser.GameObjects.Group;
   private pressedKeys!: Set<string>;
 
-  constructor(scene: Phaser.Scene, sickChildren: Phaser.GameObjects.Group, pressedKeys: Set<string>) {
+  private startingChildCount!: number;
+
+  constructor(
+    scene: Phaser.Scene,
+    sickChildren: Phaser.GameObjects.Group,
+    pressedKeys: Set<string>,
+    startingChildCount: number,
+  ) {
     this.sickChildren = sickChildren;
     this.pressedKeys = pressedKeys;
     // Set up children key events
     scene.input.keyboard!.on("keydown", this.handleChildMovementKeyDown, this);
     scene.input.keyboard!.on("keyup", this.handleChildMovementKeyUp, this);
+
+    this.startingChildCount = startingChildCount;
   }
 
   handleChildMovementKeyDown = (event: KeyboardEvent) => {
@@ -26,7 +34,7 @@ export class ChildMovementController {
 
     // Check if the key released is a correct number key
     const index = parseInt(key);
-    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= CHILDREN_COUNT;
+    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= this.startingChildCount;
     if (isExpectedNumber) {
       this.pressedKeys.add(key);
 
@@ -53,7 +61,7 @@ export class ChildMovementController {
 
     // Check if the key released is a correct number key
     const index = parseInt(key);
-    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= CHILDREN_COUNT;
+    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= this.startingChildCount;
     if (isExpectedNumber) {
       this.pressedKeys.delete(key);
 
