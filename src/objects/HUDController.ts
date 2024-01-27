@@ -14,7 +14,7 @@ export class HUDController {
     this.sprites = Array(this.playerCount)
       .fill(0xdeadbeef)
       .map((_, i) => {
-        return scene.add.sprite(20 + i * 50, 20, "kacper");
+        return scene.add.sprite(40 + i * 60, 40, "kacper");
       });
   }
 

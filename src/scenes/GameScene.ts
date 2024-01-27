@@ -1,7 +1,6 @@
 import { CHANGE_PLAYER_VIEW_TIME, SCALE } from "../constants";
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
-import { Counter } from "../objects/Counter/Counter";
 import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
 import { ChildMovementController } from "../objects/SickChild/ChildMovementController";
 import { HUDController } from "../objects/HUDController";
@@ -27,7 +26,6 @@ export class GameScene extends Phaser.Scene {
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
   private sickChildren!: Phaser.GameObjects.Group;
-  private counter!: Counter;
   private hud!: HUDController;
 
   private startingChildCount!: number;
@@ -109,9 +107,6 @@ export class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.mapLayers.barriers, this.bullets, (bulletObj: any) => {
       bulletObj.getData("ref")?.destroy();
     });
-
-    this.counter = new Counter(this);
-    this.counter.onCounterChange(this.sickChildren.getLength());
   }
 
   update(_time: number, delta: number) {
@@ -127,8 +122,6 @@ export class GameScene extends Phaser.Scene {
   }
 
   handleChildDeath = () => {
-    this.counter.decreaseCounter();
-
     if (this.sickChildren.getLength() > 0) {
       const child: SickChild = this.sickChildren.getChildren()[0].getData("ref");
       // Animate view change
