@@ -60,7 +60,7 @@ export class ChildMovementController {
       this.sickChildren.getChildren().forEach((childObj) => {
         const child: SickChild = childObj.getData("ref");
         child.setControlled(false);
-        this.hud.setState("active", parseInt(child.getControlKey()) - 1);
+        this.hud.setState("inactive", parseInt(child.getControlKey()) - 1);
       });
     }
 

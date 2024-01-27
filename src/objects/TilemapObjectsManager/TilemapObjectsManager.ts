@@ -1,24 +1,29 @@
 import {
   TiledBasicSoldierObject,
+  TiledColliderObject,
   TiledPlayerObject,
   parseBasicSoldier,
+  parseCollider,
   parseTiledPlayerObject,
 } from "./TilemapObjectsManager.validators";
 
 export class TilemapObjectsManager {
   public players!: TiledPlayerObject[];
   public basicSoldiers!: TiledBasicSoldierObject[];
+  public colliders!: TiledColliderObject[];
 
   constructor(private map: Phaser.Tilemaps.Tilemap) {
     const objects = this.map.getObjectLayerNames().flatMap((name) => this.map.getObjectLayer(name)?.objects ?? []);
 
-    const { players, basicSoldiers } = this.processObjects(objects, {
+    const { players, basicSoldiers, colliders } = this.processObjects(objects, {
       players: parseTiledPlayerObject,
       basicSoldiers: parseBasicSoldier,
+      colliders: parseCollider,
     });
 
     this.players = players;
     this.basicSoldiers = basicSoldiers;
+    this.colliders = colliders;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
