@@ -55,11 +55,11 @@ export class GameScene extends Phaser.Scene {
 
     this.mapLayers.barriers = this.map.createLayer("Barriers", tiles, 0, 0)!;
     this.mapLayers.barriers.setScale(SCALE);
-    this.mapLayers.barriers.setDepth(-9);
+    this.mapLayers.barriers.setDepth(-8);
 
     this.mapLayers.collisionUnder = this.map.createLayer("No Collision Under Player", tiles, 0, 0)!;
     this.mapLayers.collisionUnder.setScale(SCALE);
-    this.mapLayers.collisionUnder.setDepth(-8);
+    this.mapLayers.collisionUnder.setDepth(-9);
 
     this.mapLayers.collisionAbove = this.map.createLayer("No Collision Above Player", tiles, 0, 0)!;
     this.mapLayers.collisionAbove.setScale(SCALE);
@@ -141,10 +141,14 @@ export class GameScene extends Phaser.Scene {
       sickChildObj.getData("ref")?.onHit(bulletObj.getData("ref"));
       bulletObj.getData("ref")?.destroy();
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    this.physics.add.collider(this.mapLayers.barriers, this.bullets, (bulletObj: any) => {
-      bulletObj.getData("ref")?.destroy();
-    });
+    this.physics.add.collider(
+      this.mapCollidersGroup,
+      this.bullets,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (_mapCollidersGroupElement: any, bulletObj: any) => {
+        bulletObj.getData("ref")?.destroy();
+      },
+    );
   }
 
   update(_time: number, delta: number) {
