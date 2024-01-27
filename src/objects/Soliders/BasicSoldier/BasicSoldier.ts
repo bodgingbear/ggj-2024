@@ -1,5 +1,6 @@
 import { SCALE } from "../../../constants";
 import { rotateVector } from "../../../utils/rotateVector";
+import { KillZone } from "../../KillZone/KillZone";
 import { Bullet } from "../Bullet";
 
 export type BasicSoldierOpts = {
@@ -22,6 +23,8 @@ export class BasicSoldier {
   sprite: Phaser.GameObjects.Sprite;
   rotatingRect: Phaser.GameObjects.Rectangle;
 
+  killZone!: KillZone;
+
   shootingEvent: Phaser.Time.TimerEvent | undefined;
 
   rotationDirection = 1;
@@ -34,6 +37,7 @@ export class BasicSoldier {
     private bullets: Phaser.GameObjects.Group,
     private opts: BasicSoldierOpts,
     private animationName: SoldierAnimationName,
+    killZone: KillZone,
   ) {
     this.sprite = this.scene.add.sprite(position.x, position.y, "master", SOLDIER_BASE_SPRITE_NAME[animationName]);
     this.sprite.play(animationName + "-right");
@@ -62,6 +66,11 @@ export class BasicSoldier {
     };
 
     scheduleShoot();
+
+    this.killZone = killZone;
+    this.killZone.activateKillZoneOnSprite(this.sprite, this.scene);
+    this.killZone.on("child_in_kill_zone", () => console.log("SOLDIER IN DANGER"));
+    this.killZone.on("child_off_kill_zone", () => console.log("NOT ANYMORE"));
   }
 
   update(delta: number) {
@@ -89,6 +98,15 @@ export class BasicSoldier {
       this.sprite.play(this.animationName + "-up", true);
     } else {
       this.sprite.play(this.animationName + "-right", true);
+    }
+  }
+
+  onHit() {
+    this.killZone.healthBar.decreaseHealthBy(20);
+    if (this.killZone.healthBar.healthLvl <= 0) {
+      this.killZone.healthBar.destroy();
+      this.killZone.zone.destroy();
+      this.sprite.destroy();
     }
   }
 

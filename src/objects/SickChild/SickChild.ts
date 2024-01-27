@@ -43,11 +43,13 @@ export class SickChild extends EventEmitter<Events> {
 
   sprite: Phaser.GameObjects.Sprite;
 
-  private controlled: boolean = false;
+  public controlled: boolean = false;
   private controlKey: string;
   hp: number = 1;
 
   destroyed: boolean = false;
+
+  isHaHaHaAttacking: boolean = false;
 
   constructor(
     private scene: Phaser.Scene,
@@ -201,5 +203,9 @@ export class SickChild extends EventEmitter<Events> {
     } else if (this.body.velocity.y < 0) {
       this.sprite.play(this.animationName + UP_ANIMATION_SUFFIX, true);
     }
+  }
+
+  setIsPerformingHaHaHaAttack(isPerforming: boolean) {
+    this.isHaHaHaAttacking = isPerforming;
   }
 }
