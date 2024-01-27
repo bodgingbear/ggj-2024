@@ -267,7 +267,7 @@
          "objects":[
                 {
                  "height":0,
-                 "id":17,
+                 "id":46,
                  "name":"",
                  "point":true,
                  "properties":[
@@ -281,12 +281,12 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":88,
-                 "y":88
+                 "x":136,
+                 "y":56
                 }, 
                 {
                  "height":0,
-                 "id":39,
+                 "id":47,
                  "name":"",
                  "point":true,
                  "properties":[
@@ -300,8 +300,46 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":264,
-                 "y":152
+                 "x":168,
+                 "y":56
+                }, 
+                {
+                 "height":0,
+                 "id":48,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"sprite",
+                         "propertytype":"PlayerSprite",
+                         "type":"string",
+                         "value":"small-kid"
+                        }],
+                 "rotation":0,
+                 "type":"Player",
+                 "visible":true,
+                 "width":0,
+                 "x":200,
+                 "y":56
+                }, 
+                {
+                 "height":0,
+                 "id":49,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"sprite",
+                         "propertytype":"PlayerSprite",
+                         "type":"string",
+                         "value":"girl"
+                        }],
+                 "rotation":0,
+                 "type":"Player",
+                 "visible":true,
+                 "width":0,
+                 "x":232,
+                 "y":56
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -478,7 +516,7 @@
          "y":0
         }],
  "nextlayerid":15,
- "nextobjectid":41,
+ "nextobjectid":50,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.10.2",

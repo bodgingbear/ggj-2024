@@ -2,7 +2,6 @@ import { EventEmitter } from "../../utils/EventEmitter/EventEmitter";
 import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
 import { CHANGE_PLAYER_VIEW_TIME, SCALE } from "../../constants";
-import { HUDController } from "../HUDController";
 import { ExitManager } from "../ExitManager/ExitManager";
 
 const PLAYER_VELOCITY = 600;
@@ -15,11 +14,12 @@ type Events = {
   death: () => void;
 };
 
-export type SickChildAnimationName = "fat-kid" | "poor-kid" | "small-kid";
-const SICK_CHILD_BASE_SPRITE_NAME: Record<SickChildAnimationName, string> = {
-  "fat-kid": "FatKid/FatKid-1",
-  "poor-kid": "PoorKid/PoorKid-1",
-  "small-kid": "SmallKid/SmallKid-1",
+export type SickChildAnimationName = "fat-kid" | "poor-kid" | "small-kid" | "girl";
+export const SICK_CHILD_BASE_SPRITE_NAME: Record<SickChildAnimationName, string> = {
+  "fat-kid": "FatKid/FatKid-",
+  "poor-kid": "PoorKid/PoorKid-",
+  "small-kid": "SmallKid/SmallKid-",
+  girl: "Girl/Girl-",
 };
 
 /** Player
@@ -35,25 +35,20 @@ export class SickChild extends EventEmitter<Events> {
 
   destroyed: boolean = false;
 
-  private hud!: HUDController;
-
   constructor(
     private scene: Phaser.Scene,
     startingPosition: Phaser.Math.Vector2,
     private keys: Phaser.Types.Input.Keyboard.CursorKeys,
     controlIndex: number,
     private animationName: SickChildAnimationName,
-    hud: HUDController,
   ) {
     super();
-
-    this.hud = hud;
 
     this.sprite = this.scene.add.sprite(
       startingPosition.x,
       startingPosition.y,
       "master",
-      SICK_CHILD_BASE_SPRITE_NAME[animationName],
+      SICK_CHILD_BASE_SPRITE_NAME[animationName] + "1",
     );
     this.sprite.anims.play(animationName + DOWN_ANIMATION_SUFFIX);
     this.sprite.setScale(SCALE);
@@ -101,6 +96,10 @@ export class SickChild extends EventEmitter<Events> {
     return this.controlKey;
   }
 
+  getAnimationName() {
+    return this.animationName;
+  }
+
   onHit(bullet: Bullet): void {
     this.sprite.setTint(0xff0000);
     this.scene.time.addEvent({
@@ -134,8 +133,6 @@ export class SickChild extends EventEmitter<Events> {
       delay: 1000,
       callback: () => {
         this.emit("death");
-
-        this.hud.setState("dead", parseInt(this.controlKey) - 1);
       },
     });
   }

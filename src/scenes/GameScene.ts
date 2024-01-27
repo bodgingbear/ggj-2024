@@ -79,8 +79,6 @@ export class GameScene extends Phaser.Scene {
 
     this.startingChildCount = this.tilemapObjectsManager.players.length;
 
-    this.hud = new HUDController(this.startingChildCount);
-    this.scene.run("HUDScene", { controller: this.hud });
     this.mapCollidersGroup = this.physics.add.group();
     this.tilemapObjectsManager.colliders.forEach((colliderData) => {
       const width = colliderData.width * SCALE;
@@ -106,12 +104,14 @@ export class GameScene extends Phaser.Scene {
         this.keys,
         childIdx,
         playerPosition.sprite,
-        this.hud,
-      ).on("death", this.handleChildDeath);
+      );
+
+      sickChild.on("death", this.handleChildDeath(sickChild));
       this.sickChildren.add(sickChild.sprite);
 
       this.physics.add.collider(sickChild.sprite, this.mapCollidersGroup);
     });
+    this.hud = new HUDController(this, this.sickChildren);
 
     this.cameras.main.startFollow(this.sickChildren.getChildren()[0]);
     this.cameras.main.stopFollow();
@@ -173,11 +173,10 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  handleChildDeath = () => {
+  handleChildDeath = (child: SickChild) => () => {
     if (this.sickChildren.getLength() > 0) {
-      const child: SickChild = this.sickChildren.getChildren()[0].getData("ref");
-      // Animate view change
       this.cameras.main.pan(child.sprite.x, child.sprite.y, CHANGE_PLAYER_VIEW_TIME, "Sine.easeInOut", undefined);
+      this.hud.setState("dead", parseInt(child.getControlKey()) - 1);
     } else {
       this.scene.run("GameOverScene");
     }

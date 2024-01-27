@@ -37,7 +37,7 @@ const PlayerValidator = z.object({
   y: z.number(),
   type: z.literal("Player"),
   properties: z.object({
-    sprite: z.union([z.literal("fat-kid"), z.literal("poor-kid"), z.literal("small-kid")]),
+    sprite: z.union([z.literal("fat-kid"), z.literal("poor-kid"), z.literal("small-kid"), z.literal("girl")]),
   }),
 });
 

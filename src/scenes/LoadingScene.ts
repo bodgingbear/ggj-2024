@@ -168,6 +168,46 @@ export class LoadingScene extends Phaser.Scene {
       repeat: -1,
     });
     this.anims.create({
+      key: "girl-left",
+      frames: this.anims.generateFrameNames("master", {
+        start: 1,
+        end: 2,
+        prefix: "SmallKid/SmallKid-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "girl-right",
+      frames: this.anims.generateFrameNames("master", {
+        start: 3,
+        end: 4,
+        prefix: "Girl/Girl-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "girl-down",
+      frames: this.anims.generateFrameNames("master", {
+        start: 5,
+        end: 6,
+        prefix: "Girl/Girl-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "girl-up",
+      frames: this.anims.generateFrameNames("master", {
+        start: 7,
+        end: 8,
+        prefix: "Girl/Girl-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
       key: "basic-soldier",
       frames: this.anims.generateFrameNames("master", {
         start: 1,
