@@ -37,7 +37,6 @@ export class GameScene extends Phaser.Scene {
 
   private startingChildCount!: number;
   private mapCollidersGroup!: Phaser.Physics.Arcade.Group;
-  private currentChildCount!: number;
 
   private createMap() {
     this.map = this.make.tilemap({ key: "tilemap" });
@@ -152,8 +151,6 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number) {
-    this.currentChildCount = this.sickChildren.getLength();
-
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
 
@@ -165,7 +162,7 @@ export class GameScene extends Phaser.Scene {
 
       if (intersects(child.sprite, this.exit)) {
         this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
-        child.winLevel(this.exitManager, this.currentChildCount);
+        child.winLevel(this.exitManager, this.sickChildren.getLength());
       }
     });
   }
@@ -181,6 +178,6 @@ export class GameScene extends Phaser.Scene {
   };
 
   handleLevelWin = () => {
-    alert("ALL SAVED! YEEEEEAH!");
+    console.log("ALL SAVED! YEEEEEAH!");
   };
 }
