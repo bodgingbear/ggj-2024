@@ -44,7 +44,6 @@ export class GameScene extends Phaser.Scene {
 
   private exitManager!: ExitManager;
 
-  private startingChildCount!: number;
   private mapCollidersGroup!: Phaser.Physics.Arcade.Group;
 
   private createMap(level: AvailableLevels) {
@@ -87,8 +86,6 @@ export class GameScene extends Phaser.Scene {
 
     this.tombStonesManager = new TombStonesManager(this);
     this.sickChildren = this.physics.add.group({});
-
-    this.startingChildCount = this.tilemapObjectsManager.objects.players.length;
 
     this.mapCollidersGroup = this.physics.add.group();
     this.tilemapObjectsManager.objects.colliders.forEach((colliderData) => {
@@ -177,13 +174,13 @@ export class GameScene extends Phaser.Scene {
         bulletObj.getData("ref")?.destroy();
       },
     );
+
+    new ChildMovementController(this, this.sickChildren, this.hud);
   }
 
   update(_time: number, delta: number) {
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
-
-    new ChildMovementController(this, this.sickChildren, this.startingChildCount, this.hud);
 
     const exitGroup = this.exitManager.getExitGroup();
     this.sickChildren.getChildren().forEach((childObj) => {

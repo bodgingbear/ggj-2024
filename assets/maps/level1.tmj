@@ -166,8 +166,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":168,
-                 "y":368
+                 "x":51,
+                 "y":387
                 }, 
                 {
                  "height":0,
@@ -191,8 +191,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":212,
-                 "y":92
+                 "x":79,
+                 "y":389
                 }, 
                 {
                  "height":0,
@@ -216,8 +216,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":436,
-                 "y":104
+                 "x":124,
+                 "y":388
                 }, 
                 {
                  "height":0,
@@ -241,8 +241,8 @@
                  "type":"Player",
                  "visible":true,
                  "width":0,
-                 "x":404,
-                 "y":204
+                 "x":150,
+                 "y":390
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -766,7 +766,7 @@
          "y":0
         }],
  "nextlayerid":16,
- "nextobjectid":74,
+ "nextobjectid":75,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.10.2",
