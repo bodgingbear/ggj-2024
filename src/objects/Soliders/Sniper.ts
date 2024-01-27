@@ -46,7 +46,7 @@ export class Sniper {
     position: Phaser.Math.Vector2,
     private bullets: Phaser.GameObjects.Group,
     public opts: SniperOpts,
-    animationName: SniperAnimationName = "basic-soldier",
+    animationName: SniperAnimationName,
   ) {
     this.container = this.scene.add.container(position.x, position.y).setScale(SCALE);
 
@@ -57,7 +57,7 @@ export class Sniper {
     this.line = new Phaser.GameObjects.Line(this.scene, 0, 0, 0, 0, RAY_LENGTH, 0, 0xff2222, 1).setOrigin(0, 0.5);
 
     this.container.add([this.sprite, this.line]);
-    this.sprite.anims.play(animationName);
+    this.sprite.anims.play(animationName + "-right");
 
     scene.physics.world.enable(this.sprite);
 

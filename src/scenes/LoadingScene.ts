@@ -1,8 +1,9 @@
-import { TEAM } from "../constants";
+import { AVAILABLE_LEVELS, TEAM } from "../constants";
 import { FontFile } from "../components/FontFile/FontFile";
 import { loadAsset } from "../utils/loadAsset/loadAsset";
 import { shouldSkipIntro } from "../utils/shouldSkipIntro/shouldSkipIntro";
 import { shouldSkipMenu } from "../utils/shouldSkipMenu/shouldSkipMenu";
+import { GameScene } from "./GameScene";
 
 export class LoadingScene extends Phaser.Scene {
   private introImage!: Phaser.GameObjects.Sprite;
@@ -20,11 +21,6 @@ export class LoadingScene extends Phaser.Scene {
   private loadAssets() {
     // Assets go here
     this.load.video("demo", loadAsset("videos/demo.mp4"), true);
-
-    this.load.image("kacper", loadAsset("images/credits/kacper.png"));
-    this.load.image("kuba", loadAsset("images/credits/kuba.png"));
-    this.load.image("bartek", loadAsset("images/credits/bartek.png"));
-    this.load.image("rafal", loadAsset("images/credits/rafal.png"));
 
     this.load.multiatlas("master", "atlas/atlas.json", "atlas");
     this.load.image("tilemap", loadAsset("maps/tilemap.png"));
@@ -209,11 +205,41 @@ export class LoadingScene extends Phaser.Scene {
       repeat: -1,
     });
     this.anims.create({
-      key: "basic-soldier",
+      key: "basic-soldier-left",
       frames: this.anims.generateFrameNames("master", {
         start: 1,
         end: 2,
-        prefix: "BasicSoldier/BasicSoldier-",
+        prefix: "ArmyMan/ArmyMan-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "basic-soldier-right",
+      frames: this.anims.generateFrameNames("master", {
+        start: 3,
+        end: 4,
+        prefix: "ArmyMan/ArmyMan-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "basic-soldier-down",
+      frames: this.anims.generateFrameNames("master", {
+        start: 5,
+        end: 6,
+        prefix: "ArmyMan/ArmyMan-",
+      }),
+      frameRate: 6,
+      repeat: -1,
+    });
+    this.anims.create({
+      key: "basic-soldier-up",
+      frames: this.anims.generateFrameNames("master", {
+        start: 7,
+        end: 8,
+        prefix: "ArmyMan/ArmyMan-",
       }),
       frameRate: 6,
       repeat: -1,
@@ -268,7 +294,7 @@ export class LoadingScene extends Phaser.Scene {
 
   private changeScene = () => {
     if (shouldSkipMenu()) {
-      this.scene.start("GameScene");
+      GameScene.start(this, AVAILABLE_LEVELS[0]);
     } else {
       this.scene.start("MainMenuScene");
     }

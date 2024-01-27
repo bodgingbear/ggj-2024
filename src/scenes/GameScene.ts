@@ -1,4 +1,4 @@
-import { SCALE } from "../constants";
+import { AVAILABLE_LEVELS, AvailableLevels, SCALE } from "../constants";
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
@@ -7,6 +7,8 @@ import { Sniper } from "../objects/Soliders/Sniper";
 import { HUDController } from "../objects/HUDController";
 import { intersects } from "../utils/intersects/intersects";
 import { ExitManager } from "../objects/ExitManager/ExitManager";
+import { GameOverScene } from "./GameOverScene";
+import { assertExistence } from "../utils/assertExistence/assertExistence";
 
 interface MapLayers {
   ground: Phaser.Tilemaps.TilemapLayer;
@@ -16,6 +18,10 @@ interface MapLayers {
 }
 
 export class GameScene extends Phaser.Scene {
+  public static start(scene: Phaser.Scene, level: AvailableLevels) {
+    scene.scene.start("GameScene", { level });
+  }
+
   private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
   private map!: Phaser.Tilemaps.Tilemap;
   private tilemapObjectsManager!: TilemapObjectsManager;
@@ -32,14 +38,15 @@ export class GameScene extends Phaser.Scene {
   private soldiers!: Phaser.GameObjects.Group;
   private sickChildren!: Phaser.GameObjects.Group;
   private hud!: HUDController;
+  private level!: AvailableLevels;
 
   private exitManager!: ExitManager;
 
   private startingChildCount!: number;
   private mapCollidersGroup!: Phaser.Physics.Arcade.Group;
 
-  private createMap() {
-    this.map = this.make.tilemap({ key: "level2" });
+  private createMap(level: AvailableLevels) {
+    this.map = this.make.tilemap({ key: level });
     this.tilemapObjectsManager = new TilemapObjectsManager(this.map);
 
     // The first parameter is the name of the tileset in Tiled and the second parameter is the key
@@ -68,8 +75,10 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels * SCALE, this.map.heightInPixels * SCALE);
   }
 
-  public create(): void {
-    this.createMap();
+  public create({ level }: { level: AvailableLevels }): void {
+    assertExistence(level);
+    this.level = level;
+    this.createMap(level);
 
     // Setup keys
     this.keys = this.input.keyboard!.createCursorKeys();
@@ -103,6 +112,7 @@ export class GameScene extends Phaser.Scene {
         this.keys,
         childIdx,
         playerPosition.sprite,
+        playerPosition.initialDirection,
       );
 
       sickChild.on("death", this.handleChildDeath(sickChild));
@@ -181,10 +191,6 @@ export class GameScene extends Phaser.Scene {
         .getChildren()
         .some((exit) => intersects(child.sprite, exit as Phaser.GameObjects.Rectangle));
 
-      console.log(
-        exitGroup.getChildren().map((exit) => intersects(child.sprite, exit as Phaser.GameObjects.Rectangle)),
-      );
-
       if (isIntersecting) {
         this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
         child.winLevel(this.exitManager, this.sickChildren.getLength());
@@ -196,11 +202,13 @@ export class GameScene extends Phaser.Scene {
     if (this.sickChildren.getLength() > 0) {
       this.hud.setState("dead", parseInt(child.getControlKey()) - 1);
     } else {
-      this.scene.run("GameOverScene");
+      GameOverScene.run(this, this.level);
     }
   };
 
   handleLevelWin = () => {
-    console.log("ALL SAVED! YEEEEEAH!");
+    const currentLevelIndex = AVAILABLE_LEVELS.indexOf(this.level);
+    const nextLevel = AVAILABLE_LEVELS[currentLevelIndex + 1];
+    GameScene.start(this, nextLevel);
   };
 }

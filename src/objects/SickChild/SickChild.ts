@@ -22,6 +22,20 @@ export const SICK_CHILD_BASE_SPRITE_NAME: Record<SickChildAnimationName, string>
   girl: "Girl/Girl-",
 };
 
+export type SickChildInitialDirection = "up" | "down" | "left" | "right";
+const INITIAL_DIRECTION_TO_SUFFIX_MAP: Record<
+  SickChildInitialDirection,
+  | typeof DOWN_ANIMATION_SUFFIX
+  | typeof UP_ANIMATION_SUFFIX
+  | typeof LEFT_ANIMATION_SUFFIX
+  | typeof RIGHT_ANIMATION_SUFFIX
+> = {
+  up: UP_ANIMATION_SUFFIX,
+  down: DOWN_ANIMATION_SUFFIX,
+  left: LEFT_ANIMATION_SUFFIX,
+  right: RIGHT_ANIMATION_SUFFIX,
+};
+
 /** Player
  */
 export class SickChild extends EventEmitter<Events> {
@@ -41,6 +55,7 @@ export class SickChild extends EventEmitter<Events> {
     private keys: Phaser.Types.Input.Keyboard.CursorKeys,
     controlIndex: number,
     private animationName: SickChildAnimationName,
+    initialDirection: SickChildInitialDirection,
   ) {
     super();
 
@@ -50,7 +65,9 @@ export class SickChild extends EventEmitter<Events> {
       "master",
       SICK_CHILD_BASE_SPRITE_NAME[animationName] + "1",
     );
-    this.sprite.anims.play(animationName + DOWN_ANIMATION_SUFFIX);
+
+    const initialSuffix = INITIAL_DIRECTION_TO_SUFFIX_MAP[initialDirection];
+    this.sprite.anims.play(animationName + initialSuffix);
     this.sprite.setScale(SCALE);
 
     this.scene.physics.world.enable(this.sprite);

@@ -4,72 +4,177 @@
 			"image": "atlas.png",
 			"format": "RGBA8888",
 			"size": {
-				"w": 63,
-				"h": 187
+				"w": 256,
+				"h": 64
 			},
 			"scale": 1,
 			"frames": [
 				{
-					"filename": "UI/Frame/Active",
+					"filename": "ArmyMan/ArmyMan-1",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 15,
-						"h": 15
+						"w": 18,
+						"h": 28
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 15,
-						"h": 15
+						"w": 18,
+						"h": 28
 					},
 					"frame": {
 						"x": 1,
 						"y": 1,
-						"w": 15,
-						"h": 15
+						"w": 18,
+						"h": 28
 					}
 				},
 				{
-					"filename": "UI/Frame/ActiveBackground",
+					"filename": "ArmyMan/ArmyMan-2",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 15,
-						"h": 15
+						"w": 18,
+						"h": 28
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 15,
-						"h": 15
+						"w": 18,
+						"h": 28
 					},
 					"frame": {
-						"x": 18,
-						"y": 1,
-						"w": 15,
-						"h": 15
+						"x": 1,
+						"y": 31,
+						"w": 18,
+						"h": 28
 					}
 				},
 				{
-					"filename": "UI/Frame/Dead",
+					"filename": "ArmyMan/ArmyMan-3",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 15,
-						"h": 15
+						"w": 18,
+						"h": 28
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 15,
-						"h": 15
+						"w": 18,
+						"h": 28
 					},
 					"frame": {
-						"x": 35,
+						"x": 21,
 						"y": 1,
-						"w": 15,
-						"h": 15
+						"w": 18,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ArmyMan/ArmyMan-4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 18,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 18,
+						"h": 28
+					},
+					"frame": {
+						"x": 21,
+						"y": 31,
+						"w": 18,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ArmyMan/ArmyMan-5",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 11,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 11,
+						"h": 28
+					},
+					"frame": {
+						"x": 41,
+						"y": 1,
+						"w": 11,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ArmyMan/ArmyMan-6",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 11,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 11,
+						"h": 28
+					},
+					"frame": {
+						"x": 41,
+						"y": 31,
+						"w": 11,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ArmyMan/ArmyMan-7",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 11,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 11,
+						"h": 28
+					},
+					"frame": {
+						"x": 54,
+						"y": 1,
+						"w": 11,
+						"h": 28
+					}
+				},
+				{
+					"filename": "ArmyMan/ArmyMan-8",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 11,
+						"h": 28
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 11,
+						"h": 28
+					},
+					"frame": {
+						"x": 54,
+						"y": 31,
+						"w": 11,
+						"h": 28
 					}
 				},
 				{
@@ -87,157 +192,10 @@
 						"h": 28
 					},
 					"frame": {
-						"x": 52,
+						"x": 67,
 						"y": 1,
 						"w": 10,
 						"h": 28
-					}
-				},
-				{
-					"filename": "UI/Frame/DeadBackground",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 15,
-						"h": 15
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 15,
-						"h": 15
-					},
-					"frame": {
-						"x": 1,
-						"y": 18,
-						"w": 15,
-						"h": 15
-					}
-				},
-				{
-					"filename": "UI/Frame/Inactive",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 15,
-						"h": 15
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 15,
-						"h": 15
-					},
-					"frame": {
-						"x": 18,
-						"y": 18,
-						"w": 15,
-						"h": 15
-					}
-				},
-				{
-					"filename": "UI/Frame/InactiveBackground",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 15,
-						"h": 15
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 15,
-						"h": 15
-					},
-					"frame": {
-						"x": 35,
-						"y": 18,
-						"w": 15,
-						"h": 15
-					}
-				},
-				{
-					"filename": "Girl/Girl-1",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 10,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 10,
-						"h": 21
-					},
-					"frame": {
-						"x": 52,
-						"y": 31,
-						"w": 10,
-						"h": 21
-					}
-				},
-				{
-					"filename": "UI/Frame/Mask",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 15,
-						"h": 15
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 15,
-						"h": 15
-					},
-					"frame": {
-						"x": 1,
-						"y": 35,
-						"w": 15,
-						"h": 15
-					}
-				},
-				{
-					"filename": "UI/Frame/Saved",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 15,
-						"h": 15
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 15,
-						"h": 15
-					},
-					"frame": {
-						"x": 18,
-						"y": 35,
-						"w": 15,
-						"h": 15
-					}
-				},
-				{
-					"filename": "UI/Frame/SavedBackground",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 15,
-						"h": 15
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 15,
-						"h": 15
-					},
-					"frame": {
-						"x": 35,
-						"y": 35,
-						"w": 15,
-						"h": 15
 					}
 				},
 				{
@@ -255,8 +213,8 @@
 						"h": 22
 					},
 					"frame": {
-						"x": 1,
-						"y": 52,
+						"x": 79,
+						"y": 1,
 						"w": 11,
 						"h": 22
 					}
@@ -276,8 +234,8 @@
 						"h": 22
 					},
 					"frame": {
-						"x": 14,
-						"y": 52,
+						"x": 92,
+						"y": 1,
 						"w": 11,
 						"h": 22
 					}
@@ -297,94 +255,10 @@
 						"h": 22
 					},
 					"frame": {
-						"x": 27,
-						"y": 52,
+						"x": 105,
+						"y": 1,
 						"w": 11,
 						"h": 22
-					}
-				},
-				{
-					"filename": "Girl/Girl-2",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 10,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 10,
-						"h": 21
-					},
-					"frame": {
-						"x": 40,
-						"y": 52,
-						"w": 10,
-						"h": 21
-					}
-				},
-				{
-					"filename": "Girl/Girl-3",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 10,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 10,
-						"h": 21
-					},
-					"frame": {
-						"x": 52,
-						"y": 54,
-						"w": 10,
-						"h": 21
-					}
-				},
-				{
-					"filename": "Girl/Girl-4",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 10,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 10,
-						"h": 21
-					},
-					"frame": {
-						"x": 40,
-						"y": 75,
-						"w": 10,
-						"h": 21
-					}
-				},
-				{
-					"filename": "PoorKid/PoorKid-1",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 9,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 9,
-						"h": 21
-					},
-					"frame": {
-						"x": 52,
-						"y": 77,
-						"w": 9,
-						"h": 21
 					}
 				},
 				{
@@ -402,8 +276,8 @@
 						"h": 22
 					},
 					"frame": {
-						"x": 1,
-						"y": 76,
+						"x": 118,
+						"y": 1,
 						"w": 11,
 						"h": 22
 					}
@@ -423,8 +297,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 14,
-						"y": 76,
+						"x": 131,
+						"y": 1,
 						"w": 11,
 						"h": 21
 					}
@@ -444,30 +318,9 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 27,
-						"y": 76,
+						"x": 144,
+						"y": 1,
 						"w": 11,
-						"h": 21
-					}
-				},
-				{
-					"filename": "PoorKid/PoorKid-2",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 9,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 9,
-						"h": 21
-					},
-					"frame": {
-						"x": 40,
-						"y": 98,
-						"w": 9,
 						"h": 21
 					}
 				},
@@ -486,8 +339,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 51,
-						"y": 100,
+						"x": 157,
+						"y": 1,
 						"w": 11,
 						"h": 21
 					}
@@ -507,8 +360,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 14,
-						"y": 99,
+						"x": 170,
+						"y": 1,
 						"w": 11,
 						"h": 21
 					}
@@ -528,8 +381,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 1,
-						"y": 100,
+						"x": 183,
+						"y": 1,
 						"w": 11,
 						"h": 21
 					}
@@ -549,30 +402,9 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 27,
-						"y": 99,
+						"x": 196,
+						"y": 1,
 						"w": 11,
-						"h": 21
-					}
-				},
-				{
-					"filename": "PoorKid/PoorKid-3",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 9,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 9,
-						"h": 21
-					},
-					"frame": {
-						"x": 40,
-						"y": 121,
-						"w": 9,
 						"h": 21
 					}
 				},
@@ -591,8 +423,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 51,
-						"y": 123,
+						"x": 209,
+						"y": 1,
 						"w": 11,
 						"h": 21
 					}
@@ -612,8 +444,8 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 14,
-						"y": 122,
+						"x": 222,
+						"y": 1,
 						"w": 11,
 						"h": 21
 					}
@@ -633,9 +465,51 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 1,
-						"y": 123,
+						"x": 235,
+						"y": 1,
 						"w": 11,
+						"h": 21
+					}
+				},
+				{
+					"filename": "SmallKid/SmallKid-1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 7,
+						"h": 17
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 7,
+						"h": 17
+					},
+					"frame": {
+						"x": 248,
+						"y": 1,
+						"w": 7,
+						"h": 17
+					}
+				},
+				{
+					"filename": "Girl/Girl-1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 10,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 10,
+						"h": 21
+					},
+					"frame": {
+						"x": 67,
+						"y": 31,
+						"w": 10,
 						"h": 21
 					}
 				},
@@ -654,30 +528,9 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 27,
-						"y": 122,
+						"x": 79,
+						"y": 25,
 						"w": 11,
-						"h": 21
-					}
-				},
-				{
-					"filename": "PoorKid/PoorKid-4",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 9,
-						"h": 21
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 9,
-						"h": 21
-					},
-					"frame": {
-						"x": 40,
-						"y": 144,
-						"w": 9,
 						"h": 21
 					}
 				},
@@ -696,31 +549,52 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 51,
-						"y": 146,
+						"x": 92,
+						"y": 25,
 						"w": 11,
 						"h": 21
 					}
 				},
 				{
-					"filename": "SmallKid/SmallKid-5",
+					"filename": "UI/Frame/Active",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
-						"w": 9,
-						"h": 17
+						"w": 15,
+						"h": 15
 					},
 					"spriteSourceSize": {
 						"x": 0,
 						"y": 0,
-						"w": 9,
-						"h": 17
+						"w": 15,
+						"h": 15
 					},
 					"frame": {
-						"x": 1,
-						"y": 169,
-						"w": 9,
-						"h": 17
+						"x": 79,
+						"y": 48,
+						"w": 15,
+						"h": 15
+					}
+				},
+				{
+					"filename": "UI/Frame/ActiveBackground",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 15,
+						"h": 15
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 15,
+						"h": 15
+					},
+					"frame": {
+						"x": 96,
+						"y": 48,
+						"w": 15,
+						"h": 15
 					}
 				},
 				{
@@ -738,10 +612,346 @@
 						"h": 21
 					},
 					"frame": {
-						"x": 1,
-						"y": 146,
+						"x": 105,
+						"y": 25,
 						"w": 11,
 						"h": 21
+					}
+				},
+				{
+					"filename": "UI/Frame/Dead",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 15,
+						"h": 15
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 15,
+						"h": 15
+					},
+					"frame": {
+						"x": 113,
+						"y": 48,
+						"w": 15,
+						"h": 15
+					}
+				},
+				{
+					"filename": "Girl/Girl-2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 10,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 10,
+						"h": 21
+					},
+					"frame": {
+						"x": 118,
+						"y": 25,
+						"w": 10,
+						"h": 21
+					}
+				},
+				{
+					"filename": "SmallKid/SmallKid-2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 7,
+						"h": 17
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 7,
+						"h": 17
+					},
+					"frame": {
+						"x": 248,
+						"y": 20,
+						"w": 7,
+						"h": 17
+					}
+				},
+				{
+					"filename": "Girl/Girl-3",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 10,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 10,
+						"h": 21
+					},
+					"frame": {
+						"x": 130,
+						"y": 25,
+						"w": 10,
+						"h": 21
+					}
+				},
+				{
+					"filename": "UI/Frame/DeadBackground",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 15,
+						"h": 15
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 15,
+						"h": 15
+					},
+					"frame": {
+						"x": 130,
+						"y": 48,
+						"w": 15,
+						"h": 15
+					}
+				},
+				{
+					"filename": "Girl/Girl-4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 10,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 10,
+						"h": 21
+					},
+					"frame": {
+						"x": 142,
+						"y": 24,
+						"w": 10,
+						"h": 21
+					}
+				},
+				{
+					"filename": "PoorKid/PoorKid-1",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 21
+					},
+					"frame": {
+						"x": 154,
+						"y": 24,
+						"w": 9,
+						"h": 21
+					}
+				},
+				{
+					"filename": "PoorKid/PoorKid-2",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 21
+					},
+					"frame": {
+						"x": 165,
+						"y": 24,
+						"w": 9,
+						"h": 21
+					}
+				},
+				{
+					"filename": "PoorKid/PoorKid-3",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 21
+					},
+					"frame": {
+						"x": 176,
+						"y": 24,
+						"w": 9,
+						"h": 21
+					}
+				},
+				{
+					"filename": "PoorKid/PoorKid-4",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 21
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 21
+					},
+					"frame": {
+						"x": 187,
+						"y": 24,
+						"w": 9,
+						"h": 21
+					}
+				},
+				{
+					"filename": "UI/Frame/Inactive",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 15,
+						"h": 15
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 15,
+						"h": 15
+					},
+					"frame": {
+						"x": 198,
+						"y": 24,
+						"w": 15,
+						"h": 15
+					}
+				},
+				{
+					"filename": "UI/Frame/InactiveBackground",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 15,
+						"h": 15
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 15,
+						"h": 15
+					},
+					"frame": {
+						"x": 215,
+						"y": 24,
+						"w": 15,
+						"h": 15
+					}
+				},
+				{
+					"filename": "UI/Frame/Mask",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 15,
+						"h": 15
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 15,
+						"h": 15
+					},
+					"frame": {
+						"x": 147,
+						"y": 47,
+						"w": 15,
+						"h": 15
+					}
+				},
+				{
+					"filename": "UI/Frame/Saved",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 15,
+						"h": 15
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 15,
+						"h": 15
+					},
+					"frame": {
+						"x": 164,
+						"y": 47,
+						"w": 15,
+						"h": 15
+					}
+				},
+				{
+					"filename": "UI/Frame/SavedBackground",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 15,
+						"h": 15
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 15,
+						"h": 15
+					},
+					"frame": {
+						"x": 181,
+						"y": 47,
+						"w": 15,
+						"h": 15
+					}
+				},
+				{
+					"filename": "SmallKid/SmallKid-5",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 9,
+						"h": 17
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 9,
+						"h": 17
+					},
+					"frame": {
+						"x": 198,
+						"y": 41,
+						"w": 9,
+						"h": 17
 					}
 				},
 				{
@@ -759,8 +969,8 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 12,
-						"y": 169,
+						"x": 209,
+						"y": 41,
 						"w": 9,
 						"h": 17
 					}
@@ -780,8 +990,8 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 23,
-						"y": 169,
+						"x": 220,
+						"y": 41,
 						"w": 9,
 						"h": 17
 					}
@@ -801,51 +1011,9 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 34,
-						"y": 169,
+						"x": 232,
+						"y": 24,
 						"w": 9,
-						"h": 17
-					}
-				},
-				{
-					"filename": "SmallKid/SmallKid-1",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 7,
-						"h": 17
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 7,
-						"h": 17
-					},
-					"frame": {
-						"x": 45,
-						"y": 169,
-						"w": 7,
-						"h": 17
-					}
-				},
-				{
-					"filename": "SmallKid/SmallKid-2",
-					"rotated": false,
-					"trimmed": false,
-					"sourceSize": {
-						"w": 7,
-						"h": 17
-					},
-					"spriteSourceSize": {
-						"x": 0,
-						"y": 0,
-						"w": 7,
-						"h": 17
-					},
-					"frame": {
-						"x": 54,
-						"y": 169,
-						"w": 7,
 						"h": 17
 					}
 				},
@@ -864,8 +1032,8 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 14,
-						"y": 145,
+						"x": 231,
+						"y": 43,
 						"w": 7,
 						"h": 17
 					}
@@ -885,8 +1053,8 @@
 						"h": 17
 					},
 					"frame": {
-						"x": 23,
-						"y": 145,
+						"x": 240,
+						"y": 43,
 						"w": 7,
 						"h": 17
 					}
@@ -906,8 +1074,8 @@
 						"h": 4
 					},
 					"frame": {
-						"x": 32,
-						"y": 145,
+						"x": 67,
+						"y": 54,
 						"w": 4,
 						"h": 4
 					}
@@ -918,6 +1086,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:f50c57264b03759273e0e1cddc69b742:9a4db5dda07e76833cde385e1b178281:cbce6b53f0f49e0bf15173c25c41f876$"
+		"smartupdate": "$TexturePacker:SmartUpdate:84cc143f0b1f07ee0c92ca94fd7c229d:8eed9dae2c37f7af3d518ba13f03781f:cbce6b53f0f49e0bf15173c25c41f876$"
 	}
 }

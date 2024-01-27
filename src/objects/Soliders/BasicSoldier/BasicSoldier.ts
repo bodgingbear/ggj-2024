@@ -14,7 +14,7 @@ export type BasicSoldierOpts = {
 
 export type SoldierAnimationName = "basic-soldier";
 const SOLDIER_BASE_SPRITE_NAME: Record<SoldierAnimationName, string> = {
-  "basic-soldier": "BasicSoldier/BasicSoldier-1",
+  "basic-soldier": "ArmyMan/ArmyMan-1",
 };
 
 export class BasicSoldier {
@@ -35,7 +35,7 @@ export class BasicSoldier {
     animationName: SoldierAnimationName,
   ) {
     this.sprite = this.scene.add.sprite(position.x, position.y, "master", SOLDIER_BASE_SPRITE_NAME[animationName]);
-    this.sprite.anims.play(animationName);
+    this.sprite.anims.play(animationName + "-right");
     this.sprite.setScale(SCALE);
     const startingRotationInRadians = (opts.startingRotation * Math.PI) / 180;
     this.sprite.setRotation(startingRotationInRadians);

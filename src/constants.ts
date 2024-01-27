@@ -53,3 +53,6 @@ export const TEAM: TeamMemberData[] = [
 
 export const SCALE = 5;
 export const CHANGE_PLAYER_VIEW_TIME = 250;
+
+export const AVAILABLE_LEVELS = ["level1", "level2"] as const;
+export type AvailableLevels = (typeof AVAILABLE_LEVELS)[number];

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { BasicSoldierOpts, SoldierAnimationName } from "../Soliders/BasicSoldier/BasicSoldier";
-import { SickChildAnimationName } from "../SickChild/SickChild";
+import { SickChildAnimationName, SickChildInitialDirection } from "../SickChild/SickChild";
 import { SniperOpts } from "../Soliders/Sniper";
 
 type TiledObject = Phaser.Types.Tilemaps.TiledObject;
@@ -9,6 +9,7 @@ export interface TiledPlayerObject {
   x: number;
   y: number;
   sprite: SickChildAnimationName;
+  initialDirection: SickChildInitialDirection;
 }
 const PropertiesValidator = z.array(
   z.object({
@@ -24,6 +25,7 @@ const PlayerValidator = z.object({
   type: z.literal("Player"),
   properties: z.object({
     sprite: z.union([z.literal("fat-kid"), z.literal("poor-kid"), z.literal("small-kid"), z.literal("girl")]),
+    initialDirection: z.union([z.literal("up"), z.literal("down"), z.literal("left"), z.literal("right")]),
   }),
 });
 
@@ -51,6 +53,7 @@ export function parseTiledPlayerObject(obj: TiledObject): TiledPlayerObject | nu
     x: data.data.x,
     y: data.data.y,
     sprite: data.data.properties.sprite,
+    initialDirection: data.data.properties.initialDirection,
   };
 }
 

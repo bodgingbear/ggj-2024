@@ -1,5 +1,7 @@
 import { TextButton } from "../components/TextButton/TextButton";
+import { AVAILABLE_LEVELS } from "../constants";
 import { centerElement } from "../utils/centerElement/centerElement";
+import { GameScene } from "./GameScene";
 
 export class MainMenuScene extends Phaser.Scene {
   public constructor() {
@@ -35,7 +37,7 @@ export class MainMenuScene extends Phaser.Scene {
     pressSpaceButton.setOrigin(0.5, 0.5);
 
     this.input.keyboard!.addKey("SPACE").on("down", (): void => {
-      this.scene.start("GameScene");
+      GameScene.start(this, AVAILABLE_LEVELS[0]);
     });
 
     const howToPlayButton = new TextButton(this, 32, 720 - 32, "How to play", {
