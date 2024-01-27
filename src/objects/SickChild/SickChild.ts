@@ -2,6 +2,7 @@ import { EventEmitter } from "../../utils/EventEmitter/EventEmitter";
 import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
 import { CHANGE_PLAYER_VIEW_TIME, SCALE } from "../../constants";
+import { HUDController } from "../HUDController";
 
 const PLAYER_VELOCITY = 600;
 
@@ -29,14 +30,19 @@ export class SickChild extends EventEmitter<Events> {
 
   destroyed: boolean = false;
 
+  private hud!: HUDController;
+
   constructor(
     private scene: Phaser.Scene,
     startingPosition: Phaser.Math.Vector2,
     private keys: Phaser.Types.Input.Keyboard.CursorKeys,
     controlIndex: number,
     animationName: SickChildAnimationName,
+    hud: HUDController,
   ) {
     super();
+
+    this.hud = hud;
 
     this.sprite = this.scene.add.sprite(
       startingPosition.x,
@@ -115,6 +121,8 @@ export class SickChild extends EventEmitter<Events> {
         this.sprite.destroy();
         this.body.destroy();
         this.emit("death");
+
+        this.hud.setState("dead", parseInt(this.controlKey) - 1);
       },
     });
   }

@@ -4,6 +4,7 @@ import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { Counter } from "../objects/Counter/Counter";
 import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
 import { ChildMovementController } from "../objects/SickChild/ChildMovementController";
+import { HUDController } from "../objects/HUDController";
 
 interface MapLayers {
   ground: Phaser.Tilemaps.TilemapLayer;
@@ -23,11 +24,11 @@ export class GameScene extends Phaser.Scene {
     });
   }
 
-  private pressedKeys: Set<string> = new Set();
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
   private sickChildren!: Phaser.GameObjects.Group;
   private counter!: Counter;
+  private hud!: HUDController;
 
   private startingChildCount!: number;
 
@@ -63,6 +64,9 @@ export class GameScene extends Phaser.Scene {
 
     this.startingChildCount = this.tilemapObjectsManager.players.length;
 
+    this.hud = new HUDController(this.startingChildCount);
+    this.scene.run("HUDScene", { controller: this.hud });
+
     // Create SickChild instances
     this.tilemapObjectsManager.players.forEach((playerPosition, childIdx) => {
       const sickChild = new SickChild(
@@ -71,10 +75,9 @@ export class GameScene extends Phaser.Scene {
         this.keys,
         childIdx,
         playerPosition.sprite,
+        this.hud,
       ).on("death", this.handleChildDeath);
       this.sickChildren.add(sickChild.sprite);
-
-      // this.scene.run("HUDScene", { playerCount: this.startingChildCount });
 
       this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
     });
@@ -115,7 +118,7 @@ export class GameScene extends Phaser.Scene {
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
 
-    new ChildMovementController(this, this.sickChildren, this.pressedKeys, this.startingChildCount);
+    new ChildMovementController(this, this.sickChildren, this.startingChildCount, this.hud);
 
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");

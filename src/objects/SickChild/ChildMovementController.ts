@@ -1,22 +1,25 @@
+import { HUDController } from "../HUDController";
 import { SickChild } from "./SickChild";
 
 export class ChildMovementController {
   private sickChildren!: Phaser.GameObjects.Group;
-  private pressedKeys!: Set<string>;
 
   private startingChildCount!: number;
+
+  private hud!: HUDController;
 
   constructor(
     scene: Phaser.Scene,
     sickChildren: Phaser.GameObjects.Group,
-    pressedKeys: Set<string>,
     startingChildCount: number,
+    hud: HUDController,
   ) {
     this.sickChildren = sickChildren;
-    this.pressedKeys = pressedKeys;
     // Set up children key events
     scene.input.keyboard!.on("keydown", this.handleChildMovementKeyDown, this);
     scene.input.keyboard!.on("keyup", this.handleChildMovementKeyUp, this);
+
+    this.hud = hud;
 
     this.startingChildCount = startingChildCount;
   }
@@ -29,20 +32,21 @@ export class ChildMovementController {
       this.sickChildren.getChildren().forEach((childObj) => {
         const child: SickChild = childObj.getData("ref");
         child.setControlled(true);
+        this.hud.setState("active", parseInt(child.getControlKey()) - 1);
       });
     }
 
     // Check if the key released is a correct number key
-    const index = parseInt(key);
-    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= this.startingChildCount;
-    if (isExpectedNumber) {
-      this.pressedKeys.add(key);
+    const keyNumber = parseInt(key);
+    const isExpectedKeyNumber = !isNaN(keyNumber) && keyNumber >= 1 && keyNumber <= this.startingChildCount;
 
+    if (isExpectedKeyNumber) {
       this.sickChildren.getChildren().forEach((childObj) => {
         const child: SickChild = childObj.getData("ref");
-
-        if (child.getControlKey() === key) {
+        const childKey = child.getControlKey();
+        if (childKey === key) {
           child.setControlled(true);
+          this.hud.setState("active", parseInt(childKey) - 1);
         }
       });
     }
@@ -56,20 +60,20 @@ export class ChildMovementController {
       this.sickChildren.getChildren().forEach((childObj) => {
         const child: SickChild = childObj.getData("ref");
         child.setControlled(false);
+        this.hud.setState("active", parseInt(child.getControlKey()) - 1);
       });
     }
 
     // Check if the key released is a correct number key
-    const index = parseInt(key);
-    const isExpectedNumber = !isNaN(index) && index >= 1 && index <= this.startingChildCount;
-    if (isExpectedNumber) {
-      this.pressedKeys.delete(key);
-
+    const keyNumber = parseInt(key);
+    const isExpectedKeyNumber = !isNaN(keyNumber) && keyNumber >= 1 && keyNumber <= this.startingChildCount;
+    if (isExpectedKeyNumber) {
       this.sickChildren.getChildren().forEach((childObj) => {
         const child: SickChild = childObj.getData("ref");
-
-        if (child.getControlKey() === key) {
+        const childKey = child.getControlKey();
+        if (childKey === key) {
           child.setControlled(false);
+          this.hud.setState("inactive", parseInt(childKey) - 1);
         }
       });
     }
