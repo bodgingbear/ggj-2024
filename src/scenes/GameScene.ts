@@ -1,7 +1,7 @@
 import { CHANGE_PLAYER_VIEW_TIME, SCALE } from "../constants";
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
-import { HUD } from "../objects/HUD/HUD";
+import { Counter } from "../objects/Counter/Counter";
 import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
 import { ChildMovementController } from "../objects/SickChild/ChildMovementController";
 
@@ -9,8 +9,6 @@ interface MapLayers {
   ground: Phaser.Tilemaps.TilemapLayer;
   barriers: Phaser.Tilemaps.TilemapLayer;
 }
-
-// @TODO: (IN THE MORNING) think through Player movement together with the camera follow/transition
 
 export class GameScene extends Phaser.Scene {
   private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -29,7 +27,7 @@ export class GameScene extends Phaser.Scene {
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
   private sickChildren!: Phaser.GameObjects.Group;
-  private hud!: HUD;
+  private counter!: Counter;
 
   private createMap() {
     this.map = this.make.tilemap({ key: "tilemap" });
@@ -58,10 +56,11 @@ export class GameScene extends Phaser.Scene {
 
     // Setup keys
     this.keys = this.input.keyboard!.createCursorKeys();
+
     this.sickChildren = this.physics.add.group({});
 
     // Create SickChild instances
-    this.tilemapObjectsManager.players.forEach((playerPosition, childIdx) => {
+    players.forEach((playerPosition, childIdx) => {
       const sickChild = new SickChild(
         this,
         new Phaser.Math.Vector2(playerPosition.x * SCALE, playerPosition.y * SCALE),
@@ -102,8 +101,8 @@ export class GameScene extends Phaser.Scene {
       bulletObj.getData("ref")?.destroy();
     });
 
-    this.hud = new HUD(this);
-    this.hud.onCounterChange(this.sickChildren.getLength());
+    this.counter = new Counter(this);
+    this.counter.onCounterChange(this.sickChildren.getLength());
   }
 
   update(_time: number, delta: number) {
@@ -119,7 +118,7 @@ export class GameScene extends Phaser.Scene {
   }
 
   handleChildDeath = () => {
-    this.hud.decreaseCounter();
+    this.counter.decreaseCounter();
     if (this.sickChildren.getLength() > 0) {
       const child: SickChild = this.sickChildren.getChildren()[0].getData("ref");
       // Animate view change

@@ -1,7 +1,7 @@
 const BOTTOM_LINE_Y = 650;
 const COUNTER_X = 100;
 
-export class HUD {
+export class Counter {
   counterText: Phaser.GameObjects.Text;
   counter: number = 1;
 
