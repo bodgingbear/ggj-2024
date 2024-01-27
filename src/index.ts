@@ -24,6 +24,18 @@ const game = new Phaser.Game({
   },
   physics: {
     default: "arcade",
+    arcade:
+      import.meta.env.VITE_DEBUG_MODE === "true"
+        ? {
+            debug: true,
+            debugShowBody: true,
+            debugShowStaticBody: true,
+            debugShowVelocity: true,
+            debugVelocityColor: 0xffff00,
+            debugBodyColor: 0x0000ff,
+            debugStaticBodyColor: 0xffffff,
+          }
+        : {},
   },
   pixelArt: true,
 });
