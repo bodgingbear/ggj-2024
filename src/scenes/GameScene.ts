@@ -8,6 +8,8 @@ import { HUDController } from "../objects/HUDController";
 interface MapLayers {
   ground: Phaser.Tilemaps.TilemapLayer;
   barriers: Phaser.Tilemaps.TilemapLayer;
+  collisionUnder: Phaser.Tilemaps.TilemapLayer;
+  collisionAbove: Phaser.Tilemaps.TilemapLayer;
 }
 
 export class GameScene extends Phaser.Scene {
@@ -29,6 +31,7 @@ export class GameScene extends Phaser.Scene {
   private hud!: HUDController;
 
   private startingChildCount!: number;
+  private mapCollidersGroup!: Phaser.Physics.Arcade.Group;
 
   private createMap() {
     this.map = this.make.tilemap({ key: "tilemap" });
@@ -42,11 +45,19 @@ export class GameScene extends Phaser.Scene {
 
     this.mapLayers.ground = this.map.createLayer("Ground", tiles, 0, 0)!;
     this.mapLayers.ground.setScale(SCALE);
+    this.mapLayers.ground.setDepth(-10);
 
     this.mapLayers.barriers = this.map.createLayer("Barriers", tiles, 0, 0)!;
     this.mapLayers.barriers.setScale(SCALE);
+    this.mapLayers.barriers.setDepth(-9);
 
-    this.mapLayers.barriers.setCollisionByExclusion([-1]);
+    this.mapLayers.collisionUnder = this.map.createLayer("No Collision Under Player", tiles, 0, 0)!;
+    this.mapLayers.collisionUnder.setScale(SCALE);
+    this.mapLayers.collisionUnder.setDepth(-8);
+
+    this.mapLayers.collisionAbove = this.map.createLayer("No Collision Above Player", tiles, 0, 0)!;
+    this.mapLayers.collisionAbove.setScale(SCALE);
+    this.mapLayers.collisionAbove.setDepth(1);
 
     this.physics.world.setBounds(0, 0, this.map.widthInPixels * SCALE, this.map.heightInPixels * SCALE);
     this.cameras.main.setBounds(0, 0, this.map.widthInPixels * SCALE, this.map.heightInPixels * SCALE);
@@ -64,6 +75,22 @@ export class GameScene extends Phaser.Scene {
 
     this.hud = new HUDController(this.startingChildCount);
     this.scene.run("HUDScene", { controller: this.hud });
+    this.mapCollidersGroup = this.physics.add.group();
+    this.tilemapObjectsManager.colliders.forEach((colliderData) => {
+      const width = colliderData.width * SCALE;
+      const height = colliderData.height * SCALE;
+      const x = colliderData.x * SCALE;
+      const y = colliderData.y * SCALE;
+
+      const collider = this.mapCollidersGroup.create(0, 0) as Phaser.Physics.Arcade.Sprite;
+      const colliderBody = collider.body as Phaser.Physics.Arcade.Body;
+
+      collider.setOrigin(0, 0);
+      collider.setSize(width, height);
+      collider.setOffset(x, y);
+      collider.setVisible(false);
+      colliderBody.setImmovable(true);
+    });
 
     // Create SickChild instances
     this.tilemapObjectsManager.players.forEach((playerPosition, childIdx) => {
@@ -77,7 +104,7 @@ export class GameScene extends Phaser.Scene {
       ).on("death", this.handleChildDeath);
       this.sickChildren.add(sickChild.sprite);
 
-      this.physics.add.collider(sickChild.sprite, this.mapLayers.barriers);
+      this.physics.add.collider(sickChild.sprite, this.mapCollidersGroup);
     });
 
     this.cameras.main.startFollow(this.sickChildren.getChildren()[0]);
