@@ -20,6 +20,7 @@ const SOLDIER_BASE_SPRITE_NAME: Record<SoldierAnimationName, string> = {
 export class BasicSoldier {
   body: Phaser.Physics.Arcade.Body;
   sprite: Phaser.GameObjects.Sprite;
+  rotatingRect: Phaser.GameObjects.Rectangle;
 
   shootingEvent: Phaser.Time.TimerEvent | undefined;
 
@@ -32,13 +33,15 @@ export class BasicSoldier {
     position: Phaser.Math.Vector2,
     private bullets: Phaser.GameObjects.Group,
     private opts: BasicSoldierOpts,
-    animationName: SoldierAnimationName,
+    private animationName: SoldierAnimationName,
   ) {
     this.sprite = this.scene.add.sprite(position.x, position.y, "master", SOLDIER_BASE_SPRITE_NAME[animationName]);
-    this.sprite.anims.play(animationName + "-right");
-    this.sprite.setScale(SCALE);
+    this.sprite.play(animationName + "-right");
+    this.sprite.setScale(SCALE).setDepth(1);
+
+    this.rotatingRect = this.scene.add.rectangle(position.x, position.y, 100, 100, 0xff0000, 0);
     const startingRotationInRadians = (opts.startingRotation * Math.PI) / 180;
-    this.sprite.setRotation(startingRotationInRadians);
+    this.rotatingRect.setRotation(startingRotationInRadians);
 
     scene.physics.world.enable(this.sprite);
 
@@ -52,7 +55,7 @@ export class BasicSoldier {
       this.scene.time.addEvent({
         delay: this.opts.shootInterval! + Math.random() * this.opts.shootIntervalJitter!,
         callback: () => {
-          this.shoot(rotateVector(this.body.rotation));
+          this.shoot(rotateVector(this.rotatingRect.angle));
           scheduleShoot();
         },
       });
@@ -64,18 +67,28 @@ export class BasicSoldier {
   update(delta: number) {
     if (!this.rotationEnabled) return;
 
-    this.body.rotation += this.rotationDirection * this.opts.rotationSpeed! * delta;
+    this.rotatingRect.angle += this.rotationDirection * this.opts.rotationSpeed! * delta;
 
     if (this.rotationDirection > 0) {
-      if (this.body.rotation > this.opts.rotationRange![1]) {
+      if (this.rotatingRect.angle > this.opts.rotationRange![1]) {
         this.rotationDirection *= -1;
       }
     }
 
     if (this.rotationDirection < 0) {
-      if (this.body.rotation < this.opts.rotationRange![0]) {
+      if (this.rotatingRect.angle < this.opts.rotationRange![0]) {
         this.rotationDirection *= -1;
       }
+    }
+
+    if (this.rotatingRect.angle > 45 && this.rotatingRect.angle < 135) {
+      this.sprite.play(this.animationName + "-down", true);
+    } else if (this.rotatingRect.angle >= 135 || this.rotatingRect.angle < -135) {
+      this.sprite.play(this.animationName + "-left", true);
+    } else if (this.rotatingRect.angle >= -135 && this.rotatingRect.angle < -45) {
+      this.sprite.play(this.animationName + "-up", true);
+    } else {
+      this.sprite.play(this.animationName + "-right", true);
     }
   }
 
