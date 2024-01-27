@@ -16,7 +16,6 @@ export class Bullet {
     this.scene.physics.world.enable(this.sprite);
 
     this.body = this.sprite.body as Phaser.Physics.Arcade.Body;
-
     this.sprite.setData("ref", this);
 
     this.scene.time.addEvent({

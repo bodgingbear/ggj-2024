@@ -158,12 +158,8 @@ export class SickChild extends EventEmitter<Events> {
     this.sprite.destroy();
     this.body.destroy();
     // @TODO add corpse
-    this.scene.time.addEvent({
-      delay: 1000,
-      callback: () => {
-        this.emit("death");
-      },
-    });
+
+    this.emit("death");
   }
 
   update() {

@@ -25,7 +25,7 @@ export class Blood {
       return sprite;
     });
 
-    const bloodFlightTimeMs = 1000;
+    const bloodFlightTimeMs = 100;
 
     this.scene.time.addEvent({
       delay: bloodFlightTimeMs,

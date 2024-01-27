@@ -184,12 +184,18 @@ export class Sniper {
     if (!this.shootingEnabled) return;
 
     if (targetHit.minDistance < SHOOTING_RANGE && closest === targetHit) {
-      this.shoot(rotateVector(this.container.angle));
+      this.shootingEnabled = false;
+
+      this.scene.time.addEvent({
+        delay: 20,
+        callback: () => {
+          this.shoot(rotateVector(this.container.angle));
+        },
+      });
     }
   }
 
   shoot = (direction: Phaser.Math.Vector2) => {
-    this.shootingEnabled = false;
     this.rotationEnabled = false;
 
     this.scene.time.addEvent({
