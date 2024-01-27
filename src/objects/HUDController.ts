@@ -6,12 +6,12 @@ export type ChildState = "active" | "inactive" | "dead";
 // bartek - dead
 
 export class HUDController {
-  private sprites!: Phaser.GameObjects.Sprite[];
+  private childSprites!: Phaser.GameObjects.Sprite[];
 
   constructor(private playerCount: number) {}
 
   create(scene: Phaser.Scene) {
-    this.sprites = Array(this.playerCount)
+    this.childSprites = Array(this.playerCount)
       .fill(0xdeadbeef)
       .map((_, i) => {
         return scene.add.sprite(40 + i * 60, 40, "kacper");
@@ -21,13 +21,13 @@ export class HUDController {
   public setState(state: ChildState, childIdx: number) {
     switch (state) {
       case "active":
-        this.sprites[childIdx].setTexture("kuba");
+        this.childSprites[childIdx].setTexture("kuba");
         break;
       case "inactive":
-        this.sprites[childIdx].setTexture("kacper");
+        this.childSprites[childIdx].setTexture("kacper");
         break;
       case "dead":
-        this.sprites[childIdx].setTexture("bartek");
+        this.childSprites[childIdx].setTexture("bartek");
         break;
     }
   }
