@@ -53,7 +53,7 @@ export class Sniper {
       rotationRange: [180, 270],
       rotationSpeed: 0.03,
       timeToShoot: 100,
-      cooldown: 1000,
+      cooldown: 100000000,
       ...opts,
     };
     this.container = this.scene.add.container(position.x, position.y).setScale(SCALE);

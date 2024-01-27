@@ -31,7 +31,7 @@ export class SickChild extends EventEmitter<Events> {
 
   private controlled: boolean = false;
   private controlKey: string;
-  hp: number = 1;
+  hp: number = 100;
 
   destroyed: boolean = false;
 

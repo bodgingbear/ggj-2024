@@ -113,6 +113,7 @@ export class GameScene extends Phaser.Scene {
     });
     this.hud = new HUDController(this, this.sickChildren);
 
+    new ChildMovementController(this, this.sickChildren, this.startingChildCount, this.hud);
     this.cameras.main.startFollow(this.sickChildren.getChildren()[0]);
     this.cameras.main.stopFollow();
 
@@ -163,8 +164,6 @@ export class GameScene extends Phaser.Scene {
   update(_time: number, delta: number) {
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
-
-    new ChildMovementController(this, this.sickChildren, this.startingChildCount, this.hud);
 
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");
