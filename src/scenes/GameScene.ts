@@ -19,17 +19,6 @@ interface MapLayers {
   collisionAbove: Phaser.Tilemaps.TilemapLayer;
 }
 
-// KillZone
-
-// - stwórz killzone class - DONE
-// - stwórz health bary soldierów - DONE
-// - health bar pokazuje się tylko jak in the killzone - DONE
-// - ZMNIEJSZAJ HEALTH NA ATTACK (attack spacją)
-//    - możliwy tylko jak w kółku
-// - zniszczenie soldiera jak 0 health
-// - aktywuj health bary tylko kiedy Child jest w niewidzialnym kółeczku
-// - jak health bar na zero to soldier destroy
-
 export class GameScene extends Phaser.Scene {
   public static start(scene: Phaser.Scene, level: AvailableLevels) {
     scene.scene.start("GameScene", { level });
@@ -224,13 +213,6 @@ export class GameScene extends Phaser.Scene {
         child.winLevel(this.exitManager, this.sickChildren.getLength());
       }
 
-      // czyli if isActive zone i zostanie naciśnięta spacja
-
-      // kiedy SickChild jest in the zone to chcemy wywolłać na nim
-
-      // czyli jakoś trzeba połączyć jednak dziecko z killzonem!
-      // JAKOS TO ZEMITUJ I GIT
-
       // Check for children in kill zones
       this.killZones.getChildren().forEach((killZoneObj) => {
         const killZone: KillZone = killZoneObj.getData("ref");
@@ -246,20 +228,15 @@ export class GameScene extends Phaser.Scene {
 
           if (isChildInKillZone) {
             const isNotActiveZone = !killZone.zone.getData("isActive");
+
             if (isNotActiveZone) {
-              killZone.emit("child_in_kill_zone");
               killZone.zone.setData("isActive", true);
               killZone.healthBar.show();
-
-              // ATTACK THE ZONE!
-              // if (child.isHaHaHaAttacking) {
-              //   killZone.healthBar.emit("HAHAHA_attack");
-              // }
             }
           } else {
             const isActiveZone = killZone.zone.getData("isActive");
+
             if (isActiveZone) {
-              killZone.emit("child_off_kill_zone");
               killZone.zone.setData("isActive", false);
               killZone.healthBar.hide();
             }

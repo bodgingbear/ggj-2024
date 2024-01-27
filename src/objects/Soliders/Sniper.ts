@@ -79,8 +79,6 @@ export class Sniper {
 
     this.killZone = killZone;
     this.killZone.activateKillZoneOnSprite(this.container, this.scene);
-    // this.killZone.on("child_in_kill_zone", () => console.log("SNIPER DAMAGE"));
-    // this.killZone.on("child_off_kill_zone", () => console.log("NOT ANYMORE"));
   }
 
   trackTargetGroup(group: Phaser.GameObjects.Group) {
@@ -94,7 +92,6 @@ export class Sniper {
   onHit() {
     this.killZone.healthBar.decreaseHealthBy(20);
     if (this.killZone.healthBar.healthLvl <= 0) {
-      this.killZone.healthBar.destroy();
       this.killZone.zone.destroy();
       this.sprite.destroy();
     }

@@ -69,8 +69,6 @@ export class BasicSoldier {
 
     this.killZone = killZone;
     this.killZone.activateKillZoneOnSprite(this.sprite, this.scene);
-    this.killZone.on("child_in_kill_zone", () => console.log("SOLDIER IN DANGER"));
-    this.killZone.on("child_off_kill_zone", () => console.log("NOT ANYMORE"));
   }
 
   update(delta: number) {
@@ -104,7 +102,6 @@ export class BasicSoldier {
   onHit() {
     this.killZone.healthBar.decreaseHealthBy(20);
     if (this.killZone.healthBar.healthLvl <= 0) {
-      this.killZone.healthBar.destroy();
       this.killZone.zone.destroy();
       this.sprite.destroy();
     }
