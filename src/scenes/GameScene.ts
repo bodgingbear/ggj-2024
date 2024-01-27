@@ -4,6 +4,8 @@ import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
 import { ChildMovementController } from "../objects/SickChild/ChildMovementController";
 import { HUDController } from "../objects/HUDController";
+import { intersects } from "../utils/intersects/intersects";
+import { ExitManager } from "../objects/ExitManager/ExitManager";
 
 interface MapLayers {
   ground: Phaser.Tilemaps.TilemapLayer;
@@ -30,8 +32,12 @@ export class GameScene extends Phaser.Scene {
   private sickChildren!: Phaser.GameObjects.Group;
   private hud!: HUDController;
 
+  private exitManager!: ExitManager;
+  private exit!: Phaser.GameObjects.Text;
+
   private startingChildCount!: number;
   private mapCollidersGroup!: Phaser.Physics.Arcade.Group;
+  private currentChildCount!: number;
 
   private createMap() {
     this.map = this.make.tilemap({ key: "tilemap" });
@@ -110,6 +116,11 @@ export class GameScene extends Phaser.Scene {
     this.cameras.main.startFollow(this.sickChildren.getChildren()[0]);
     this.cameras.main.stopFollow();
 
+    // Manage exit
+    this.exitManager = new ExitManager(this);
+    this.exit = this.exitManager.getExit();
+    this.exitManager.on("level_win", this.handleLevelWin);
+
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
 
@@ -137,6 +148,8 @@ export class GameScene extends Phaser.Scene {
   }
 
   update(_time: number, delta: number) {
+    this.currentChildCount = this.sickChildren.getLength();
+
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
 
@@ -145,6 +158,11 @@ export class GameScene extends Phaser.Scene {
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");
       child.update();
+
+      if (intersects(child.sprite, this.exit)) {
+        this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
+        child.winLevel(this.exitManager, this.currentChildCount);
+      }
     });
   }
 
@@ -154,5 +172,9 @@ export class GameScene extends Phaser.Scene {
       // Animate view change
       this.cameras.main.pan(child.sprite.x, child.sprite.y, CHANGE_PLAYER_VIEW_TIME, "Sine.easeInOut", undefined);
     }
+  };
+
+  handleLevelWin = () => {
+    alert("ALL SAVED! YEEEEEAH!");
   };
 }

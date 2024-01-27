@@ -3,6 +3,7 @@ import { Bullet } from "../Soliders/Bullet";
 import { Blood } from "./Blood";
 import { CHANGE_PLAYER_VIEW_TIME, SCALE } from "../../constants";
 import { HUDController } from "../HUDController";
+import { ExitManager } from "../ExitManager/ExitManager";
 
 const PLAYER_VELOCITY = 600;
 
@@ -109,6 +110,13 @@ export class SickChild extends EventEmitter<Events> {
     new Blood(this.scene, this.body.position, 100, 50, 50);
     if (this.hp <= 0) {
       this.destroy();
+    }
+  }
+
+  winLevel(exitManager: ExitManager, currentChildCount: number) {
+    this.sprite.destroy();
+    if (currentChildCount === 1) {
+      exitManager.emit("level_win");
     }
   }
 

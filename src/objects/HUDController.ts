@@ -1,9 +1,10 @@
-export type ChildState = "active" | "inactive" | "dead";
+export type ChildState = "active" | "inactive" | "dead" | "saved";
 
 // CURRENT STATE MAPPING:
 // kuba - active
 // kacper - inactive
 // bartek - dead
+// rafal - saved
 
 export class HUDController {
   private childSprites!: Phaser.GameObjects.Sprite[];
@@ -28,6 +29,9 @@ export class HUDController {
         break;
       case "dead":
         this.childSprites[childIdx].setTexture("bartek");
+        break;
+      case "saved":
+        this.childSprites[childIdx].setTexture("rafal");
         break;
     }
   }
