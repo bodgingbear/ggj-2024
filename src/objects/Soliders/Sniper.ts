@@ -74,38 +74,6 @@ export class Sniper {
 
   trackBarriers(barriers: Phaser.GameObjects.Group) {
     this.barriers = barriers;
-    // console.log(barriers);
-    // this.barriers.forEachTile((tile) => {
-    //   //   console.log(tile);
-    // });
-
-    // const containerPos = new Phaser.Math.Vector2(this.container.x, this.container.y);
-    // const startPos = new Phaser.Math.Vector2(this.line.x, this.line.y).add(containerPos);
-
-    // const endPos = new Phaser.Math.Vector2(
-    //   this.line.x + this.line.width * SCALE,
-    //   this.line.y + this.line.height * SCALE,
-    // ).add(containerPos);
-
-    // const line = new Phaser.Geom.Line(startPos.x, startPos.y, endPos.x, endPos.y);
-    // this.lineDebug = this.scene.add.line(0, 0, line.x1, line.y1, line.x2, line.y2, 0xff00ff, 1).setOrigin(0);
-
-    // this.barriers.forEachTile((tile) => {
-    //   if (!tile.tileset) return;
-
-    //   const rect = new Phaser.Geom.Rectangle(
-    //     tile.pixelX * SCALE,
-    //     tile.pixelY * SCALE,
-    //     tile.width * SCALE,
-    //     tile.height * SCALE,
-    //   );
-    //   //   console.log(tile, rect);
-    //   setTimeout(() => {
-    //     this.scene.add.rectangle(rect.x + 5, rect.y + 5, rect.width - 10, rect.height - 10, 0x00ff00, 0.1).setOrigin(0);
-    //   }, 100);
-    //   //   const out = Phaser.Geom.Intersects.GetLineToRectangle(line, rect);
-    //   //   if (out.length > 0) console.log(out);
-    // });
   }
 
   update(delta: number) {
@@ -125,8 +93,6 @@ export class Sniper {
         }
       }
     }
-
-    // this.targetGroup?.getChildren().forEach((child) => {});
   }
 
   drawLaser() {
@@ -139,8 +105,6 @@ export class Sniper {
     ).add(startPos);
 
     const line = new Phaser.Geom.Line(startPos.x, startPos.y, endPos.x, endPos.y);
-
-    // this.lineDebug.setTo(line.x1, line.y1, line.x2, line.y2);
 
     const barriersHit = {
       minDistance: Infinity,
@@ -220,9 +184,11 @@ export class Sniper {
             1500,
           ).sprite.setData("hp", 2),
         );
+        this.line.setAlpha(0);
         this.scene.time.addEvent({
           delay: this.opts.cooldown!,
           callback: () => {
+            this.line.setAlpha(1);
             this.shootingEnabled = true;
             this.rotationEnabled = true;
           },
