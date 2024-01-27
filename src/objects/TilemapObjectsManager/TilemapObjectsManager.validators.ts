@@ -17,6 +17,13 @@ export interface TiledBasicSoldierObject {
   sprite: SoldierAnimationName;
 }
 
+export interface TiledColliderObject {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
 const PropertiesValidator = z.array(
   z.object({
     name: z.string(),
@@ -72,6 +79,7 @@ const BasicSoldierValidator = z.object({
     shootIntervalJitter: z.number(),
     bulletsInSeries: z.number(),
     rotationSpeed: z.number(),
+    startingRotation: z.number(),
     stopOnShoot: z.boolean(),
     sprite: z.literal("basic-soldier"),
   }),
@@ -97,5 +105,31 @@ export function parseBasicSoldier(obj: TiledObject): TiledBasicSoldierObject | n
       rotationRange: [rotationRangeStart, rotationRangeEnd],
     },
     sprite,
+  };
+}
+
+const ColliderValidator = z.object({
+  x: z.number(),
+  y: z.number(),
+  height: z.number(),
+  width: z.number(),
+  type: z.literal("Collider"),
+});
+
+export function parseCollider(obj: TiledObject): TiledColliderObject | null {
+  const data = ColliderValidator.safeParse({
+    ...obj,
+    properties: parseProperties(obj.properties),
+  });
+
+  if (!data.success) {
+    return null;
+  }
+
+  return {
+    x: data.data.x,
+    y: data.data.y,
+    height: data.data.height,
+    width: data.data.width,
   };
 }

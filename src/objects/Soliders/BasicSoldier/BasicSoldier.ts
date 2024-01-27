@@ -3,6 +3,7 @@ import { rotateVector } from "../../../utils/rotateVector";
 import { Bullet } from "../Bullet";
 
 export type BasicSoldierOpts = {
+  startingRotation: number;
   rotationRange: [number, number];
   shootInterval: number;
   shootIntervalJitter: number;
@@ -36,6 +37,8 @@ export class BasicSoldier {
     this.sprite = this.scene.add.sprite(position.x, position.y, "master", SOLDIER_BASE_SPRITE_NAME[animationName]);
     this.sprite.anims.play(animationName);
     this.sprite.setScale(SCALE);
+    const startingRotationInRadians = (opts.startingRotation * Math.PI) / 180;
+    this.sprite.setRotation(startingRotationInRadians);
 
     scene.physics.world.enable(this.sprite);
 

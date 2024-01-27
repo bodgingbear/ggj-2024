@@ -21,6 +21,11 @@ export class LoadingScene extends Phaser.Scene {
     // Assets go here
     this.load.video("demo", loadAsset("videos/demo.mp4"), true);
 
+    this.load.image("kacper", loadAsset("images/credits/kacper.png"));
+    this.load.image("kuba", loadAsset("images/credits/kuba.png"));
+    this.load.image("bartek", loadAsset("images/credits/bartek.png"));
+    this.load.image("rafal", loadAsset("images/credits/rafal.png"));
+
     this.load.multiatlas("master", "atlas/atlas.json", "atlas");
     this.load.image("base_tiles", loadAsset("maps/tilemap.png"));
     this.load.tilemapTiledJSON("tilemap", loadAsset("maps/tilemap.tmj"));
