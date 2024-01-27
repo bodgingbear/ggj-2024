@@ -7,14 +7,16 @@ export type ChildState = "active" | "inactive" | "dead" | "saved";
 const GAP = 4 * SCALE;
 const TILE_WIDTH = 15 * SCALE;
 const FRAME_TOP_OFFSET = 3 * SCALE;
+const TEXT_GAP = 2 * SCALE;
 
 class PlayerTile {
   private frameSprite: Phaser.GameObjects.Sprite;
   private avatarSprite: Phaser.GameObjects.Sprite;
   private maskSprite: Phaser.GameObjects.Sprite;
   private backgroundSprite: Phaser.GameObjects.Sprite;
+  private controlKeyText: Phaser.GameObjects.Text;
 
-  constructor(scene: Phaser.Scene, x: number, y: number, animationName: SickChildAnimationName) {
+  constructor(scene: Phaser.Scene, x: number, y: number, animationName: SickChildAnimationName, controlKey: string) {
     this.backgroundSprite = scene.add.sprite(0, 0, "master", "UI/Frame/ActiveBackground");
     this.backgroundSprite.setScale(SCALE);
     this.backgroundSprite.setOrigin(0, 0);
@@ -36,6 +38,10 @@ class PlayerTile {
     this.frameSprite.setOrigin(0, 0);
     this.frameSprite.setPosition(x, y);
 
+    this.controlKeyText = scene.add.text(0, 0, controlKey);
+    this.controlKeyText.setOrigin(0.5, 0);
+    this.controlKeyText.setPosition(x + this.backgroundSprite.displayWidth / 2, y + TILE_WIDTH + TEXT_GAP);
+
     const mask = this.maskSprite.createBitmapMask();
     this.avatarSprite.setMask(mask);
 
@@ -50,6 +56,8 @@ class PlayerTile {
         this.avatarSprite.setAlpha(1);
         this.frameSprite.setAlpha(1);
         this.backgroundSprite.setAlpha(1);
+        this.controlKeyText.setColor("#ffd506");
+
         break;
       case "inactive":
         this.frameSprite.setTexture("master", "UI/Frame/Inactive");
@@ -57,6 +65,8 @@ class PlayerTile {
         this.avatarSprite.setAlpha(1);
         this.frameSprite.setAlpha(0);
         this.backgroundSprite.setAlpha(0.5);
+        this.controlKeyText.setColor("#ffffff");
+
         break;
       case "dead":
         this.frameSprite.setTexture("master", "UI/Frame/Dead");
@@ -64,6 +74,9 @@ class PlayerTile {
         this.avatarSprite.setAlpha(0.5);
         this.frameSprite.setAlpha(1);
         this.backgroundSprite.setAlpha(1);
+        this.controlKeyText.setAlpha(0.5);
+        this.controlKeyText.setColor("#ffffff");
+
         break;
       case "saved":
         this.frameSprite.setTexture("master", "UI/Frame/Saved");
@@ -71,6 +84,8 @@ class PlayerTile {
         this.avatarSprite.setAlpha(0.5);
         this.frameSprite.setAlpha(1);
         this.backgroundSprite.setAlpha(1);
+        this.controlKeyText.setColor("#37ba12");
+
         break;
       default:
         assertNever(state);
@@ -94,7 +109,9 @@ export class HUDController {
     for (let i = 0; i < playersList.length; i++) {
       const player = playersList[i].getData("ref") as SickChild;
 
-      this.playerTiles.push(new PlayerTile(scene, GAP + i * (TILE_WIDTH + GAP), GAP, player.getAnimationName()));
+      this.playerTiles.push(
+        new PlayerTile(scene, GAP + i * (TILE_WIDTH + GAP), GAP, player.getAnimationName(), player.getControlKey()),
+      );
     }
   }
 
