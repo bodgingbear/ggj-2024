@@ -1,11 +1,12 @@
 import { AVAILABLE_LEVELS, AvailableLevels, SCALE } from "../constants";
+import { ExitManager } from "../objects/ExitManager/ExitManager";
+import { HUDController } from "../objects/HUDController";
+import { KillZone } from "../objects/KillZone/KillZone";
+import { ChildMovementController } from "../objects/SickChild/ChildMovementController";
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
-import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
-import { ChildMovementController } from "../objects/SickChild/ChildMovementController";
 import { Sniper } from "../objects/Soliders/Sniper";
-import { HUDController } from "../objects/HUDController";
-import { ExitManager } from "../objects/ExitManager/ExitManager";
+import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
 import { GameOverScene } from "./GameOverScene";
 import { assertExistence } from "../utils/assertExistence/assertExistence";
 import { TombStonesManager } from "../objects/TombStonesManager/TombStonesManager";
@@ -38,12 +39,15 @@ export class GameScene extends Phaser.Scene {
   private bullets!: Phaser.GameObjects.Group;
   private soldiers!: Phaser.GameObjects.Group;
   private sickChildren!: Phaser.GameObjects.Group;
+  private killZones!: Phaser.GameObjects.Group;
   private hud!: HUDController;
   private level!: AvailableLevels;
 
   private exitManager!: ExitManager;
 
   private mapCollidersGroup!: Phaser.Physics.Arcade.Group;
+
+  private canChildLaugh = true;
 
   private createMap(level: AvailableLevels) {
     this.map = this.make.tilemap({ key: level });
@@ -129,30 +133,40 @@ export class GameScene extends Phaser.Scene {
 
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
+    this.killZones = this.physics.add.group({});
 
+    // CREATE BASIC SOLDIERS
     this.tilemapObjectsManager.objects.basicSoldiers.forEach((soldierData) => {
+      const soldierKillZone = new KillZone();
       const soldier = new BasicSoldier(
         this,
         new Phaser.Math.Vector2(soldierData.x * SCALE, soldierData.y * SCALE),
         this.bullets,
         soldierData.options,
         soldierData.sprite,
+        soldierKillZone,
       );
 
+      this.killZones.add(soldierKillZone.zone);
       this.soldiers.add(soldier.sprite);
     });
+
+    // CREATE SNIPERS
     this.tilemapObjectsManager.objects.snipers.forEach((sniperData) => {
+      const sniperKillZone = new KillZone();
       const sniper = new Sniper(
         this,
         new Phaser.Math.Vector2(sniperData.x * SCALE, sniperData.y * SCALE),
         this.bullets,
         sniperData.options,
         sniperData.sprite,
+        sniperKillZone,
       );
 
       sniper.trackTargetGroup(this.sickChildren);
       sniper.trackBarriers(this.mapCollidersGroup);
 
+      this.killZones.add(sniperKillZone.zone);
       this.soldiers.add(sniper.sprite);
     });
 
@@ -197,7 +211,59 @@ export class GameScene extends Phaser.Scene {
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");
       child.update();
+
+      // Check for children in kill zones
+      this.killZones.getChildren().forEach((killZoneObj) => {
+        const killZone: KillZone = killZoneObj.getData("ref");
+
+        this.sickChildren.getChildren().forEach((childObj) => {
+          const child: SickChild = childObj.getData("ref");
+
+          if (!child.controlled) {
+            return;
+          }
+
+          const isChildInKillZone = this.physics.overlap(killZone.zone, child.sprite);
+
+          if (isChildInKillZone) {
+            const isNotActiveZone = !killZone.zone.getData("isActive");
+
+            if (isNotActiveZone) {
+              killZone.zone.setData("isActive", true);
+              killZone.healthBar.show();
+            }
+          } else {
+            const isActiveZone = killZone.zone.getData("isActive");
+
+            if (isActiveZone) {
+              killZone.zone.setData("isActive", false);
+              killZone.healthBar.hide();
+            }
+          }
+        });
+      });
     });
+
+    this.cameras.main.setZoom(0.6);
+
+    if (this.keys.space.isDown) {
+      console.log("SPACE");
+      if (!this.canChildLaugh) return;
+      this.canChildLaugh = false;
+      this.time.addEvent({
+        delay: 1000,
+        callback: () => {
+          this.canChildLaugh = true;
+        },
+      });
+
+      this.soldiers.getChildren().forEach((soldierObj) => {
+        const soldier = soldierObj.getData("ref") as BasicSoldier | Sniper;
+        if (soldier.killZone.zone.getData("isActive")) {
+          soldier?.onHit?.();
+        }
+      });
+    }
   }
 
   handleChildDeath = (child: SickChild) => () => {

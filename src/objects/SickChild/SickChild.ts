@@ -43,7 +43,7 @@ export class SickChild extends EventEmitter<Events> {
 
   sprite: Phaser.GameObjects.Sprite;
 
-  private controlled: boolean = false;
+  public controlled: boolean = false;
   private controlKey: string;
   hp: number = 1;
 

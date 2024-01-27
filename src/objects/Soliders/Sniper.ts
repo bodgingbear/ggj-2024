@@ -1,5 +1,6 @@
 import { SCALE } from "../../constants";
 import { rotateVector } from "../../utils/rotateVector";
+import { KillZone } from "../KillZone/KillZone";
 import { Bullet } from "./Bullet";
 
 export type SniperOpts = {
@@ -41,12 +42,15 @@ export class Sniper {
 
   lineDebug!: Phaser.GameObjects.Line;
 
+  killZone!: KillZone;
+
   constructor(
     private scene: Phaser.Scene,
     position: Phaser.Math.Vector2,
     private bullets: Phaser.GameObjects.Group,
     public opts: SniperOpts,
     private animationName: SniperAnimationName,
+    killZone: KillZone,
   ) {
     this.container = this.scene.add.container(position.x, position.y).setScale(SCALE);
 
@@ -72,6 +76,9 @@ export class Sniper {
     this.body.setCollideWorldBounds(true);
 
     this.sprite.setData("ref", this);
+
+    this.killZone = killZone;
+    this.killZone.activateKillZoneOnSprite(this.container, this.scene);
   }
 
   trackTargetGroup(group: Phaser.GameObjects.Group) {
@@ -80,6 +87,15 @@ export class Sniper {
 
   trackBarriers(barriers: Phaser.GameObjects.Group) {
     this.barriers = barriers;
+  }
+
+  onHit() {
+    this.killZone.healthBar.decreaseHealthBy(20);
+    if (this.killZone.healthBar.healthLvl <= 0) {
+      this.killZone.zone.destroy();
+      this.sprite.destroy();
+      this.line.destroy();
+    }
   }
 
   update(delta: number) {
