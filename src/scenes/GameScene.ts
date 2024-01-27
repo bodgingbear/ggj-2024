@@ -133,6 +133,8 @@ export class GameScene extends Phaser.Scene {
       const child: SickChild = this.sickChildren.getChildren()[0].getData("ref");
       // Animate view change
       this.cameras.main.pan(child.sprite.x, child.sprite.y, CHANGE_PLAYER_VIEW_TIME, "Sine.easeInOut", undefined);
+    } else {
+      this.scene.run("GameOverScene");
     }
   };
 }

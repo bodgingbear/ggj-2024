@@ -10,13 +10,14 @@ import { GameScene } from "./scenes/GameScene";
 import { HowToPlayScene } from "./scenes/HowToPlayScene";
 import { CreditsScene } from "./scenes/CreditsScene";
 import { HUDScene } from "./scenes/HUDScene";
+import { GameOverScene } from "./scenes/GameOverScene";
 
 const game = new Phaser.Game({
   type: Phaser.AUTO,
   banner: true,
   width: 1920,
   height: 1080,
-  scene: [BootScene, LoadingScene, MainMenuScene, GameScene, HowToPlayScene, CreditsScene, HUDScene],
+  scene: [BootScene, LoadingScene, MainMenuScene, GameScene, HowToPlayScene, CreditsScene, HUDScene, GameOverScene],
   scale: {
     parent: "app",
     mode: Phaser.Scale.FIT,
