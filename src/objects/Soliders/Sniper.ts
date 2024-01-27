@@ -16,7 +16,7 @@ const SNIPER_BASE_SPRITE_NAME: Record<SniperAnimationName, string> = {
 
 const RAY_LENGTH = 1000;
 
-const SHOOTING_RANGE = 1000;
+const SHOOTING_RANGE = Infinity;
 
 export class Sniper {
   body: Phaser.Physics.Arcade.Body;

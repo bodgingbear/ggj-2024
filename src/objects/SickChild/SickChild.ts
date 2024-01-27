@@ -127,11 +127,12 @@ export class SickChild extends EventEmitter<Events> {
   public destroy() {
     if (this.destroyed) return;
     this.destroyed = true;
+    this.sprite.destroy();
+    this.body.destroy();
+    // @TODO add corpse
     this.scene.time.addEvent({
       delay: 1000,
       callback: () => {
-        this.sprite.destroy();
-        this.body.destroy();
         this.emit("death");
 
         this.hud.setState("dead", parseInt(this.controlKey) - 1);
