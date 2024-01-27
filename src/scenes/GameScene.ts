@@ -1,4 +1,4 @@
-import { SCALE } from "../constants";
+import { CHANGE_PLAYER_VIEW_TIME, SCALE } from "../constants";
 import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { HUD } from "../objects/HUD/HUD";
@@ -9,6 +9,8 @@ interface MapLayers {
   ground: Phaser.Tilemaps.TilemapLayer;
   barriers: Phaser.Tilemaps.TilemapLayer;
 }
+
+// @TODO: (IN THE MORNING) think through Player movementtogether with the camera follow/transition
 
 export class GameScene extends Phaser.Scene {
   private keys!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -127,7 +129,9 @@ export class GameScene extends Phaser.Scene {
       if (shouldControlChild) {
         child.setControlled(true);
         child.update();
-        this.cameras.main.startFollow(child.sprite);
+
+        // Animate view change
+        this.cameras.main.pan(child.sprite.x, child.sprite.y, CHANGE_PLAYER_VIEW_TIME, "Sine.easeInOut", undefined);
       } else {
         child.setControlled(false);
       }
@@ -137,7 +141,9 @@ export class GameScene extends Phaser.Scene {
   handleChildDeath = () => {
     this.hud.decreaseCounter();
     if (this.sickChildren.getLength() > 0) {
-      this.cameras.main.startFollow(this.sickChildren.getChildren()[0]);
+      const child: SickChild = this.sickChildren.getChildren()[0].getData("ref");
+      // Animate view change
+      this.cameras.main.pan(child.sprite.x, child.sprite.y, CHANGE_PLAYER_VIEW_TIME, "Sine.easeInOut", undefined);
     }
   };
 }

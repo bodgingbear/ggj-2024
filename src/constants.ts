@@ -1,7 +1,5 @@
 import { TeamMemberData } from "./types/TeamMember";
 
-export const CHILDREN_COUNT = 5;
-
 export const TEAM: TeamMemberData[] = [
   {
     name: "Kacper Pietrzak",
@@ -54,3 +52,5 @@ export const TEAM: TeamMemberData[] = [
 ];
 
 export const SCALE = 5;
+export const CHILDREN_COUNT = 5;
+export const CHANGE_PLAYER_VIEW_TIME = 250;
