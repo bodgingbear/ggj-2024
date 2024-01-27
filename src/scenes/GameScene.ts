@@ -4,6 +4,7 @@ import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { Counter } from "../objects/Counter/Counter";
 import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
 import { ChildMovementController } from "../objects/SickChild/ChildMovementController";
+import { Sniper } from "../objects/Soliders/Sniper";
 
 interface MapLayers {
   ground: Phaser.Tilemaps.TilemapLayer;
@@ -84,6 +85,11 @@ export class GameScene extends Phaser.Scene {
 
     this.bullets = this.physics.add.group({});
     this.soldiers = this.physics.add.group({});
+
+    const sniper = new Sniper(this, new Phaser.Math.Vector2(337, 165).scale(SCALE), this.bullets);
+    sniper.trackTargetGroup(this.sickChildren);
+    sniper.trackBarriers(this.mapLayers.barriers);
+    this.soldiers.add(sniper.sprite);
 
     this.tilemapObjectsManager.basicSoldiers.forEach((soldierData) => {
       const soldier = new BasicSoldier(
