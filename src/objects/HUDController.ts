@@ -10,6 +10,8 @@ const FRAME_TOP_OFFSET = 3 * SCALE;
 const TEXT_GAP = 2 * SCALE;
 
 class PlayerTile {
+  public state!: ChildState;
+
   private frameSprite: Phaser.GameObjects.Sprite;
   private avatarSprite: Phaser.GameObjects.Sprite;
   private maskSprite: Phaser.GameObjects.Sprite;
@@ -49,6 +51,8 @@ class PlayerTile {
   }
 
   public setState(state: ChildState) {
+    this.state = state;
+
     switch (state) {
       case "active":
         this.frameSprite.setTexture("master", "UI/Frame/Active");
@@ -118,4 +122,8 @@ export class HUDController {
   public setState(state: ChildState, childIdx: number) {
     this.playerTiles[childIdx].setState(state);
   }
+
+  // public getChildState(childIdx: number): ChildState {
+  //   return this.playerTiles[childIdx].state;
+  // }
 }

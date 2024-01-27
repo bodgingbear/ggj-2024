@@ -1,6 +1,9 @@
 import { HUDController } from "../HUDController";
 import { SickChild } from "./SickChild";
 
+let canPressSpace = true;
+const spacePressBuffer = 600; // ms
+
 export class ChildMovementController {
   private sickChildren!: Phaser.GameObjects.Group;
 
@@ -26,6 +29,7 @@ export class ChildMovementController {
 
   handleChildMovementKeyDown = (event: KeyboardEvent) => {
     const key = event.key;
+    const code = event.code;
 
     // Activate all children with Shift
     if (key === "Shift") {
@@ -49,6 +53,31 @@ export class ChildMovementController {
           this.hud.setState("active", parseInt(childKey) - 1);
         }
       });
+    }
+
+    if (code === "Space") {
+      if (canPressSpace) {
+        canPressSpace = false;
+        // PERFORM ATTACK WITH ACTIVE CHILDREN
+        console.log("ATTACK!!!");
+        this.sickChildren.getChildren().forEach((childObj) => {
+          const sickChild: SickChild = childObj.getData("ref");
+
+          // const isSickChi
+          if (sickChild.controlled) {
+            console.log("started attack");
+
+            sickChild.setIsPerformingHaHaHaAttack(true);
+          }
+          // @TODO: set to false setIsPerformingHaHaHaAttack
+        });
+
+        // haHaHaAttackOnTheZone
+        setTimeout(() => {
+          console.log("can attack again!");
+          canPressSpace = true;
+        }, spacePressBuffer);
+      }
     }
   };
 
