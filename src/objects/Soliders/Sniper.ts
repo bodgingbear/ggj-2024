@@ -46,26 +46,23 @@ export class Sniper {
     position: Phaser.Math.Vector2,
     private bullets: Phaser.GameObjects.Group,
     public opts: SniperOpts,
-    animationName: SniperAnimationName,
+    private animationName: SniperAnimationName,
   ) {
     this.container = this.scene.add.container(position.x, position.y).setScale(SCALE);
 
     this.container.angle = opts.startingRotation;
 
-    this.sprite = new Phaser.GameObjects.Sprite(
-      this.scene,
-      0,
-      0,
-      "master",
-      SNIPER_BASE_SPRITE_NAME[animationName],
-    ).setTint(0x555555);
+    this.sprite = this.scene.add
+      .sprite(position.x, position.y, "master", SNIPER_BASE_SPRITE_NAME[animationName])
+      .setScale(SCALE)
+      .setTint(0x555555);
 
-    this.line = new Phaser.GameObjects.Line(this.scene, 3, -0.5, 0, 0, RAY_LENGTH, 0)
+    this.line = new Phaser.GameObjects.Line(this.scene, 0, 0, 0, 0, RAY_LENGTH, 0)
       .setOrigin(0, 0.5)
       .setLineWidth(1)
       .setStrokeStyle(0.5, 0xff2222, 1);
 
-    this.container.add([this.sprite, this.line]);
+    this.container.add([this.line]);
     this.sprite.anims.play(animationName + "-" + "right");
 
     scene.physics.world.enable(this.sprite);
@@ -101,6 +98,20 @@ export class Sniper {
           this.rotationDirection *= -1;
         }
       }
+    }
+
+    if (this.container.angle > 45 && this.container.angle < 135) {
+      this.container.setDepth(1);
+      this.sprite.play(this.animationName + "-down", true);
+    } else if (this.container.angle >= 135 || this.container.angle < -135) {
+      this.container.setDepth(1);
+      this.sprite.play(this.animationName + "-left", true);
+    } else if (this.container.angle >= -135 && this.container.angle < -45) {
+      this.container.setDepth(-1);
+      this.sprite.play(this.animationName + "-up", true);
+    } else {
+      this.container.setDepth(1);
+      this.sprite.play(this.animationName + "-right", true);
     }
   }
 
