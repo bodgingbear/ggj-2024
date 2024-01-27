@@ -94,6 +94,7 @@ export class Sniper {
     if (this.killZone.healthBar.healthLvl <= 0) {
       this.killZone.zone.destroy();
       this.sprite.destroy();
+      this.line.destroy();
     }
   }
 

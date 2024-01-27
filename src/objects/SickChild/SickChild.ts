@@ -86,10 +86,6 @@ export class SickChild extends EventEmitter<Events> {
   }
 
   setControlled(value: boolean): void {
-    if (value === this.controlled) {
-      return;
-    }
-
     if (value && !this.scene.data.get("cameraIsMoving")) {
       const previousControlled = this.scene.data.get("currentlyControlled");
       this.scene.data.set("currentlyControlled", this);

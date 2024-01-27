@@ -7,7 +7,6 @@ import { SickChild } from "../objects/SickChild/SickChild";
 import { BasicSoldier } from "../objects/Soliders/BasicSoldier/BasicSoldier";
 import { Sniper } from "../objects/Soliders/Sniper";
 import { TilemapObjectsManager } from "../objects/TilemapObjectsManager/TilemapObjectsManager";
-import { intersects } from "../utils/intersects/intersects";
 import { GameOverScene } from "./GameOverScene";
 import { assertExistence } from "../utils/assertExistence/assertExistence";
 import { TombStonesManager } from "../objects/TombStonesManager/TombStonesManager";
@@ -46,7 +45,6 @@ export class GameScene extends Phaser.Scene {
 
   private exitManager!: ExitManager;
 
-  private startingChildCount!: number;
   private mapCollidersGroup!: Phaser.Physics.Arcade.Group;
 
   private canChildLaugh = true;
@@ -91,8 +89,6 @@ export class GameScene extends Phaser.Scene {
 
     this.tombStonesManager = new TombStonesManager(this);
     this.sickChildren = this.physics.add.group({});
-
-    this.startingChildCount = this.tilemapObjectsManager.objects.players.length;
 
     this.mapCollidersGroup = this.physics.add.group();
     this.tilemapObjectsManager.objects.colliders.forEach((colliderData) => {
@@ -191,27 +187,30 @@ export class GameScene extends Phaser.Scene {
         bulletObj.getData("ref")?.destroy();
       },
     );
+
+    new ChildMovementController(this, this.sickChildren, this.hud);
+
+    this.sickChildren.getChildren().forEach((childObj) => {
+      const child: SickChild = childObj.getData("ref");
+
+      this.physics.add.overlap(child.sprite, this.exitManager.getExitGroup(), () => {
+        this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
+        child.winLevel(this.exitManager, this.sickChildren.getLength());
+
+        if (this.sickChildren.getLength() === 0) {
+          this.handleLevelWin();
+        }
+      });
+    });
   }
 
   update(_time: number, delta: number) {
     this.bullets?.getChildren().forEach((b) => b.getData("ref").update());
     this.soldiers?.getChildren().forEach((b) => b.getData("ref").update(delta));
 
-    new ChildMovementController(this, this.sickChildren, this.startingChildCount, this.hud);
-
-    const exitGroup = this.exitManager.getExitGroup();
     this.sickChildren.getChildren().forEach((childObj) => {
       const child: SickChild = childObj.getData("ref");
       child.update();
-
-      const isIntersecting = exitGroup
-        .getChildren()
-        .some((exit) => intersects(child.sprite, exit as Phaser.GameObjects.Rectangle));
-
-      if (isIntersecting) {
-        this.hud.setState("saved", parseInt(child.getControlKey()) - 1);
-        child.winLevel(this.exitManager, this.sickChildren.getLength());
-      }
 
       // Check for children in kill zones
       this.killZones.getChildren().forEach((killZoneObj) => {
