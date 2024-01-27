@@ -52,12 +52,21 @@ export class Sniper {
 
     this.container.angle = opts.startingRotation;
 
-    this.sprite = new Phaser.GameObjects.Sprite(this.scene, 0, 0, "master", SNIPER_BASE_SPRITE_NAME[animationName]);
+    this.sprite = new Phaser.GameObjects.Sprite(
+      this.scene,
+      0,
+      0,
+      "master",
+      SNIPER_BASE_SPRITE_NAME[animationName],
+    ).setTint(0x555555);
 
-    this.line = new Phaser.GameObjects.Line(this.scene, 0, 0, 0, 0, RAY_LENGTH, 0, 0xff2222, 1).setOrigin(0, 0.5);
+    this.line = new Phaser.GameObjects.Line(this.scene, 3, -0.5, 0, 0, RAY_LENGTH, 0)
+      .setOrigin(0, 0.5)
+      .setLineWidth(1)
+      .setStrokeStyle(0.5, 0xff2222, 1);
 
     this.container.add([this.sprite, this.line]);
-    this.sprite.anims.play(animationName + "-right");
+    this.sprite.anims.play(animationName + "-" + "right");
 
     scene.physics.world.enable(this.sprite);
 
