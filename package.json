@@ -8,7 +8,9 @@
     "build": "yarn type-check && vite build",
     "preview": "vite preview",
     "type-check": "tsc",
-    "lint": "eslint --ext .ts src/"
+    "lint": "eslint --ext .ts src/",
+    "build:cf": "yarn build && rm -rf cf-dist && mkdir -p cf-dist/projects/ggj-2024/play && cp -R dist/. cf-dist/projects/ggj-2024/play/",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "phaser": "^3.70.0",

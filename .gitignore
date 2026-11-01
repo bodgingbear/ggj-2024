@@ -30,3 +30,7 @@ dist-ssr
 .yarn/install-state.gz
 
 !.vscode/settings.json
+
+# Cloudflare Worker assets
+cf-dist
+.wrangler

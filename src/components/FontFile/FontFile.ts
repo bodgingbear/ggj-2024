@@ -25,12 +25,12 @@ export class FontFile extends Phaser.Loader.File {
     if (typeof this.fontConfig.custom === "string") {
       custom = {
         families: [this.fontConfig.custom],
-        urls: ["/fonts/fonts.css"],
+        urls: ["fonts/fonts.css"],
       };
     } else if (Array.isArray(this.fontConfig.custom)) {
       custom = {
         families: this.fontConfig.custom,
-        urls: ["/fonts/fonts.css"],
+        urls: ["fonts/fonts.css"],
       };
     } else {
       custom = this.fontConfig.custom;
